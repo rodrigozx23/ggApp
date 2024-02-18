@@ -389,8 +389,33 @@ export const getPedidoDetalles = async (pedido_id) => {
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
-    const data = await response.json();
-    return data.detalle;
+    //const data = await response.json();
+     
+    const pedidos = await response.json();
+
+    const responseProd = await fetch('http://localhost:8080/gg/producto', {
+      method: 'GET' // Adjust the method accordingly
+    });
+    if (!responseProd.ok) {
+      throw new Error(`API request failed with status ${responseProd.status}`);
+    }
+    const productos = await responseProd.json();
+
+    // Find the object in data with matching id_categoria
+    const newArray = pedidos.detalle.map(pedido => {
+      const matchingProducto = productos.find(producto => producto.id === pedido.id_producto);
+      
+      if (matchingProducto) {
+        return {
+          ...pedido,
+          descripcion: matchingProducto.descripcion,
+        };
+      }
+  
+      return pedido;
+    });
+    return newArray;
+    //return data.detalle;
   } catch (error) {
     throw new Error('API request failed: ' + error.message);
   }

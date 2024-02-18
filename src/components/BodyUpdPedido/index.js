@@ -90,7 +90,7 @@ useEffect(() => {
 		  // Check if the response is an array
       const transformedData = data.map(item => ({
         id: item.id,
-        Description: item.id_producto, // Replace this with the actual property name for description
+        Description: item.descripcion, // Replace this with the actual property name for description
         Quantity: item.cantidad,
         UnitPrice: item.precio_unitario,
         Total: item.precio_total,
