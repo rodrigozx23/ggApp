@@ -19,13 +19,13 @@ const PedidosDetalleForm = ({ onAddToTable }) => {
     const fetchData = async () => {
       try {
         const data = await fetchProdutos(); // Assuming fetchProdutos correctly fetches the data
-       
         if (Array.isArray(data)) {
+          const modifiedData = data.map(item => ({ id: item.id, description: item.descripcion, unitprice: item.precio }));
           // Extract products descriptions from the response and set them in state
-          const descriptions = data.map(item => item.description);
-          const ids = data.map((item) => item.id);
-          const unitPrices = data.map(item => item.unitprice);
-          setProductData(data);
+          const descriptions = modifiedData.map(item => item.description);
+          const ids = modifiedData.map((item) => item.id);
+          const unitPrices = modifiedData.map(item => item.unitprice);
+          setProductData(modifiedData);
           for (let i = 0; i < ids.length; i++) {
             idToUnitPriceMap[ids[i]] = unitPrices[i];
           }        
@@ -43,6 +43,7 @@ const PedidosDetalleForm = ({ onAddToTable }) => {
   }, []);
 
   const handleProductSelect = (description, id) => {
+    console.log("1232")
     const selectedUnitPrice = idToUnitPriceMap[id];
     if (selectedUnitPrice !== undefined) {
       setIdProducto(id);

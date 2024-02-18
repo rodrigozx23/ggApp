@@ -48,12 +48,20 @@ function BodyMantenimientoProducto({
 			updatedDescription: updatedData['description'],
 			updatedQuantity: updatedData['quantity'],
 			updatedUnitPrice: updatedData['unitprice'],
-			updatedCategory: updatedData['category'],
+			updatedCategory: updatedData['id_categoria'],
 		  });
 
+		  let modifiedData = {
+			id: updatedingData.id,
+			description: updatedingData.descripcion,
+			quantity: updatedingData.stock,
+			unitprice: updatedingData.precio,
+			category: updatedingData.descripcion_cat,
+			// Include other properties if needed
+		  };
 		  // Update the product data after a successful update
 		  const updatedProductData = [...productData];
-		  updatedProductData[rowIndex] = updatedingData;
+		  updatedProductData[rowIndex] = modifiedData;
 		  setProductData(updatedProductData);
 		  
 		  // Exit edit mode
@@ -216,11 +224,15 @@ function BodyMantenimientoProducto({
 								categoryDescriptions={categoryDescriptions}
 								categoryIds={categoryIds}
 								selectedCategoryDescription={updatedData['category'] || ''}
-								onCategorySelect={(selectedCategoryDescription) => {
-								  const updatedValue = { ...updatedData };
-								  updatedValue['category'] = selectedCategoryDescription;
-								  setUpdatedData(updatedValue);
-								}}
+								onCategorySelect={
+									(selectedCategoryDescription, id) => 
+									{
+										const updatedValue = { ...updatedData };
+										updatedValue['category'] = selectedCategoryDescription;
+										updatedValue['id_categoria'] = id;
+										setUpdatedData(updatedValue);										
+									}
+								}
 							  />
 							) : (                       
 							  row.category

@@ -86,10 +86,17 @@ useEffect(() => {
 	const fetchData = async () => {
 	  try {
 		const data = await getPedidoDetalles(idPedido); // Assuming fetchProdutos correctly fetches the data
-
 		if (Array.isArray(data)) {
 		  // Check if the response is an array
-		  setDetallePedidoData(data);
+      const transformedData = data.map(item => ({
+        id: item.id,
+        Description: item.id_producto, // Replace this with the actual property name for description
+        Quantity: item.cantidad,
+        UnitPrice: item.precio_unitario,
+        Total: item.precio_total,
+      }));
+      
+		  setDetallePedidoData(transformedData);
 		  
 		  setLoading(false)
 		} else {

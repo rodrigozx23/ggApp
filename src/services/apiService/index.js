@@ -165,8 +165,28 @@ export const updateProduct = async ({ product_id, updatedDescription, updatedQua
     });
     
     if (response.ok) {
-      const data = await response.json(); // Parse the response body as JSON
-      return data; // Return the response data
+      const product = await response.json(); // Parse the response body as JSON
+      const responseCat = await fetch('http://localhost:8080/gg/categoria', {
+        method: 'GET', // Adjust the method accordingly
+      });
+    
+      if (!responseCat.ok) {
+        throw new Error(`Failed to fetch category data with status ${responseCat.status}`);
+      }
+    
+      const categories = await responseCat.json();
+      // Find the matching category for the single product
+      const matchingCategory = categories.find(category => category.id === product.id_categoria);
+
+      // Create a new object with added descripcion_cat
+      const newObject = matchingCategory
+        ? {
+            ...product,
+            descripcion_cat: matchingCategory.descripcion,
+          }
+        : product;
+
+      return newObject; // Return the response data
     } else {
       // Handle the error or response status here
       const errorData = await response.json(); // Parse the error response as JSON if available
@@ -254,68 +274,77 @@ export const deleteProducts = async ( id ) => {
 
 // Aqui iria el insert si tuviera uno asi como el de pedidos :'v
 
-// PEDIDOS 
+// PEDIDOS - Insertar y obtener pedido
 
 export const insertPedido = async ({ pedido_id, updatedMesa, updatedCliente, updatedTotal, updatedEstadoPedido }) => {
   try {
-    const response = await fetch('http://127.0.0.1:8000/pedidos/', {
+    const response = await fetch('http://localhost:8080/gg/pedido', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(
         { 
-          id: pedido_id, 
-          mesa: updatedMesa, 
+          mesa: parseInt(updatedMesa),
           cliente: updatedCliente, 
-          total: updatedTotal, 
-          estadoPedido: updatedEstadoPedido,           
-          status: true }),
+          total:  parseFloat(updatedTotal),
+          fecha_creacion: date,
+          user_id_creacion: user,
+          fecha_modificacion: date,
+          user_id_modificacion: user        
+        }),
     });
-     if (response.ok) {
+    if (response.ok) {
       const data = await response.json(); // Parse the response body as JSON
       return data; // Return the response data
     } else {
       // Handle the error or response status here
       const errorData = await response.json(); // Parse the error response as JSON if available
-      throw new Error('Failed to update Pedido: ${errorData.message}');
+      throw new Error('Failed to update Pedido: '+ errorData.message);
     }
   } catch (error) {
     // Handle network errors
-    throw new Error('Network error: ${error.message}');
+    throw new Error('Network error: '+ error.message);
   }
 };
 
 export const insertPedidoDetalle = async ({ pedido_id, model }) => {
+  const results = [];
   try {
-    const response = await fetch('http://127.0.0.1:8000/pedidodetalles/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(
-        { 
-          idPedido: pedido_id, 
-          model: model
-        }),
-    });
-     if (response.ok) {
-      const data = await response.json(); // Parse the response body as JSON
-      return data; // Return the response data
-    } else {
-      // Handle the error or response status here
-      const errorData = await response.json(); // Parse the error response as JSON if available
-      throw new Error('Failed to update pedidoDetalle: ${errorData.message}');
+    for (const item of model) {
+      const response = await fetch('http://localhost:8080/gg/pedido_detalle', {
+        method: 'POST',
+        body: JSON.stringify(
+          { 
+            id_pedido: parseInt(pedido_id), 
+            id_producto: parseInt(item.idProducto),
+            cantidad: parseInt(item.Quantity),
+            precio_unitario: parseFloat(item.UnitPrice), 
+            precio_total: parseFloat(item.Total),
+            fecha_creacion: date,
+            user_id_creacion: user,
+            fecha_modificacion: date,
+            user_id_modificacion: user 
+          }),
+      });
+      if (response.ok) {
+        const data = await response.json(); // Parse the response body as JSON
+        results.push(data);
+      } else {
+        // Handle the error or response status here
+        const errorData = await response.json(); // Parse the error response as JSON if available
+        throw new Error('Failed to update pedidoDetalle: '+ errorData.message);
+      }   
     }
   } catch (error) {
     // Handle network errors
-    throw new Error('Network error: ${error.message}');
+    throw new Error('Network error: '+ error.message);
   }
+  return results; // Return the response data
 };
 
 export const fetchPedidos = async () => {
   try {
-    const response = await fetch('http://127.0.0.1:8000/pedidos/');
+    const response = await fetch('http://localhost:8080/gg/pedido', {
+      method: 'GET' // Adjust the method accordingly
+    });
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
@@ -343,7 +372,7 @@ export const fetchPedidoDetalles = async () => {
 
 export const getPedidos = async (pedido_id) => {
   try {
-    const response = await fetch('http://127.0.0.1:8000/pedidos/'+pedido_id);
+    const response = await fetch('http://localhost:8080/gg/pedido/'+pedido_id);
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
@@ -356,12 +385,12 @@ export const getPedidos = async (pedido_id) => {
 
 export const getPedidoDetalles = async (pedido_id) => {
   try {
-    const response = await fetch('http://127.0.0.1:8000/getpedidodetallesbypedido/'+pedido_id);
+    const response = await fetch('http://localhost:8080/gg/pedido_completo/'+pedido_id);
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
     const data = await response.json();
-    return data;
+    return data.detalle;
   } catch (error) {
     throw new Error('API request failed: ' + error.message);
   }

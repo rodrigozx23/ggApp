@@ -17,7 +17,7 @@ const ProductAutoCompleteInput = ({
   }, [selectedProductDescription]);
 
   const getSuggestions = (inputValue) => {
-    const inputValueLowerCase = inputValue.trim().toLowerCase();
+    const inputValueLowerCase = inputValue.trim().toLowerCase();  
     return productDescriptions.filter((description) =>
       description.toLowerCase().includes(inputValueLowerCase)
     );
