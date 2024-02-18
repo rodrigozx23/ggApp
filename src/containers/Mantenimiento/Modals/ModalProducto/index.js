@@ -19,6 +19,7 @@ function ModalProducto({
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [categoryIds, setCategoryIds] = useState([]);
   const [selectedCategoryDescription, setSelectedCategoryDescription] = useState(''); // Added state
+  const [categoryId, setCategoryId] = useState([]);
 
   const handleInsert = async (descripcionInput, quantityInput, unitPriceInput, categoryInput) => {
 		try {
@@ -33,15 +34,24 @@ function ModalProducto({
 
 		  // Check if the response is successful and handle it as needed
 		  if (response) {
-			// Optionally, you can add code to update your UI or take other actions upon success
-			console.log('Product saved successfully:', response);
-			setProductData((prevData) => [...prevData, response]); 
-			// Clear the input and close the modal
-			setDescripcionInput('');
-      setQuantityInput('');
-      setUnitPriceInput('');
-      setCategoryInput('');
-			setShowModalProductos(false);
+        // Optionally, you can add code to update your UI or take other actions upon success
+        console.log('Product saved successfully:', response);
+
+        const transformedObject = {
+          id: response.id,
+          description: response.descripcion,
+          quantity:response.stock,
+          unitprice:response.precio,
+          category:response.descripcion_cat
+        };	
+        
+        setProductData((prevData) => [...prevData, transformedObject]); 
+        // Clear the input and close the modal
+        setDescripcionInput('');
+        setQuantityInput('');
+        setUnitPriceInput('');
+        setCategoryInput('');
+        setShowModalProductos(false);
 		  } else {
 			// Handle the case when the request was not successful (e.g., display an error message)
 			console.error('Category not saved: An error occurred');
@@ -58,11 +68,12 @@ function ModalProducto({
     const fetchData = async () => {
       try {
         const data = await fetchCategories(); // Assuming fetchCategories correctly fetches the data
-
+        
         if (Array.isArray(data)) {
           // Extract category descriptions from the response and set them in state
-          const descriptions = data.map(item => item.description);
-          const ids = data.map((item) => item.id);
+          const modifiedData = data.map(item => ({ id: item.id, description: item.descripcion }));
+          const descriptions = modifiedData.map(item => item.description);
+          const ids = modifiedData.map((item) => item.id);
           setCategoryDescriptions(descriptions);
           setCategoryIds(ids);
         } else {
@@ -75,9 +86,10 @@ function ModalProducto({
     fetchData();
   }, []);
 
-  const handleCategorySelect = (description) => {
+  const handleCategorySelect = (description, id) => {
     setSelectedCategoryDescription(description);
     setCategoryInput(description); // Update the category input with the selected description
+    setCategoryId(id);
   };
 
   return(
@@ -168,7 +180,7 @@ function ModalProducto({
               <div class="modal-footer">
                 <button
                   className="btn btn-success mt-3" // Add margin top class               
-                  onClick={() => handleInsert(descripcionInput, quantityInput, unitPriceInput, categoryInput)}
+                  onClick={() => handleInsert(descripcionInput, quantityInput, unitPriceInput, categoryId)}
                 >
                   Save
                 </button>
@@ -180,6 +192,7 @@ function ModalProducto({
                       setQuantityInput('');
                       setUnitPriceInput('');
                       setCategoryInput('');
+                      setCategoryId('');
                       setShowModalProductos(false)
                     }                  
                   }

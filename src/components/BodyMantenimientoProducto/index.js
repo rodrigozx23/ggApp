@@ -27,7 +27,8 @@ function BodyMantenimientoProducto({
 
 		if (Array.isArray(data)) {
 		  // Check if the response is an array
-		  setProductData(data);
+		  const modifiedData = data.map(item => ({ id: item.id, description: item.descripcion, quantity: item.stock, unitprice: item.precio, category: item.descripcion_cat}));
+		  setProductData(modifiedData);
 		  
 		  setLoading(false)
 		} else {
@@ -83,13 +84,13 @@ function BodyMantenimientoProducto({
 			  // Exit edit mode
 			  setEditRow(null);
 			} else {
-			  console.error('pedido detalle not saved: An error occurred');
+			  console.error('productos not saved: An error occurred');
 			}
 		  }
 	  
 		} catch (error) {
 		  // Handle errors from the updateProduct function
-		  console.error('Error updating PedidoDetalle:', error);
+		  console.error('Error deleting productos:', error);
 		}
 	  };
 
@@ -100,7 +101,8 @@ function BodyMantenimientoProducto({
 	
 			if (Array.isArray(data)) {
 			  // Extract category descriptions from the response and set them in state
-			  const descriptions = data.map(item => item.description);
+			  const modifiedData = data.map(item => ({ id: item.id, description: item.descripcion }));
+			  const descriptions = modifiedData.map(item => item.description);
 			  const ids = data.map((item) => item.id);
 			  setCategoryDescriptions(descriptions);
 			  setCategoryIds(ids);

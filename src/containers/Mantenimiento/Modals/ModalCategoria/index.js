@@ -16,7 +16,13 @@ function ModalCategoria({
 		  if (response) {
 			// Optionally, you can add code to update your UI or take other actions upon success
 			console.log('Category saved successfully:', response);
-			setCategoryData((prevData) => [...prevData, response]); 
+
+			const transformedObject = {
+				id: response.id,
+				description: response.descripcion,
+			};	
+
+			setCategoryData((prevData) => [...prevData, transformedObject]); 
 			// Clear the input and close the modal
 			setDescripcionInput('');
 			setShowModalCategoria(false);

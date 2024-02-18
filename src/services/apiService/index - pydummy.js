@@ -1,89 +1,58 @@
-const user = 0;
-const timestamp = Date.now();
-const date = new Date(timestamp).toISOString();
 // CATEGORIAS
 
 export const fetchCategories = async () => {
   try {
-    const response = await fetch('http://localhost:8080/gg/categoria', {
-      method: 'GET' // Adjust the method accordingly
-    });
+    const response = await fetch('http://127.0.0.1:8000/categories/');
     if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
+      throw new Error('Failed to fetch data');
     }
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
     throw new Error('API request failed: ' + error.message);
   }
 };
 
 export const updateCategory = async ({ category_id, updatedDescription }) => {
   try {
-    const apiUrl = 'http://localhost:8080/gg/categoria/' + category_id;
-	  console.log('PUT request to:', apiUrl);
-    const response = await fetch(apiUrl, {
+	console.log('/categories/'+category_id);
+    const response = await fetch('http://127.0.0.1:8000/categories/'+category_id, {
       method: 'PUT',
-      body: JSON.stringify({  
-        descripcion: updatedDescription, 
-        fecha_creacion: date,
-        user_id_creacion: user,
-        fecha_modificacion: date,
-        user_id_modificacion: user,
-        estado: true 
-      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: category_id, description: updatedDescription, status: true }),
     });
 
-    if (response.ok) {     
+    if (response.ok) {
       const data = await response.json(); // Parse the response body as JSON
       return data; // Return the response data
     } else {
       // Handle the error or response status here
       const errorData = await response.json(); // Parse the error response as JSON if available
-      throw new Error('Failed to update category:'+ errorData.message);
+      throw new Error('Failed to update category: ${errorData.message}');
     }
   } catch (error) {
     // Handle network errors
-    throw new Error('Network error: '+ error.message);
+    throw new Error('Network error: ${error.message}');
   }
 };
 
 export const insertCategory = async ({ updatedDescription }) => {
   try {
-    const response = await fetch('http://localhost:8080/gg/categoria', {
+    
+    const response = await fetch('http://127.0.0.1:8000/categories/', {
       method: 'POST',
-      body: JSON.stringify({ 
-        descripcion: updatedDescription, 
-        fecha_creacion: date,
-        user_id_creacion: user,
-        fecha_modificacion: date,
-        user_id_modificacion: user
-      }),      
       headers: {
         'Content-Type': 'application/json',
       },
-    });
-    if (response.ok) {
-      const data = await response.json(); // Parse the response body as JSON
-      return data; // Return the response data
-    } else {
-      // Handle the error or response status here
-      const errorData = await response.json(); // Parse the error response as JSON if available
-      throw new Error('Failed to insert category:'+errorData.message);
-    }
-  } catch (error) {
-    // Handle network errors
-    throw new Error('Network error: ' + error.message);
-  }
-};
-
-export const deleteCategory = async ( id ) => {
-  try {
-	console.log('/categories/'+id);
-    const response = await fetch('http://localhost:8080/gg/categoria/'+ id, {
-      method: 'DELETE',
-      body: JSON.stringify({ id: id }),
+      body: JSON.stringify(
+        { 
+          id: "0", 
+          description: updatedDescription, 
+          status: true 
+        }
+      ),
     });
 
     if (response.ok) {
@@ -92,11 +61,11 @@ export const deleteCategory = async ( id ) => {
     } else {
       // Handle the error or response status here
       const errorData = await response.json(); // Parse the error response as JSON if available
-      throw new Error('Failed to delete categoria:'+errorData.message);
+      throw new Error('Failed to update category: ${errorData.message}');
     }
   } catch (error) {
     // Handle network errors
-    throw new Error('Network error: ' + error.message);
+    throw new Error('Network error: ${error.message}');
   }
 };
 
@@ -104,37 +73,12 @@ export const deleteCategory = async ( id ) => {
 
 export const fetchProdutos = async () => {
   try {
-    const response = await fetch('http://localhost:8080/gg/producto',{
-      method: 'GET' // Adjust the method accordingly
-    });
+    const response = await fetch('http://127.0.0.1:8000/products/');
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
-
-    const products = await response.json();
-
-    const responseCat = await fetch('http://localhost:8080/gg/categoria', {
-      method: 'GET' // Adjust the method accordingly
-    });
-    if (!responseCat.ok) {
-      throw new Error(`API request failed with status ${responseCat.status}`);
-    }
-    const categories = await responseCat.json();
-
-    // Find the object in data with matching id_categoria
-    const newArray = products.map(product => {
-      const matchingCategory = categories.find(category => category.id === product.id_categoria);
-      
-      if (matchingCategory) {
-        return {
-          ...product,
-          descripcion_cat: matchingCategory.descripcion,
-        };
-      }
-  
-      return product;
-    });
-    return newArray;
+    const data = await response.json();
+    return data;
   } catch (error) {
     throw new Error('API request failed: ' + error.message);
   }
@@ -142,116 +86,65 @@ export const fetchProdutos = async () => {
 
 export const updateProduct = async ({ product_id, updatedDescription, updatedQuantity, updatedUnitPrice, updatedCategory }) => {
   try {
-    const apiUrl = 'http://localhost:8080/gg/producto/' + product_id;
-	  console.log('PUT request to:', apiUrl);
-    const response = await fetch(apiUrl, {
+	console.log('/products/'+product_id);
+    const response = await fetch('http://127.0.0.1:8000/products/'+product_id, {
       method: 'PUT',
-      body: JSON.stringify(
-        { 
-          descripcion: updatedDescription, 
-          stock: parseFloat(updatedQuantity), 
-          precio: parseFloat(updatedUnitPrice), 
-          id_categoria: parseInt(updatedCategory),
-          fecha_creacion: date,
-          user_id_creacion: user,
-          fecha_modificacion: date,
-          user_id_modificacion: user,          
-          estado: true 
-        }
-      ),      
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(
+        { 
+          id: product_id, 
+          description: updatedDescription, 
+          quantity: updatedQuantity, 
+          unitprice: updatedUnitPrice, 
+          category: updatedCategory,           
+          status: true }),
     });
-    
+
     if (response.ok) {
       const data = await response.json(); // Parse the response body as JSON
       return data; // Return the response data
     } else {
       // Handle the error or response status here
       const errorData = await response.json(); // Parse the error response as JSON if available
-      throw new Error('Failed to update product:'+ errorData.message);
+      throw new Error('Failed to update category: ${errorData.message}');
     }
   } catch (error) {
     // Handle network errors
-    throw new Error('Network error:'+ error.message);
+    throw new Error('Network error: ${error.message}');
   }
 };
 
 export const insertProduct = async ({ product_id, updatedDescription, updatedQuantity, updatedUnitPrice, updatedCategory }) => {
   try {
-    const response = await fetch('http://localhost:8080/gg/producto', {
+    const response = await fetch('http://127.0.0.1:8000/products/', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(
         { 
-          descripcion: updatedDescription, 
-          stock: parseFloat(updatedQuantity), 
-          precio: parseFloat(updatedUnitPrice), 
-          id_categoria: parseInt(updatedCategory),
-          fecha_creacion: date,
-          user_id_creacion: user,
-          fecha_modificacion: date,
-          user_id_modificacion: user,              
-          estado: true }),
+          id: product_id, 
+          description: updatedDescription, 
+          quantity: updatedQuantity, 
+          unitprice: updatedUnitPrice, 
+          category: updatedCategory,           
+          status: true }),
     });
      if (response.ok) {
-      const product = await response.json();
-      
-      const responseCat = await fetch('http://localhost:8080/gg/categoria', {
-        method: 'GET', // Adjust the method accordingly
-      });
-    
-      if (!responseCat.ok) {
-        throw new Error(`Failed to fetch category data with status ${responseCat.status}`);
-      }
-    
-      const categories = await responseCat.json();
-      // Find the matching category for the single product
-      const matchingCategory = categories.find(category => category.id === product.id_categoria);
-
-      // Create a new object with added descripcion_cat
-      const newObject = matchingCategory
-        ? {
-            ...product,
-            descripcion_cat: matchingCategory.descripcion,
-          }
-        : product;
-
-      console.log(newObject);
-      return newObject; // Return the response data
-    } else {
-      // Handle the error or response status here
-      const errorData = await response.json(); // Parse the error response as JSON if available
-      throw new Error('Failed to update product: '+errorData.message);
-    }
-  } catch (error) {
-    // Handle network errors
-    throw new Error('Network error: '+error.message);
-  }
-};
-
-export const deleteProducts = async ( id ) => {
-  try {
-	console.log('/products/'+id);
-    const response = await fetch('http://localhost:8080/gg/producto/'+ id, {
-      method: 'DELETE',
-      body: JSON.stringify({ id: id }),
-    });
-
-    if (response.ok) {
       const data = await response.json(); // Parse the response body as JSON
       return data; // Return the response data
     } else {
       // Handle the error or response status here
       const errorData = await response.json(); // Parse the error response as JSON if available
-      throw new Error('Failed to delete producto: '+errorData.message);
+      throw new Error('Failed to update category: ${errorData.message}');
     }
   } catch (error) {
     // Handle network errors
-    throw new Error('Network error: '+error.message);
+    throw new Error('Network error: ${error.message}');
   }
 };
-
 // Aqui iria el insert si tuviera uno asi como el de pedidos :'v
 
 // PEDIDOS 
@@ -473,6 +366,56 @@ export const deletePedidoDetalle = async ( pedidodetalle_id ) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ id: pedidodetalle_id }),
+    });
+
+    if (response.ok) {
+      const data = await response.json(); // Parse the response body as JSON
+      return data; // Return the response data
+    } else {
+      // Handle the error or response status here
+      const errorData = await response.json(); // Parse the error response as JSON if available
+      throw new Error('Failed to deletePedidoDetalle: ${errorData.message}');
+    }
+  } catch (error) {
+    // Handle network errors
+    throw new Error('Network error: ${error.message}');
+  }
+};
+
+export const deleteProducts = async ( id ) => {
+  try {
+	console.log('/products/'+id);
+    const response = await fetch('http://127.0.0.1:8000/products/'+ id, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: id }),
+    });
+
+    if (response.ok) {
+      const data = await response.json(); // Parse the response body as JSON
+      return data; // Return the response data
+    } else {
+      // Handle the error or response status here
+      const errorData = await response.json(); // Parse the error response as JSON if available
+      throw new Error('Failed to deletePedidoDetalle: ${errorData.message}');
+    }
+  } catch (error) {
+    // Handle network errors
+    throw new Error('Network error: ${error.message}');
+  }
+};
+
+export const deleteCategory = async ( id ) => {
+  try {
+	console.log('/categories/'+id);
+    const response = await fetch('http://127.0.0.1:8000/categories/'+ id, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: id }),
     });
 
     if (response.ok) {

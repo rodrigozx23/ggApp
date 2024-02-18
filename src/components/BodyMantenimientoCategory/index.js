@@ -27,17 +27,20 @@ function BodyMantenimientoCategory({
 	const fetchData = async () => {
 	  try {
 		const data = await fetchCategories(); // Assuming fetchCategories correctly fetches the data
-
-		if (Array.isArray(data)) {
-		  // Check if the response is an array
-		  setCategoryData(data);
-		  
-		  setLoading(false)
-		} else {
-		  console.error('Error: Data received from the API is not an array.');
-		}
+    console.log(data)
+      if (Array.isArray(data)) {
+        // Check if the response is an array
+        const modifiedData = data.map(item => ({ id: item.id, description: item.descripcion }));
+        setCategoryData(modifiedData);
+        //setCategoryData(data);
+        
+        setLoading(false)
+      } else {
+        console.error('Cat Error: Data received from the API is not an array.');
+      }
 	  } catch (error) {
-		console.error('Error fetching data:', error);
+      console.log(error);
+		  console.error('Cat Error fetching data:', error);
 	  }
 	};
 	fetchData();
@@ -49,10 +52,15 @@ function BodyMantenimientoCategory({
         category_id,
         updatedDescription,
 		  });
-
+      console.log(updatedData)
 		  // Update the category data after a successful update
+      let modifiedData = {
+        id: updatedData.id,
+        description: updatedData.descripcion,
+        // Include other properties if needed
+      };
 		  const updatedCategoryData = [...categoryData];
-		  updatedCategoryData[rowIndex] = updatedData;
+		  updatedCategoryData[rowIndex] = modifiedData;
 		  setCategoryData(updatedCategoryData);
 		  
 		  // Exit edit mode
