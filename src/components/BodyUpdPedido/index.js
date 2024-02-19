@@ -177,6 +177,7 @@ useEffect(() => {
             <p>No Detalle data available.</p>
           ) : (
             <TablaDetallePedido 
+              id = {idPedido}
               data ={detallePedidoData} 
               setData = {setDetallePedidoData} 
               type={'update'} 

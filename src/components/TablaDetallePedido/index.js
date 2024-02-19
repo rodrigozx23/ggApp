@@ -4,6 +4,7 @@ import { updateDetallePed, deletePedidoDetalle } from '../../services/apiService
 
 function TablaDetallePedido(
   {
+    id,
     data, 
     setData, 
     type = "", 
@@ -82,13 +83,22 @@ const arraysEqual = (arr1, arr2) => {
 };
 
 const handleSave = async (rowIndex, pedidodet_id) => {
+
+  var q = updatedData['quantity'];
+  var up =  updatedData['unitprice'];
+  var total = q * up;
+  console.log(q)
+  console.log(up)
+  console.log(total)
   try {
     const updatedingData = await updateDetallePed({
+      pedido_id: id,
       pedidodet_id,
       updatedQuantity: updatedData['quantity'],
-      updatedUnitPrice: 0,
-      updatedTotal: 0,
+      updatedUnitPrice: updatedData['unitprice'],
+      updatedTotal: total.toFixed(2),
     });
+    console.log(updatedingData);
     // Update the PedidoDetalle data after a successful update
     const updatedPedidoDetalleData = [...data]; // Assuming data is your original array
     updatedPedidoDetalleData[rowIndex] = {
@@ -199,7 +209,7 @@ return (
                       // Show input field when in edit mode
                         <input
                           type="text"
-                          value={updatedData['quantity'] || ''}
+                          value={updatedData['quantity'] || descriptionToTotalMap[row].Quantity }
                           onChange={(e) => {
                           const inputValue = e.target.value;
                           if (/^\d*\.?\d*$/.test(inputValue)) {
@@ -214,7 +224,27 @@ return (
                       )
                     }
                   </td>
-                  <td>{descriptionToTotalMap[row].UnitPrice.toFixed(2)}</td>
+                  <td>
+                    {
+                      editRow === index ? (
+                      // Show input field when in edit mode
+                        <input
+                          type="text"
+                          value={updatedData['unitprice'] ||  descriptionToTotalMap[row].UnitPrice }
+                          onChange={(e) => {
+                          const inputValue = e.target.value;
+                          if (/^\d*\.?\d*$/.test(inputValue)) {
+                            const updatedValue = { ...updatedData };
+                            updatedValue['unitprice'] = inputValue;
+                            setUpdatedData(updatedValue);
+                          }
+                        }}
+                        />
+                      ) : (                       
+                        descriptionToTotalMap[row].UnitPrice
+                      )//<!--<td>{descriptionToTotalMap[row].UnitPrice.toFixed(2)}</td>-->
+                    }                  
+                  </td>
                   <td>{descriptionToTotalMap[row].Total.toFixed(2)}</td>
                   <td>
                       {editRow === index ? (

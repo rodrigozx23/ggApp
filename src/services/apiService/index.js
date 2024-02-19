@@ -391,7 +391,7 @@ export const getPedidoDetalles = async (pedido_id) => {
     }
     //const data = await response.json();
      
-    const pedidos = await response.json();
+    const pedidosDetalle = await response.json();
 
     const responseProd = await fetch('http://localhost:8080/gg/producto', {
       method: 'GET' // Adjust the method accordingly
@@ -402,7 +402,7 @@ export const getPedidoDetalles = async (pedido_id) => {
     const productos = await responseProd.json();
 
     // Find the object in data with matching id_categoria
-    const newArray = pedidos.detalle.map(pedido => {
+    const newArray = pedidosDetalle.detalle.map(pedido => {
       const matchingProducto = productos.find(producto => producto.id === pedido.id_producto);
       
       if (matchingProducto) {
@@ -413,8 +413,9 @@ export const getPedidoDetalles = async (pedido_id) => {
       }
   
       return pedido;
-    });
+    });    
     return newArray;
+
     //return data.detalle;
   } catch (error) {
     throw new Error('API request failed: ' + error.message);
@@ -425,19 +426,24 @@ export const getPedidoDetalles = async (pedido_id) => {
 
 export const updatePedido = async ({ pedido_id, updatedMesa, updatedCliente, updatedTotal, updatedEstadoPedido}) => {
   try {
-	console.log('/pedidos/'+pedido_id);
-    const response = await fetch('http://127.0.0.1:8000/pedidos/'+pedido_id, {
+    const response = await fetch('http://localhost:8080/gg/pedido/'+pedido_id, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 
-        id: pedido_id, 
-        mesa: updatedMesa, 
-        cliente: updatedCliente, 
-        total: updatedTotal, 
-        estadoPedido: updatedEstadoPedido,
-        status: true }),
+      body: JSON.stringify(
+        {
+          mesa: updatedMesa, 
+          cliente: updatedCliente, 
+          total: updatedTotal,           
+          fecha_creacion: date,
+          user_id_creacion: user,
+          fecha_modificacion: date,
+          user_id_modificacion: user,   
+          //estadoPedido: updatedEstadoPedido,
+          estado: true 
+        }
+        ),      
+        headers: {
+          'Content-Type': 'application/json',
+        },
     });
 
     if (response.ok) {
@@ -446,86 +452,123 @@ export const updatePedido = async ({ pedido_id, updatedMesa, updatedCliente, upd
     } else {
       // Handle the error or response status here
       const errorData = await response.json(); // Parse the error response as JSON if available
-      throw new Error('Failed to update Pedido: ${errorData.message}');
+      throw new Error('Failed to update Pedido: '+ errorData.message);
     }
   } catch (error) {
     // Handle network errors
-    throw new Error('Network error: ${error.message}');
+    throw new Error('Network error: '+ error.message);
   }
 };
 
 export const updatePedidoDetalle = async ({ pedido_id, model }) => {
+  const results = [];
+  console.log(model)
   try {
-	console.log('/pedidodetalles/'+pedido_id);
-  console.log(model);
-    const response = await fetch('http://127.0.0.1:8000/pedidodetalles/'+pedido_id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(
-        { 
-          id: pedido_id, 
-          model: model         
-        }),
-    });
+    for (const item of model) {
+      const response = await fetch('http://localhost:8080/gg/pedido_detalle/'+item.id, {
+        method: 'PUT',
+        body: JSON.stringify(
+          { 
+            id_pedido: pedido_id,
+            cantidad: item.Quantity, 
+            precio_unitario: item.UnitPrice, 
+            precio_total: item.Total,           
+            fecha_creacion: date,
+            user_id_creacion: user,
+            fecha_modificacion: date,
+            user_id_modificacion: user,   
+            estado: item.Quantity == 0 ? false : true     
+          }
+        ),      
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    if (response.ok) {
-      const data = await response.json(); // Parse the response body as JSON
-      return data; // Return the response data
-    } else {
-      // Handle the error or response status here
-      const errorData = await response.json(); // Parse the error response as JSON if available
-      throw new Error('Failed to update PedidoDetalle: ${errorData.message}');
+      if (response.ok) {
+        const data = await response.json(); // Parse the response body as JSON
+        return data; // Return the response data
+      } else {
+        // Handle the error or response status here
+        const errorData = await response.json(); // Parse the error response as JSON if available
+        throw new Error('Failed to update PedidoDetalle: '+ errorData.message);
+      }
     }
   } catch (error) {
     // Handle network errors
-    throw new Error('Network error: ${error.message}');
+    throw new Error('Network error: '+ error.message);
   }
 };
 
-export const updateDetallePed = async ({ pedidodet_id, updatedQuantity, updatedUnitPrice, updatedTotal }) => {
+export const updateDetallePed = async ({ pedido_id, pedidodet_id, updatedQuantity, updatedUnitPrice, updatedTotal }) => {
   try {
-	console.log('/detallepedido/'+pedidodet_id);
-    const response = await fetch('http://127.0.0.1:8000/detallepedido/'+pedidodet_id, {
+	console.log("updateDetallePed/detallepedido/"+pedido_id);
+    const response = await fetch('http://localhost:8080/gg/pedido_detalle/'+pedidodet_id, {
       method: 'PUT',
+      body: JSON.stringify(
+        { 
+          id_pedido: pedido_id,
+          //id_producto: pedido_id,
+          //id: pedidodet_id, 
+          //idProducto: updatedDescription, 
+          cantidad:  parseInt(updatedQuantity), 
+          precio_unitario: parseFloat(updatedUnitPrice), 
+          precio_total: parseFloat(updatedTotal),           
+          //estadoPedidoDetalle: true,
+          fecha_creacion: date,
+          user_id_creacion: user,
+          fecha_modificacion: date,
+          user_id_modificacion: user,   
+          estado: updatedQuantity == 0 ? false : true
+        }
+      ),      
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(
-        { 
-          id: pedidodet_id, 
-          //idProducto: updatedDescription, 
-          Quantity: updatedQuantity, 
-          //UnitPrice: updatedUnitPrice, 
-          Total: updatedTotal,           
-          //estadoPedidoDetalle: true,
-          status: updatedQuantity == 0 ? false : true
-        }),
     });
 
     if (response.ok) {
-      const data = await response.json(); // Parse the response body as JSON
-      return data; // Return the response data
+      //const data = await response.json(); // Parse the response body as JSON
+      //return data; // Return the response data
+      const pedidosDetalle = await response.json();
+
+      const responseProd = await fetch('http://localhost:8080/gg/producto', {
+        method: 'GET' // Adjust the method accordingly
+      });
+      if (!responseProd.ok) {
+        throw new Error(`API request failed with status ${responseProd.status}`);
+      }
+      const productos = await responseProd.json();
+  
+      // Find the object in data with matching id_categoria
+      const newArray = pedidosDetalle.detalle.map(pedido => {
+        const matchingProducto = productos.find(producto => producto.id === pedido.id_producto);
+        
+        if (matchingProducto) {
+          return {
+            ...pedido,
+            descripcion: matchingProducto.descripcion,
+          };
+        }
+    
+        return pedido;
+      });    
+      return newArray;      
     } else {
       // Handle the error or response status here
       const errorData = await response.json(); // Parse the error response as JSON if available
-      throw new Error('Failed to update category: ${errorData.message}');
+      throw new Error('Failed to update category: '+ errorData.message);
     }
   } catch (error) {
     // Handle network errors
-    throw new Error('Network error: ${error.message}');
+    throw new Error('Network error: '+ error.message);
   }
 };
 
 export const deletePedidoDetalle = async ( pedidodetalle_id ) => {
   try {
-	console.log('/pedidodetalles/'+pedidodetalle_id);
-    const response = await fetch('http://127.0.0.1:8000/pedidodetalles/'+ pedidodetalle_id, {
+    const response = await fetch('http://localhost:8080/gg/pedido_detalle/'+ pedidodetalle_id, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify({ id: pedidodetalle_id }),
     });
 
