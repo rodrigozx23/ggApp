@@ -465,12 +465,13 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
     for (const item of model) {
       console.log("updatePedidoDetalle - model")
       console.log(item)
-      if(item.id == 0){
+      if(item.id){
         const response = await fetch('http://localhost:8080/gg/pedido_detalle/'+item.id, {
         method: 'PUT',
         body: JSON.stringify(
           { 
             id_pedido: pedido_id,
+            id_producto: 0,
             cantidad: parseInt(item.Quantity), 
             precio_unitario: parseFloat(item.UnitPrice), 
             precio_total: parseFloat(item.Total),           
@@ -540,7 +541,7 @@ export const updateDetallePed = async ({ pedido_id, pedidodet_id, updatedQuantit
       body: JSON.stringify(
         { 
           id_pedido: pedido_id,
-          id_producto: 1, // ESTO YA NO DEBE IR EN UPDATE.
+          id_producto: 0, // ESTO YA NO DEBE IR EN UPDATE.
           //id: pedidodet_id, 
           //idProducto: updatedDescription, 
           cantidad:  parseInt(updatedQuantity), 
