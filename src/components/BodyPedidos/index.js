@@ -90,7 +90,6 @@ function BodyPedidos({
           activeOrders.map(order => (
             <PedidoButton key={order.id} cliente={order.cliente} mesa={order.mesa} fecha={order.fecha} hora = {order.hora}
             onClick={() => {
-              console.log(order)
               openUpdPedidoDetails(order.id, order.cliente, order.mesa, order.total)
             }} />
           ))          

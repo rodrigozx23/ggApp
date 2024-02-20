@@ -43,7 +43,6 @@ const PedidosDetalleForm = ({ onAddToTable }) => {
   }, []);
 
   const handleProductSelect = (description, id) => {
-    console.log("1232")
     const selectedUnitPrice = idToUnitPriceMap[id];
     if (selectedUnitPrice !== undefined) {
       setIdProducto(id);

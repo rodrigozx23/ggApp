@@ -82,23 +82,27 @@ const arraysEqual = (arr1, arr2) => {
   );
 };
 
-const handleSave = async (rowIndex, pedidodet_id) => {
+const handleSave = async (rowIndex, pedidodet_id, p_quantity, p_unitPrice) => {
 
-  var q = updatedData['quantity'];
-  var up =  updatedData['unitprice'];
-  var total = q * up;
-  console.log(q)
-  console.log(up)
-  console.log(total)
+  if(!updatedData['quantity'] && !updatedData['unitprice'] ){
+    alert("No ha realizado ningun cambio.");
+    setEditRow(false);
+    return;
+  }
+
+  var quantity = !updatedData['quantity'] ? p_quantity: updatedData['quantity'];
+  var unitprice =  !updatedData['unitprice']  ? p_unitPrice : updatedData['unitprice'];
+  var total = quantity * unitprice;
+  
   try {
     const updatedingData = await updateDetallePed({
       pedido_id: id,
       pedidodet_id,
-      updatedQuantity: updatedData['quantity'],
-      updatedUnitPrice: updatedData['unitprice'],
+      updatedQuantity: parseInt(quantity),
+      updatedUnitPrice: parseFloat(unitprice),
       updatedTotal: total.toFixed(2),
     });
-    console.log(updatedingData);
+
     // Update the PedidoDetalle data after a successful update
     const updatedPedidoDetalleData = [...data]; // Assuming data is your original array
     updatedPedidoDetalleData[rowIndex] = {
@@ -250,7 +254,7 @@ return (
                       {editRow === index ? (
                         <button
                           className="btn btn-success"
-                          onClick={() => handleSave(index, descriptionToTotalMap[row].id)}
+                          onClick={() => handleSave(index, descriptionToTotalMap[row].id, descriptionToTotalMap[row].Quantity, descriptionToTotalMap[row].UnitPrice)}
                         >
                         Save
                         </button>
