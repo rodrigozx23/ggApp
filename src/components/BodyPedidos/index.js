@@ -36,7 +36,7 @@ function BodyPedidos({
             id: item.id,
             cliente: item.cliente,
             mesa: item.mesa,
-            estadoPedido: 1,
+            estadoPedido: item.estado_pedido,
             fecha: formattedDate,
             hora: formattedTime,
             total: item.total,
@@ -83,7 +83,7 @@ function BodyPedidos({
         </button>
 	    </div>     
       <div className="col-md-12 mt-3">
-      <h3>PEDIDOS - MESAS</h3>
+      <h3>Pedidos Activos - Mesas</h3>
       {loading ? (
           <p>Loading...</p>
         ) : (          

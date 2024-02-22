@@ -1,6 +1,7 @@
 const user = 0;
 const timestamp = Date.now();
-const date = new Date(timestamp).toISOString();
+const offset = -5 * 60 * 60 * 1000; // Offset for GMT-5 in milliseconds
+const date = new Date(timestamp + offset).toISOString();
 // CATEGORIAS
 
 export const fetchCategories = async () => {
@@ -288,7 +289,8 @@ export const insertPedido = async ({ pedido_id, updatedMesa, updatedCliente, upd
           fecha_creacion: date,
           user_id_creacion: user,
           fecha_modificacion: date,
-          user_id_modificacion: user        
+          user_id_modificacion: user,
+          estado_pedido : 1
         }),
     });
     if (response.ok) {
@@ -436,8 +438,8 @@ export const updatePedido = async ({ pedido_id, updatedMesa, updatedCliente, upd
           fecha_creacion: date,
           user_id_creacion: user,
           fecha_modificacion: date,
-          user_id_modificacion: user,   
-          //estadoPedido: updatedEstadoPedido,
+          user_id_modificacion: user,
+          estado_pedido : 1,
           estado: true 
         }
         )
@@ -471,7 +473,7 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
         body: JSON.stringify(
           { 
             id_pedido: pedido_id,
-            id_producto: 0,
+            //id_producto: 0,
             cantidad: parseInt(item.Quantity), 
             precio_unitario: parseFloat(item.UnitPrice), 
             precio_total: parseFloat(item.Total),           
@@ -491,10 +493,9 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
           // Handle the error or response status here
           const errorData = await response.json(); // Parse the error response as JSON if available
           throw new Error('Failed to update PedidoDetalle: '+ errorData.message);
-        }
-      }
-
-      else if(item.idProducto){
+        }      
+      } 
+      else{
         console.log("updatePedidoDetalle - idProducto")
         console.log(item)
         const response = await fetch('http://localhost:8080/gg/pedido_detalle', {
@@ -541,7 +542,7 @@ export const updateDetallePed = async ({ pedido_id, pedidodet_id, updatedQuantit
       body: JSON.stringify(
         { 
           id_pedido: pedido_id,
-          id_producto: 0, // ESTO YA NO DEBE IR EN UPDATE.
+          //id_producto: 0, // ESTO YA NO DEBE IR EN UPDATE.
           //id: pedidodet_id, 
           //idProducto: updatedDescription, 
           cantidad:  parseInt(updatedQuantity), 
@@ -616,16 +617,53 @@ export const deletePedidoDetalle = async ( pedidodetalle_id ) => {
   }
 };
 
-export const updatePagarPedido = async (pedido_id) => {
+export const updatePagarPedido = async ({ pedido_id, updatedMesa, updatedCliente, updatedTotal}) => {
   try {
-	console.log('/pedidos/'+pedido_id);
-    const response = await fetch('http://127.0.0.1:8000/pagarpedidos/'+pedido_id, {
+	console.log('/pedidos/' + pedido_id);
+    const response = await fetch('http://localhost:8080/gg/pedido/' + pedido_id, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 
-        id: pedido_id
+      body: JSON.stringify(        {
+        mesa: parseInt(updatedMesa), 
+        cliente: updatedCliente, 
+        total: parseFloat(updatedTotal),           
+        fecha_creacion: date,
+        user_id_creacion: user,
+        fecha_modificacion: date,
+        user_id_modificacion: user,
+        estado_pedido : 2, //PAGADO
+        estado: true 
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json(); // Parse the response body as JSON
+      return data; // Return the response data
+    } else {
+      // Handle the error or response status here
+      const errorData = await response.json(); // Parse the error response as JSON if available
+      throw new Error('Failed to update Pedido: ${errorData.message}');
+    }
+  } catch (error) {
+    // Handle network errors
+    throw new Error('Network error: ${error.message}');
+  }
+};
+
+export const updateCancelarPedido = async ({ pedido_id, updatedMesa, updatedCliente, updatedTotal}) => {
+  try {
+	console.log('/pedidos/' + pedido_id);
+    const response = await fetch('http://localhost:8080/gg/pedido/' + pedido_id, {
+      method: 'PUT',
+      body: JSON.stringify(        {
+        mesa: parseInt(updatedMesa), 
+        cliente: updatedCliente, 
+        total: parseFloat(updatedTotal),           
+        fecha_creacion: date,
+        user_id_creacion: user,
+        fecha_modificacion: date,
+        user_id_modificacion: user,
+        estado_pedido : 3, //CANCELADO
+        estado: true 
       }),
     });
 
