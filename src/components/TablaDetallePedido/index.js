@@ -4,6 +4,7 @@ import { updateDetallePed, deletePedidoDetalle } from '../../services/apiService
 
 function TablaDetallePedido(
   {
+    id,
     data, 
     setData, 
     type = "", 
@@ -81,14 +82,27 @@ const arraysEqual = (arr1, arr2) => {
   );
 };
 
-const handleSave = async (rowIndex, pedidodet_id) => {
+const handleSave = async (rowIndex, pedidodet_id, p_quantity, p_unitPrice) => {
+
+  if(!updatedData['quantity'] && !updatedData['unitprice'] ){
+    alert("No ha realizado ningun cambio.");
+    setEditRow(false);
+    return;
+  }
+
+  var quantity = !updatedData['quantity'] ? p_quantity: updatedData['quantity'];
+  var unitprice =  !updatedData['unitprice']  ? p_unitPrice : updatedData['unitprice'];
+  var total = quantity * unitprice;
+  
   try {
     const updatedingData = await updateDetallePed({
+      pedido_id: id,
       pedidodet_id,
-      updatedQuantity: updatedData['quantity'],
-      updatedUnitPrice: 0,
-      updatedTotal: 0,
+      updatedQuantity: parseInt(quantity),
+      updatedUnitPrice: parseFloat(unitprice),
+      updatedTotal: total.toFixed(2),
     });
+
     // Update the PedidoDetalle data after a successful update
     const updatedPedidoDetalleData = [...data]; // Assuming data is your original array
     updatedPedidoDetalleData[rowIndex] = {
@@ -199,7 +213,7 @@ return (
                       // Show input field when in edit mode
                         <input
                           type="text"
-                          value={updatedData['quantity'] || ''}
+                          value={updatedData['quantity'] || descriptionToTotalMap[row].Quantity }
                           onChange={(e) => {
                           const inputValue = e.target.value;
                           if (/^\d*\.?\d*$/.test(inputValue)) {
@@ -214,13 +228,33 @@ return (
                       )
                     }
                   </td>
-                  <td>{descriptionToTotalMap[row].UnitPrice.toFixed(2)}</td>
+                  <td>
+                    {
+                      editRow === index ? (
+                      // Show input field when in edit mode
+                        <input
+                          type="text"
+                          value={updatedData['unitprice'] ||  descriptionToTotalMap[row].UnitPrice }
+                          onChange={(e) => {
+                          const inputValue = e.target.value;
+                          if (/^\d*\.?\d*$/.test(inputValue)) {
+                            const updatedValue = { ...updatedData };
+                            updatedValue['unitprice'] = inputValue;
+                            setUpdatedData(updatedValue);
+                          }
+                        }}
+                        />
+                      ) : (                       
+                        descriptionToTotalMap[row].UnitPrice
+                      )//<!--<td>{descriptionToTotalMap[row].UnitPrice.toFixed(2)}</td>-->
+                    }                  
+                  </td>
                   <td>{descriptionToTotalMap[row].Total.toFixed(2)}</td>
                   <td>
                       {editRow === index ? (
                         <button
                           className="btn btn-success"
-                          onClick={() => handleSave(index, descriptionToTotalMap[row].id)}
+                          onClick={() => handleSave(index, descriptionToTotalMap[row].id, descriptionToTotalMap[row].Quantity, descriptionToTotalMap[row].UnitPrice)}
                         >
                         Save
                         </button>

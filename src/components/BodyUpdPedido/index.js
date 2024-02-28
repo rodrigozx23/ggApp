@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getPedidoDetalles, updatePedido, updatePedidoDetalle, updatePagarPedido  } from '../../services/apiService';
+import { getPedidoDetalles, updatePedido, updatePedidoDetalle, updatePagarPedido, updateCancelarPedido } from '../../services/apiService';
 import { TablaDetallePedido } from '../TablaDetallePedido';
 
 function BodyUpdPedido({
@@ -58,13 +58,18 @@ const handleUpdate = async (mesaInput,clienteInput, totalInput, model) => {
   }  
 };
 
-const handlePagarPedido = async () => {
+const handlePagarPedido = async (mesaInput,clienteInput, totalInput) => {
   console.log('Pedido pagar:', idPedido); 
   try {
     const confirmMessage = "Are you sure you want to paid this pedido?";
     // Call the insertCategory function to send the POST request
     if (window.confirm(confirmMessage)) {
-      const response = await updatePagarPedido(idPedido);
+      const response = await updatePagarPedido({
+          pedido_id : idPedido, 
+          updatedMesa: mesaInput, 
+          updatedCliente: clienteInput, 
+          updatedTotal: totalInput
+        });
 
       // Check if the response is successful and handle it as needed
       if (response) {
@@ -72,7 +77,36 @@ const handlePagarPedido = async () => {
         console.log('Pedido updated successfully:', response);        
       } else {
         // Handle the case when the request was not successful (e.g., display an error message)
-        console.error('Category not saved: An error occurred');
+        console.error('Pedido not saved: An error occurred');
+      }
+    }
+    openPedidoDetails();
+  } catch (error) {
+    // Handle network errors
+    console.error('Network error:', error);
+  }  
+};
+
+const handleCancelarPedido = async (mesaInput,clienteInput, totalInput) => {
+  console.log('Cancelar pagar:', idPedido); 
+  try {
+    const confirmMessage = "Are you sure you want to cancel this pedido?";
+    // Call the insertCategory function to send the POST request
+    if (window.confirm(confirmMessage)) {
+      const response = await updateCancelarPedido({
+          pedido_id : idPedido, 
+          updatedMesa: mesaInput, 
+          updatedCliente: clienteInput, 
+          updatedTotal: totalInput
+        });
+
+      // Check if the response is successful and handle it as needed
+      if (response) {
+        // Optionally, you can add code to update your UI or take other actions upon success
+        console.log('Pedido updated successfully:', response);        
+      } else {
+        // Handle the case when the request was not successful (e.g., display an error message)
+        console.error('Pedido not saved: An error occurred');
       }
     }
     openPedidoDetails();
@@ -86,10 +120,17 @@ useEffect(() => {
 	const fetchData = async () => {
 	  try {
 		const data = await getPedidoDetalles(idPedido); // Assuming fetchProdutos correctly fetches the data
-
 		if (Array.isArray(data)) {
 		  // Check if the response is an array
-		  setDetallePedidoData(data);
+      const transformedData = data.map(item => ({
+        id: item.id,
+        Description: item.descripcion, // Replace this with the actual property name for description
+        Quantity: item.cantidad,
+        UnitPrice: item.precio_unitario,
+        Total: item.precio_total,
+      }));
+      
+		  setDetallePedidoData(transformedData);
 		  
 		  setLoading(false)
 		} else {
@@ -105,16 +146,25 @@ useEffect(() => {
   return(
 	  <div className="container">  
       <div className='row'>
-        <div className="col-md-10">      
+        <div className="col-md-8">      
             <h2>Actualizar Pedido</h2>
+        </div>
+        <div className="col-md-2">
+          <button 
+            className="btn btn-primary mt-3" 
+            onClick={() => {
+                handlePagarPedido(mesaInput, clienteInput, totalInput)
+            }}>
+            Pagar Pedido
+          </button>
         </div>
         <div className="col-md-2">
           <button 
             className="btn btn-secondary mt-3" 
             onClick={() => {
-                handlePagarPedido()
+                handleCancelarPedido(mesaInput, clienteInput, totalInput)
             }}>
-            Pagar Pedido
+            Cancelar Pedido
           </button>
         </div> 
       </div>        
@@ -170,6 +220,7 @@ useEffect(() => {
             <p>No Detalle data available.</p>
           ) : (
             <TablaDetallePedido 
+              id = {idPedido}
               data ={detallePedidoData} 
               setData = {setDetallePedidoData} 
               type={'update'} 

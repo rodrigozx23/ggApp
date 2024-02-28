@@ -27,7 +27,8 @@ function BodyMantenimientoProducto({
 
 		if (Array.isArray(data)) {
 		  // Check if the response is an array
-		  setProductData(data);
+		  const modifiedData = data.map(item => ({ id: item.id, description: item.descripcion, quantity: item.stock, unitprice: item.precio, category: item.descripcion_cat}));
+		  setProductData(modifiedData);
 		  
 		  setLoading(false)
 		} else {
@@ -47,12 +48,20 @@ function BodyMantenimientoProducto({
 			updatedDescription: updatedData['description'],
 			updatedQuantity: updatedData['quantity'],
 			updatedUnitPrice: updatedData['unitprice'],
-			updatedCategory: updatedData['category'],
+			updatedCategory: updatedData['id_categoria'],
 		  });
 
+		  let modifiedData = {
+			id: updatedingData.id,
+			description: updatedingData.descripcion,
+			quantity: updatedingData.stock,
+			unitprice: updatedingData.precio,
+			category: updatedingData.descripcion_cat,
+			// Include other properties if needed
+		  };
 		  // Update the product data after a successful update
 		  const updatedProductData = [...productData];
-		  updatedProductData[rowIndex] = updatedingData;
+		  updatedProductData[rowIndex] = modifiedData;
 		  setProductData(updatedProductData);
 		  
 		  // Exit edit mode
@@ -83,13 +92,13 @@ function BodyMantenimientoProducto({
 			  // Exit edit mode
 			  setEditRow(null);
 			} else {
-			  console.error('pedido detalle not saved: An error occurred');
+			  console.error('productos not saved: An error occurred');
 			}
 		  }
 	  
 		} catch (error) {
 		  // Handle errors from the updateProduct function
-		  console.error('Error updating PedidoDetalle:', error);
+		  console.error('Error deleting productos:', error);
 		}
 	  };
 
@@ -100,7 +109,8 @@ function BodyMantenimientoProducto({
 	
 			if (Array.isArray(data)) {
 			  // Extract category descriptions from the response and set them in state
-			  const descriptions = data.map(item => item.description);
+			  const modifiedData = data.map(item => ({ id: item.id, description: item.descripcion }));
+			  const descriptions = modifiedData.map(item => item.description);
 			  const ids = data.map((item) => item.id);
 			  setCategoryDescriptions(descriptions);
 			  setCategoryIds(ids);
@@ -214,11 +224,15 @@ function BodyMantenimientoProducto({
 								categoryDescriptions={categoryDescriptions}
 								categoryIds={categoryIds}
 								selectedCategoryDescription={updatedData['category'] || ''}
-								onCategorySelect={(selectedCategoryDescription) => {
-								  const updatedValue = { ...updatedData };
-								  updatedValue['category'] = selectedCategoryDescription;
-								  setUpdatedData(updatedValue);
-								}}
+								onCategorySelect={
+									(selectedCategoryDescription, id) => 
+									{
+										const updatedValue = { ...updatedData };
+										updatedValue['category'] = selectedCategoryDescription;
+										updatedValue['id_categoria'] = id;
+										setUpdatedData(updatedValue);										
+									}
+								}
 							  />
 							) : (                       
 							  row.category

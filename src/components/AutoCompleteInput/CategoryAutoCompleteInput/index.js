@@ -16,6 +16,7 @@ const CategoryAutoCompleteInput = ({
   }, [selectedCategoryDescription]);
 
   const getSuggestions = (inputValue) => {
+    console.log(inputValue);
     const inputValueLowerCase = inputValue.trim().toLowerCase();
     return categoryDescriptions.filter((description) =>
       description.toLowerCase().includes(inputValueLowerCase)

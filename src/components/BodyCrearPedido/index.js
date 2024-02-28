@@ -68,7 +68,13 @@ const handleInsert = async (mesaInput, clienteInput, totalInput, model) => {
                 className="form-control"
                 placeholder="Mesa"
                 value={mesaInput}
-                onChange={(e) => setMesaInput(e.target.value)}
+                onChange={(e) => {
+                  const inputValue = e.target.value;
+                  // Check if the input is a valid decimal number
+                  if (/^[1-9]\d*$/.test(inputValue) || inputValue === '') {
+                    setMesaInput(inputValue);
+                  }
+                }}
                 />   
               </div>
             </div>
