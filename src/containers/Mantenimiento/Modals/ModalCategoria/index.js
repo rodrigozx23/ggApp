@@ -15,8 +15,6 @@ function ModalCategoria({
 		  // Check if the response is successful and handle it as needed
 		  if (response) {
 			// Optionally, you can add code to update your UI or take other actions upon success
-			console.log('Category saved successfully:', response);
-
 			const transformedObject = {
 				id: response.id,
 				description: response.descripcion,

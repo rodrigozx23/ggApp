@@ -27,7 +27,6 @@ function BodyMantenimientoCategory({
 	const fetchData = async () => {
 	  try {
 		const data = await fetchCategories(); // Assuming fetchCategories correctly fetches the data
-    console.log(data)
       if (Array.isArray(data)) {
         // Check if the response is an array
         const modifiedData = data.map(item => ({ id: item.id, description: item.descripcion }));
@@ -52,7 +51,6 @@ function BodyMantenimientoCategory({
         category_id,
         updatedDescription,
 		  });
-      console.log(updatedData)
 		  // Update the category data after a successful update
       let modifiedData = {
         id: updatedData.id,

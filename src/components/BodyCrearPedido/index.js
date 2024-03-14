@@ -35,9 +35,7 @@ const handleInsert = async (mesaInput, clienteInput, totalInput, model) => {
       // Check if the response is successful and handle it as needed
       if (response) {
         // Optionally, you can add code to update your UI or take other actions upon success
-        console.log('Pedido saved successfully:', response); 
         const responsePD = await insertPedidoDetalle({ pedido_id: response.id, model: model})
-        console.log('Pedido DET saved successfully:', responsePD);
       } else {
         // Handle the case when the request was not successful (e.g., display an error message)
         console.error('Category not saved: An error occurred');

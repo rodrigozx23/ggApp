@@ -2,11 +2,13 @@ const user = 0;
 const timestamp = Date.now();
 const offset = -5 * 60 * 60 * 1000; // Offset for GMT-5 in milliseconds
 const date = new Date(timestamp + offset).toISOString();
-// CATEGORIAS
 
+const url = process.env.REACT_APP_API_URL;
+
+// CATEGORIAS
 export const fetchCategories = async () => {
   try {
-    const response = await fetch('http://localhost:8080/gg/categoria', {
+    const response = await fetch(url+'/gg/categoria', {
       method: 'GET' // Adjust the method accordingly
     });
     if (!response.ok) {
@@ -22,8 +24,7 @@ export const fetchCategories = async () => {
 
 export const updateCategory = async ({ category_id, updatedDescription }) => {
   try {
-    const apiUrl = 'http://localhost:8080/gg/categoria/' + category_id;
-	  console.log('PUT request to:', apiUrl);
+    const apiUrl = url+'/gg/categoria/' + category_id;
     const response = await fetch(apiUrl, {
       method: 'PUT',
       body: JSON.stringify({  
@@ -52,7 +53,7 @@ export const updateCategory = async ({ category_id, updatedDescription }) => {
 
 export const insertCategory = async ({ updatedDescription }) => {
   try {
-    const response = await fetch('http://localhost:8080/gg/categoria', {
+    const response = await fetch(url+'/gg/categoria', {
       method: 'POST',
       body: JSON.stringify({ 
         descripcion: updatedDescription, 
@@ -81,8 +82,7 @@ export const insertCategory = async ({ updatedDescription }) => {
 
 export const deleteCategory = async ( id ) => {
   try {
-	console.log('/categories/'+id);
-    const response = await fetch('http://localhost:8080/gg/categoria/'+ id, {
+    const response = await fetch(url+'/gg/categoria/'+ id, {
       method: 'DELETE',
       body: JSON.stringify({ id: id }),
     });
@@ -105,7 +105,7 @@ export const deleteCategory = async ( id ) => {
 
 export const fetchProdutos = async () => {
   try {
-    const response = await fetch('http://localhost:8080/gg/producto',{
+    const response = await fetch(url+'/gg/producto',{
       method: 'GET' // Adjust the method accordingly
     });
     if (!response.ok) {
@@ -114,7 +114,7 @@ export const fetchProdutos = async () => {
 
     const products = await response.json();
 
-    const responseCat = await fetch('http://localhost:8080/gg/categoria', {
+    const responseCat = await fetch(url+'/gg/categoria', {
       method: 'GET' // Adjust the method accordingly
     });
     if (!responseCat.ok) {
@@ -143,8 +143,7 @@ export const fetchProdutos = async () => {
 
 export const updateProduct = async ({ product_id, updatedDescription, updatedQuantity, updatedUnitPrice, updatedCategory }) => {
   try {
-    const apiUrl = 'http://localhost:8080/gg/producto/' + product_id;
-	  console.log('PUT request to:', apiUrl);
+    const apiUrl = url+'/gg/producto/' + product_id;
     const response = await fetch(apiUrl, {
       method: 'PUT',
       body: JSON.stringify(
@@ -167,7 +166,7 @@ export const updateProduct = async ({ product_id, updatedDescription, updatedQua
     
     if (response.ok) {
       const product = await response.json(); // Parse the response body as JSON
-      const responseCat = await fetch('http://localhost:8080/gg/categoria', {
+      const responseCat = await fetch(url+'/gg/categoria', {
         method: 'GET', // Adjust the method accordingly
       });
     
@@ -201,7 +200,7 @@ export const updateProduct = async ({ product_id, updatedDescription, updatedQua
 
 export const insertProduct = async ({ product_id, updatedDescription, updatedQuantity, updatedUnitPrice, updatedCategory }) => {
   try {
-    const response = await fetch('http://localhost:8080/gg/producto', {
+    const response = await fetch(url+'/gg/producto', {
       method: 'POST',
       body: JSON.stringify(
         { 
@@ -218,7 +217,7 @@ export const insertProduct = async ({ product_id, updatedDescription, updatedQua
      if (response.ok) {
       const product = await response.json();
       
-      const responseCat = await fetch('http://localhost:8080/gg/categoria', {
+      const responseCat = await fetch(url+'/gg/categoria', {
         method: 'GET', // Adjust the method accordingly
       });
     
@@ -238,7 +237,6 @@ export const insertProduct = async ({ product_id, updatedDescription, updatedQua
           }
         : product;
 
-      console.log(newObject);
       return newObject; // Return the response data
     } else {
       // Handle the error or response status here
@@ -253,8 +251,7 @@ export const insertProduct = async ({ product_id, updatedDescription, updatedQua
 
 export const deleteProducts = async ( id ) => {
   try {
-	console.log('/products/'+id);
-    const response = await fetch('http://localhost:8080/gg/producto/'+ id, {
+    const response = await fetch(url+'/gg/producto/'+ id, {
       method: 'DELETE',
       body: JSON.stringify({ id: id }),
     });
@@ -279,7 +276,7 @@ export const deleteProducts = async ( id ) => {
 
 export const insertPedido = async ({ pedido_id, updatedMesa, updatedCliente, updatedTotal, updatedEstadoPedido }) => {
   try {
-    const response = await fetch('http://localhost:8080/gg/pedido', {
+    const response = await fetch(url+'/gg/pedido', {
       method: 'POST',
       body: JSON.stringify(
         { 
@@ -311,7 +308,7 @@ export const insertPedidoDetalle = async ({ pedido_id, model }) => {
   const results = [];
   try {
     for (const item of model) {
-      const response = await fetch('http://localhost:8080/gg/pedido_detalle', {
+      const response = await fetch(url+'/gg/pedido_detalle', {
         method: 'POST',
         body: JSON.stringify(
           { 
@@ -344,7 +341,7 @@ export const insertPedidoDetalle = async ({ pedido_id, model }) => {
 
 export const fetchPedidos = async () => {
   try {
-    const response = await fetch('http://localhost:8080/gg/pedido', {
+    const response = await fetch(url+'/gg/pedido', {
       method: 'GET' // Adjust the method accordingly
     });
     if (!response.ok) {
@@ -359,7 +356,7 @@ export const fetchPedidos = async () => {
 
 export const fetchPedidoDetalles = async () => {
   try {
-    const response = await fetch('http://127.0.0.1:8000/pedidodetalles/');
+    const response = await fetch(url+'/gg/pedidodetalles/');
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
@@ -374,7 +371,7 @@ export const fetchPedidoDetalles = async () => {
 
 export const getPedidos = async (pedido_id) => {
   try {
-    const response = await fetch('http://localhost:8080/gg/pedido/'+pedido_id);
+    const response = await fetch(url+'/gg/pedido/'+pedido_id);
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
@@ -387,7 +384,7 @@ export const getPedidos = async (pedido_id) => {
 
 export const getPedidoDetalles = async (pedido_id) => {
   try {
-    const response = await fetch('http://localhost:8080/gg/pedido_completo/'+pedido_id);
+    const response = await fetch(url+'/gg/pedido_completo/'+pedido_id);
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
@@ -395,7 +392,7 @@ export const getPedidoDetalles = async (pedido_id) => {
      
     const pedidosDetalle = await response.json();
 
-    const responseProd = await fetch('http://localhost:8080/gg/producto', {
+    const responseProd = await fetch(url+'/gg/producto', {
       method: 'GET' // Adjust the method accordingly
     });
     if (!responseProd.ok) {
@@ -428,7 +425,7 @@ export const getPedidoDetalles = async (pedido_id) => {
 
 export const updatePedido = async ({ pedido_id, updatedMesa, updatedCliente, updatedTotal, updatedEstadoPedido}) => {
   try {
-    const response = await fetch('http://localhost:8080/gg/pedido/'+pedido_id, {
+    const response = await fetch(url+'/gg/pedido/'+pedido_id, {
       method: 'PUT',
       body: JSON.stringify(
         {
@@ -460,15 +457,11 @@ export const updatePedido = async ({ pedido_id, updatedMesa, updatedCliente, upd
 };
 
 export const updatePedidoDetalle = async ({ pedido_id, model }) => {
-  console.log("updatePedidoDetalle")
   const results = [];
-  console.log(model)
   try {
     for (const item of model) {
-      console.log("updatePedidoDetalle - model")
-      console.log(item)
       if(item.id){
-        const response = await fetch('http://localhost:8080/gg/pedido_detalle/'+item.id, {
+        const response = await fetch(url+'/gg/pedido_detalle/'+item.id, {
         method: 'PUT',
         body: JSON.stringify(
           { 
@@ -496,9 +489,7 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
         }      
       } 
       else{
-        console.log("updatePedidoDetalle - idProducto")
-        console.log(item)
-        const response = await fetch('http://localhost:8080/gg/pedido_detalle', {
+        const response = await fetch(url+'/gg/pedido_detalle', {
         method: 'POST',
         body: JSON.stringify(
             { 
@@ -522,8 +513,6 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
           throw new Error('Failed to insert new PedidoDetalle: '+ errorData.message);
         }
       }
-      console.log("results")
-      console.log(results)
     }
   } catch (error) {
     // Handle network errors
@@ -534,10 +523,7 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
 
 export const updateDetallePed = async ({ pedido_id, pedidodet_id, updatedQuantity, updatedUnitPrice, updatedTotal }) => {
   try {
-	  console.log("updateDetallePed/detallepedido/"+pedido_id);
-    console.log(pedido_id + " - " + pedidodet_id + " - " +  updatedQuantity + " - "+  updatedUnitPrice + " - "+ updatedTotal )
-    
-    const response = await fetch('http://localhost:8080/gg/pedido_detalle/'+pedidodet_id, {
+    const response = await fetch(url+'/gg/pedido_detalle/'+pedidodet_id, {
       method: 'PUT',
       body: JSON.stringify(
         { 
@@ -565,7 +551,7 @@ export const updateDetallePed = async ({ pedido_id, pedidodet_id, updatedQuantit
       //const data = await response.json(); // Parse the response body as JSON
       //return data; // Return the response data
       const pedidosDetalle = await response.json();
-      const responseProd = await fetch('http://localhost:8080/gg/producto', {
+      const responseProd = await fetch(url+'/gg/producto', {
         method: 'GET' // Adjust the method accordingly
       });
       if (!responseProd.ok) {
@@ -598,7 +584,7 @@ export const updateDetallePed = async ({ pedido_id, pedidodet_id, updatedQuantit
 
 export const deletePedidoDetalle = async ( pedidodetalle_id ) => {
   try {
-    const response = await fetch('http://localhost:8080/gg/pedido_detalle/'+ pedidodetalle_id, {
+    const response = await fetch(url+'/gg/pedido_detalle/'+ pedidodetalle_id, {
       method: 'DELETE',
       body: JSON.stringify({ id: pedidodetalle_id }),
     });
@@ -619,8 +605,7 @@ export const deletePedidoDetalle = async ( pedidodetalle_id ) => {
 
 export const updatePagarPedido = async ({ pedido_id, updatedMesa, updatedCliente, updatedTotal}) => {
   try {
-	console.log('/pedidos/' + pedido_id);
-    const response = await fetch('http://localhost:8080/gg/pedido/' + pedido_id, {
+    const response = await fetch(url+'/gg/pedido/' + pedido_id, {
       method: 'PUT',
       body: JSON.stringify(        {
         mesa: parseInt(updatedMesa), 
@@ -651,8 +636,7 @@ export const updatePagarPedido = async ({ pedido_id, updatedMesa, updatedCliente
 
 export const updateCancelarPedido = async ({ pedido_id, updatedMesa, updatedCliente, updatedTotal}) => {
   try {
-	console.log('/pedidos/' + pedido_id);
-    const response = await fetch('http://localhost:8080/gg/pedido/' + pedido_id, {
+    const response = await fetch(url+'/gg/pedido/' + pedido_id, {
       method: 'PUT',
       body: JSON.stringify(        {
         mesa: parseInt(updatedMesa), 
