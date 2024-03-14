@@ -25,7 +25,6 @@ export const fetchCategories = async () => {
 export const updateCategory = async ({ category_id, updatedDescription }) => {
   try {
     const apiUrl = url+'/gg/categoria/' + category_id;
-	  console.log('PUT request to:', apiUrl);
     const response = await fetch(apiUrl, {
       method: 'PUT',
       body: JSON.stringify({  
@@ -83,7 +82,6 @@ export const insertCategory = async ({ updatedDescription }) => {
 
 export const deleteCategory = async ( id ) => {
   try {
-	console.log('/categories/'+id);
     const response = await fetch(url+'/gg/categoria/'+ id, {
       method: 'DELETE',
       body: JSON.stringify({ id: id }),
@@ -146,7 +144,6 @@ export const fetchProdutos = async () => {
 export const updateProduct = async ({ product_id, updatedDescription, updatedQuantity, updatedUnitPrice, updatedCategory }) => {
   try {
     const apiUrl = url+'/gg/producto/' + product_id;
-	  console.log('PUT request to:', apiUrl);
     const response = await fetch(apiUrl, {
       method: 'PUT',
       body: JSON.stringify(
@@ -240,7 +237,6 @@ export const insertProduct = async ({ product_id, updatedDescription, updatedQua
           }
         : product;
 
-      console.log(newObject);
       return newObject; // Return the response data
     } else {
       // Handle the error or response status here
@@ -255,7 +251,6 @@ export const insertProduct = async ({ product_id, updatedDescription, updatedQua
 
 export const deleteProducts = async ( id ) => {
   try {
-	console.log('/products/'+id);
     const response = await fetch(url+'/gg/producto/'+ id, {
       method: 'DELETE',
       body: JSON.stringify({ id: id }),
@@ -462,13 +457,9 @@ export const updatePedido = async ({ pedido_id, updatedMesa, updatedCliente, upd
 };
 
 export const updatePedidoDetalle = async ({ pedido_id, model }) => {
-  console.log("updatePedidoDetalle")
   const results = [];
-  console.log(model)
   try {
     for (const item of model) {
-      console.log("updatePedidoDetalle - model")
-      console.log(item)
       if(item.id){
         const response = await fetch(url+'/gg/pedido_detalle/'+item.id, {
         method: 'PUT',
@@ -498,8 +489,6 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
         }      
       } 
       else{
-        console.log("updatePedidoDetalle - idProducto")
-        console.log(item)
         const response = await fetch(url+'/gg/pedido_detalle', {
         method: 'POST',
         body: JSON.stringify(
@@ -524,8 +513,6 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
           throw new Error('Failed to insert new PedidoDetalle: '+ errorData.message);
         }
       }
-      console.log("results")
-      console.log(results)
     }
   } catch (error) {
     // Handle network errors
@@ -536,9 +523,6 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
 
 export const updateDetallePed = async ({ pedido_id, pedidodet_id, updatedQuantity, updatedUnitPrice, updatedTotal }) => {
   try {
-	  console.log("updateDetallePed/detallepedido/"+pedido_id);
-    console.log(pedido_id + " - " + pedidodet_id + " - " +  updatedQuantity + " - "+  updatedUnitPrice + " - "+ updatedTotal )
-    
     const response = await fetch(url+'/gg/pedido_detalle/'+pedidodet_id, {
       method: 'PUT',
       body: JSON.stringify(
@@ -621,7 +605,6 @@ export const deletePedidoDetalle = async ( pedidodetalle_id ) => {
 
 export const updatePagarPedido = async ({ pedido_id, updatedMesa, updatedCliente, updatedTotal}) => {
   try {
-	console.log('/pedidos/' + pedido_id);
     const response = await fetch(url+'/gg/pedido/' + pedido_id, {
       method: 'PUT',
       body: JSON.stringify(        {
@@ -653,7 +636,6 @@ export const updatePagarPedido = async ({ pedido_id, updatedMesa, updatedCliente
 
 export const updateCancelarPedido = async ({ pedido_id, updatedMesa, updatedCliente, updatedTotal}) => {
   try {
-	console.log('/pedidos/' + pedido_id);
     const response = await fetch(url+'/gg/pedido/' + pedido_id, {
       method: 'PUT',
       body: JSON.stringify(        {

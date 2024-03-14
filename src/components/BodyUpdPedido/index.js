@@ -28,7 +28,6 @@ const [loading, setLoading] = useState(true);
 
 const handleUpdate = async (mesaInput,clienteInput, totalInput, model) => {
   try {
-    console.log('Pedido detalle:', model); 
     const confirmMessage = "Are you sure you want to update this pedido?";
     // Call the insertCategory function to send the POST request
     if (window.confirm(confirmMessage)) {
@@ -43,9 +42,7 @@ const handleUpdate = async (mesaInput,clienteInput, totalInput, model) => {
       // Check if the response is successful and handle it as needed
       if (response) {
         // Optionally, you can add code to update your UI or take other actions upon success
-        console.log('Pedido updated successfully:', response);        
         const responsePD = await updatePedidoDetalle({ pedido_id: idPedido, model: model})
-        console.log('Pedido DET updated successfully:', responsePD);
       } else {
         // Handle the case when the request was not successful (e.g., display an error message)
         console.error('Category not saved: An error occurred');
@@ -59,7 +56,6 @@ const handleUpdate = async (mesaInput,clienteInput, totalInput, model) => {
 };
 
 const handlePagarPedido = async (mesaInput,clienteInput, totalInput) => {
-  console.log('Pedido pagar:', idPedido); 
   try {
     const confirmMessage = "Are you sure you want to paid this pedido?";
     // Call the insertCategory function to send the POST request
@@ -74,7 +70,7 @@ const handlePagarPedido = async (mesaInput,clienteInput, totalInput) => {
       // Check if the response is successful and handle it as needed
       if (response) {
         // Optionally, you can add code to update your UI or take other actions upon success
-        console.log('Pedido updated successfully:', response);        
+        alert("Pedido Pagado.");          
       } else {
         // Handle the case when the request was not successful (e.g., display an error message)
         console.error('Pedido not saved: An error occurred');
@@ -88,7 +84,6 @@ const handlePagarPedido = async (mesaInput,clienteInput, totalInput) => {
 };
 
 const handleCancelarPedido = async (mesaInput,clienteInput, totalInput) => {
-  console.log('Cancelar pagar:', idPedido); 
   try {
     const confirmMessage = "Are you sure you want to cancel this pedido?";
     // Call the insertCategory function to send the POST request
@@ -102,8 +97,8 @@ const handleCancelarPedido = async (mesaInput,clienteInput, totalInput) => {
 
       // Check if the response is successful and handle it as needed
       if (response) {
-        // Optionally, you can add code to update your UI or take other actions upon success
-        console.log('Pedido updated successfully:', response);        
+        // Optionally, you can add code to update your UI or take other actions upon success   
+        alert("Pedido Cancelado.");    
       } else {
         // Handle the case when the request was not successful (e.g., display an error message)
         console.error('Pedido not saved: An error occurred');

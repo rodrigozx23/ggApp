@@ -16,7 +16,6 @@ const CategoryAutoCompleteInput = ({
   }, [selectedCategoryDescription]);
 
   const getSuggestions = (inputValue) => {
-    console.log(inputValue);
     const inputValueLowerCase = inputValue.trim().toLowerCase();
     return categoryDescriptions.filter((description) =>
       description.toLowerCase().includes(inputValueLowerCase)
@@ -37,8 +36,18 @@ const CategoryAutoCompleteInput = ({
     setSelectedCategoryId(categoryId);
     setSuggestionsList([]); // Close suggestions after selection
 
+    var id_categoria = obtenerId(suggestion);
     // Call the parent component's callback to select the category
-    onCategorySelect(suggestion, categoryId)
+    onCategorySelect(suggestion, id_categoria)
+  };
+
+  const obtenerId = (nombre) => {
+    const index = categoryDescriptions.indexOf(nombre);
+    if (index !== -1) {
+      return categoryIds[index];
+    } else {
+      return "0";
+    }
   };
 
   return (
