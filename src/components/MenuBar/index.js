@@ -1,10 +1,14 @@
 function MenuBar({
   showAlmacenOptions,
   setShowAlmacenOptions,
+  showMenuOptions,
+  setShowMenuOptions,
   openCategoriaDetails,
   openProductosDetails,
-  openPedidosDetails
-
+  openPedidosDetails,
+  openPedidosMenuDetails,
+  user,
+  handleLogout
 }){
 	return(
 		<ul className="menu-bar">
@@ -37,12 +41,47 @@ function MenuBar({
             )}
           </li>
           <li className="menu-item">
-            <button 
+            <button
               className="menu-button"
-              onClick={openPedidosDetails}
+              onClick={() => setShowMenuOptions(!showMenuOptions)}
             >
-            PEDIDOS
+              PEDIDOS
             </button>
+            {showMenuOptions && (
+              <ul className="submenu">
+                <li>
+                  <button
+                    className="submenu-button"
+                    onClick={openPedidosMenuDetails}
+                  >
+                    GG Menú
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="submenu-button"
+					          onClick={openPedidosDetails}
+                  >
+                    GG Café
+                  </button>
+                </li>
+              </ul>
+            )}
+          </li>
+          <li className="menu-item">
+          <button
+              className="menu-button"
+              onClick={() => setShowMenuOptions(!showMenuOptions)}
+            >
+              {user}!
+            </button>
+            {showMenuOptions && (
+              <ul className="submenu">
+                <li>                
+                  <button className="menu-button" onClick={handleLogout}>Cerrar sesión</button>	 
+                </li>
+              </ul>
+            )}
           </li>
         </ul>
 	)	
