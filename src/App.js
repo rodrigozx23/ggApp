@@ -207,7 +207,7 @@ function App() {
   const handleLogin = () => {
     // Aquí deberías implementar la lógica para validar las credenciales
     // por ejemplo, con una llamada a un backend o utilizando Firebase
-    if (username === 'root' && password === 'root') {
+    if ((username === 'Admin' && password === '7#Dx@9!pYz2*')||(username === 'Bruno' && password === '7#Dx@9!pYz2*')) {
       setIsLoggedIn(true);
     } else {
       alert('Nombre de usuario o contraseña incorrectos');

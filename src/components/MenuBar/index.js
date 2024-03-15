@@ -54,7 +54,7 @@ function MenuBar({
                     className="submenu-button"
                     onClick={openPedidosMenuDetails}
                   >
-                    GG Menu
+                    GG Menú
                   </button>
                 </li>
                 <li>
