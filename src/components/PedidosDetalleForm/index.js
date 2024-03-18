@@ -66,6 +66,7 @@ const PedidosDetalleForm = ({ onAddToTable }) => {
         Description: descripcionFormInput,
         Quantity: quantityFormInput,
         UnitPrice: unitPriceFormInput,
+        status_row: true,
       };
       onAddToTable(newProduct);
       setIdProducto('');

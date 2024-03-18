@@ -17,6 +17,10 @@ import { ModalPedidoDetalle } from './containers/Pedido/Modals/ModalPedidoDetall
 import { BodyPedidosMenu } from './components/BodyPedidosMenu';
 import './App.css';
 
+const PASSWORD = process.env.REACT_APP_LOGIN_PASSWORD;
+const user1 = process.env.REACT_APP_ADMIN_USER;
+const user2 = process.env.REACT_APP_USER01;
+
 function App() {
   const [showAlmacenOptions, setShowAlmacenOptions] = useState(false);
   const [showMenuOptions, setShowMenuOptions] = useState(false);
@@ -54,7 +58,6 @@ function App() {
   const [idPedido, setIdPedido] = useState('');
   const [updatedDescription, setUpdatedDescription] = useState('');	
   const [updatedData, setUpdatedData] = useState({});
-	
 	
   const openCategoriaDetails = () => {
     setShowCategoriaDetails(true);
@@ -178,15 +181,14 @@ function App() {
         // If the description already exists, update the quantity and total
         updatedDetallePedidoData[existingItemIndex].Quantity += newQuantity;
         updatedDetallePedidoData[existingItemIndex].Total += newQuantity * newUnitPrice;
+        updatedDetallePedidoData[existingItemIndex].status_row = true;
       } else {
         // If the description doesn't exist, add it to the data with the total
         newItem.Quantity = newQuantity;
         newItem.Total = newQuantity * newUnitPrice;
         updatedDetallePedidoData.push(newItem);   
-      }    
-
+      }
     });
-
     updatedDetallePedidoData.forEach((item) => {
       const quantity = parseInt(item.Quantity, 10);
       const unitPrice = parseFloat(item.UnitPrice);
@@ -207,7 +209,7 @@ function App() {
   const handleLogin = () => {
     // Aquí deberías implementar la lógica para validar las credenciales
     // por ejemplo, con una llamada a un backend o utilizando Firebase
-    if ((username === 'Admin' && password === '7#Dx@9!pYz2*')||(username === 'Bruno' && password === '7#Dx@9!pYz2*')) {
+    if ((username === user1 && password === PASSWORD)||(username === user2 && password === PASSWORD)) {
       setIsLoggedIn(true);
     } else {
       alert('Nombre de usuario o contraseña incorrectos');

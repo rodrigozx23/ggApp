@@ -441,7 +441,6 @@ export const updatePedido = async ({ pedido_id, updatedMesa, updatedCliente, upd
         }
         )
     });
-
     if (response.ok) {
       const data = await response.json(); // Parse the response body as JSON
       return data; // Return the response data
@@ -461,32 +460,33 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
   try {
     for (const item of model) {
       if(item.id){
-        const response = await fetch(url+'/gg/pedido_detalle/'+item.id, {
-        method: 'PUT',
-        body: JSON.stringify(
-          { 
-            id_pedido: pedido_id,
-            //id_producto: 0,
-            cantidad: parseInt(item.Quantity), 
-            precio_unitario: parseFloat(item.UnitPrice), 
-            precio_total: parseFloat(item.Total),           
-            fecha_creacion: date,
-            user_id_creacion: user,
-            fecha_modificacion: date,
-            user_id_modificacion: user,   
-            estado: item.Quantity == 0 ? false : true     
-          }
-        )
-        });
-
-        if (response.ok) {
-          const data = await response.json(); // Parse the response body as JSON
-          results.push(data);
-        } else {
-          // Handle the error or response status here
-          const errorData = await response.json(); // Parse the error response as JSON if available
-          throw new Error('Failed to update PedidoDetalle: '+ errorData.message);
-        }      
+        if(item.status_row){
+          const response = await fetch(url+'/gg/pedido_detalle/'+item.id, {
+            method: 'PUT',
+            body: JSON.stringify(
+              { 
+                id_pedido: pedido_id,
+                //id_producto: 0,
+                cantidad: parseInt(item.Quantity), 
+                precio_unitario: parseFloat(item.UnitPrice), 
+                precio_total: parseFloat(item.Total),           
+                fecha_creacion: date,
+                user_id_creacion: user,
+                fecha_modificacion: date,
+                user_id_modificacion: user,   
+                estado: item.Quantity == 0 ? false : true     
+              }
+            )
+            });
+            if (response.ok) {
+              const data = await response.json(); // Parse the response body as JSON
+              results.push(data);
+            } else {
+              // Handle the error or response status here
+              const errorData = await response.json(); // Parse the error response as JSON if available
+              throw new Error('Failed to update PedidoDetalle: '+ errorData.message);
+            }
+        }     
       } 
       else{
         const response = await fetch(url+'/gg/pedido_detalle', {
