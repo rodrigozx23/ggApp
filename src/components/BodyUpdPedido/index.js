@@ -45,7 +45,7 @@ const handleUpdate = async (mesaInput,clienteInput, totalInput, model) => {
         const responsePD = await updatePedidoDetalle({ pedido_id: idPedido, model: model})
       } else {
         // Handle the case when the request was not successful (e.g., display an error message)
-        console.error('Category not saved: An error occurred');
+        console.error('Pedido not saved: An error occurred');
       }
     }
     openPedidoDetails();
@@ -123,6 +123,7 @@ useEffect(() => {
         Quantity: item.cantidad,
         UnitPrice: item.precio_unitario,
         Total: item.precio_total,
+        status_row: false,
       }));
       
 		  setDetallePedidoData(transformedData);

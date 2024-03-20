@@ -29,7 +29,7 @@ if (type == ""){
     
       if (descriptionToTotalMap[Description]) {
         descriptionToTotalMap[Description].Quantity += quantity;
-        descriptionToTotalMap[Description].Total += quantity * unitPrice;
+        descriptionToTotalMap[Description].Total += quantity * unitPrice;   
       } else {
         descriptionToTotalMap[Description] = {
           Quantity: quantity,
@@ -51,7 +51,7 @@ if (type == ""){
       //descriptionToTotalMap[Description].id = id;
       //descriptionToTotalMap[Description].Description = Description;
       descriptionToTotalMap[Description].Quantity += quantity;
-      descriptionToTotalMap[Description].Total += quantity * unitPrice;
+      descriptionToTotalMap[Description].Total += quantity * unitPrice;   
     } else {
       const newId = id ? id : 0;
       descriptionToTotalMap[Description] = {
@@ -113,6 +113,7 @@ const handleSave = async (rowIndex, pedidodet_id, p_quantity, p_unitPrice) => {
       Total: updatedingData.total,
       estadoPedidoDetalle: updatedingData.estadoPedidoDetalle,
       status: updatedingData.status,
+      status_row: false,
     };
     // Update the state with the modified data
     setData(updatedPedidoDetalleData);
