@@ -143,6 +143,11 @@
   cursor: pointer;
 }
 
+.highlighted {
+  background-color: lightblue; /* Adjust as needed */
+  /* Additional styling for highlighted suggestion */
+}
+
 .suggestion:hover {
   background-color: #f5f5f5;
 }
