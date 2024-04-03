@@ -22,6 +22,9 @@ const ProductAutoCompleteInput = ({
   useEffect(() => {
     if (suggestionsList.length > 0) {
       setHighlightedIndex(0); // Set the first suggestion as default highlighted
+      inputRef.current.setAttribute('autocomplete', 'on');
+    }else{
+      inputRef.current.setAttribute('autocomplete', 'off');
     }
   }, [suggestionsList]);
 
@@ -82,8 +85,12 @@ const ProductAutoCompleteInput = ({
   }, [highlightedIndex]);
 
   const scrollHighlightedIntoView = () => {
-    if (suggestionsContainerRef.current && highlightedIndex !== -1) {
-      suggestionsContainerRef.current.children[highlightedIndex].scrollIntoView({
+    if (suggestionsContainerRef.current 
+        && suggestionsContainerRef.current.children 
+        && highlightedIndex !== -1
+        && highlightedIndex < suggestionsContainerRef.current.children.length
+      ) {
+        suggestionsContainerRef.current.children[highlightedIndex].scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
       });
@@ -112,6 +119,7 @@ const ProductAutoCompleteInput = ({
             onChange={onInputChange}
             onKeyDown={handleKeyDown}
             ref={inputRef}
+            autoComplete="off"
         />
         <div className="suggestions-container" ref={suggestionsContainerRef}>
             {            
