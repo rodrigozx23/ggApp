@@ -7,6 +7,7 @@ function MenuBar({
   openProductosDetails,
   openPedidosDetails,
   openPedidosMenuDetails,
+  openReportePedidos,
   user,
   handleLogout
 }){
@@ -63,6 +64,14 @@ function MenuBar({
 					          onClick={openPedidosDetails}
                   >
                     GG Café
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="submenu-button"
+					          onClick={openReportePedidos}
+                  >
+                    Reporte Pedido
                   </button>
                 </li>
               </ul>

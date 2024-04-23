@@ -15,6 +15,8 @@ import { BodyUpdPedido } from './components/BodyUpdPedido';
 import { ModalPedidoDetalle } from './containers/Pedido/Modals/ModalPedidoDetalle';
 
 import { BodyPedidosMenu } from './components/BodyPedidosMenu';
+import { BodyReportesPedidos } from './components/BodyReportesPedidos';
+
 import './App.css';
 
 const PASSWORD = process.env.REACT_APP_LOGIN_PASSWORD;
@@ -35,6 +37,8 @@ function App() {
   const [showCrearPedidoDetails, setShowCrearPedidoDetails] = useState(false);
   const [showUpdPedidoDetails, setShowUpdPedidoDetails] = useState(false);
   const [showModalPedidoDetalle, setShowModalPedidoDetalle] = useState(false);
+
+  const [showReportePedido, setShowReportePedido] = useState(false);
 
   const [categoryData, setCategoryData] = useState([]);
   const [productData, setProductData] = useState([]);  
@@ -59,6 +63,17 @@ function App() {
   const [updatedDescription, setUpdatedDescription] = useState('');	
   const [updatedData, setUpdatedData] = useState({});
 	
+  const openReportePedidos = () => {
+    setShowReportePedido(true);
+    setShowCategoriaDetails(false);
+    setShowPedidosMenuDetails(false);
+    setShowModalCategoria(false);
+    setShowProductosDetails(false);
+    setShowPedidosDetails(false);
+    setShowCrearPedidoDetails(false);
+    setShowUpdPedidoDetails(false);
+  };
+
   const openCategoriaDetails = () => {
     setShowCategoriaDetails(true);
     setShowPedidosMenuDetails(false);
@@ -68,6 +83,7 @@ function App() {
     setShowCrearPedidoDetails(false);
     setShowUpdPedidoDetails(false);
     setMemoDetails(categoriaDetails);
+    setShowReportePedido(false);
   };
 
   const openProductosDetails = () => {
@@ -79,6 +95,7 @@ function App() {
     setShowCrearPedidoDetails(false);
     setShowUpdPedidoDetails(false);
     setMemoDetails(productosDetails);
+    setShowReportePedido(false);
   };
 
   const openPedidosDetails = () => {
@@ -90,6 +107,7 @@ function App() {
     setShowUpdPedidoDetails(false);
     setShowPedidosMenuDetails(false);
     setMemoDetails(pedidosDetails);
+    setShowReportePedido(false);
   };
 
   const openPedidosMenuDetails = () => {
@@ -101,6 +119,7 @@ function App() {
     setShowProductosDetails(false);
     setShowUpdPedidoDetails(false);
     setMemoDetails(pedidosDetails);
+    setShowReportePedido(false);
   };
 
   const openModal = (modalType) => {
@@ -134,6 +153,7 @@ function App() {
     setMesaInput('');
     setTotalInput('');
     setDetallePedidoData([]);
+    setShowReportePedido(false);
   }
 
   const openUpdPedidoDetails = (iorder, iCliente, imesa, itotal) => {
@@ -148,7 +168,7 @@ function App() {
     setMesaInput(imesa);
     setTotalInput(itotal);
     setClienteInput(iCliente);
-    //setDetallePedidoData([]);
+    setShowReportePedido(false);
   }
 
   const openPedidoDetails =() => {
@@ -159,6 +179,7 @@ function App() {
     setShowPedidosMenuDetails(false);
     setShowCategoriaDetails(false);
     setShowProductosDetails(false);
+    setShowReportePedido(false);
   }
 
   const saveDetallePedidoData = (data) => {
@@ -253,6 +274,7 @@ function App() {
           openProductosDetails = { openProductosDetails }
           openPedidosDetails = { openPedidosDetails }
           openPedidosMenuDetails = { openPedidosMenuDetails }
+          openReportePedidos = { openReportePedidos }
           user = {username}
           handleLogout = {handleLogout}
         />        
@@ -396,7 +418,13 @@ function App() {
             )}          
             </div>
           </TableDataProvider>
+
+          <div>
+            {showReportePedido && (<BodyReportesPedidos/>)}
+          </div>
+
         </div>
+
         </body>        
       </div>
     )}
