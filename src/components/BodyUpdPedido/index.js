@@ -20,95 +20,99 @@ function BodyUpdPedido({
   detallePedidoData,
   setDetallePedidoData
 }){  
-    //const [showPedidoDetalleDetails, setShowPedidoDetalleDetails] = useState(false);
-    //const [showModalPedidoDetalle, setShowModalPedidoDetalle] = useState(false);
-    //const [pedidoDetalleDetails, setPedidoDetalleDetails] = useState([]);
-//const [clienteInput, setClienteInput] = useState([]);  
-const [loading, setLoading] = useState(true); 
+ 
+const [loading, setLoading] = useState(true);
+const [buttonDisabled, setButtonDisabled] = useState(false);
 
 const handleUpdate = async (mesaInput,clienteInput, totalInput, model) => {
   try {
-    const confirmMessage = "Are you sure you want to update this pedido?";
+    setButtonDisabled(true);
+    //const confirmMessage = "Are you sure you want to update this pedido?";
     // Call the insertCategory function to send the POST request
-    if (window.confirm(confirmMessage)) {
-      const response = await updatePedido({ 
-        pedido_id: idPedido,
-        updatedCliente: clienteInput,
-        updatedMesa: mesaInput,
-        updatedTotal: totalInput,
-        updatedEstadoPedido: "1" //ESTADO CREADO
-      });
+    //if (window.confirm(confirmMessage)) {
+    const response = await updatePedido({ 
+      pedido_id: idPedido,
+      updatedCliente: clienteInput,
+      updatedMesa: mesaInput,
+      updatedTotal: totalInput,
+      updatedEstadoPedido: "1" //ESTADO CREADO
+    });
 
-      // Check if the response is successful and handle it as needed
-      if (response) {
-        // Optionally, you can add code to update your UI or take other actions upon success
-        const responsePD = await updatePedidoDetalle({ pedido_id: idPedido, model: model})
-      } else {
-        // Handle the case when the request was not successful (e.g., display an error message)
-        console.error('Pedido not saved: An error occurred');
-      }
+    // Check if the response is successful and handle it as needed
+    if (response) {
+      // Optionally, you can add code to update your UI or take other actions upon success
+      const responsePD = await updatePedidoDetalle({ pedido_id: idPedido, model: model})
+    } else {
+      // Handle the case when the request was not successful (e.g., display an error message)
+      console.error('Pedido not saved: An error occurred');
     }
+    //}
     openPedidoDetails();
   } catch (error) {
-    // Handle network errors
     console.error('Network error:', error);
-  }  
+  } finally {
+    setButtonDisabled(false);
+  }
 };
 
 const handlePagarPedido = async (mesaInput,clienteInput, totalInput) => {
   try {
-    const confirmMessage = "Are you sure you want to paid this pedido?";
+    setButtonDisabled(true);
+    //const confirmMessage = "Are you sure you want to paid this pedido?";
     // Call the insertCategory function to send the POST request
-    if (window.confirm(confirmMessage)) {
-      const response = await updatePagarPedido({
-          pedido_id : idPedido, 
-          updatedMesa: mesaInput, 
-          updatedCliente: clienteInput, 
-          updatedTotal: totalInput
-        });
+    //if (window.confirm(confirmMessage)) {
+    const response = await updatePagarPedido({
+        pedido_id : idPedido, 
+        updatedMesa: mesaInput, 
+        updatedCliente: clienteInput, 
+        updatedTotal: totalInput
+      });
 
-      // Check if the response is successful and handle it as needed
-      if (response) {
-        // Optionally, you can add code to update your UI or take other actions upon success
-        alert("Pedido Pagado.");          
-      } else {
-        // Handle the case when the request was not successful (e.g., display an error message)
-        console.error('Pedido not saved: An error occurred');
-      }
+    // Check if the response is successful and handle it as needed
+    if (response) {
+      // Optionally, you can add code to update your UI or take other actions upon success
+      alert("Pedido Pagado.");          
+    } else {
+      // Handle the case when the request was not successful (e.g., display an error message)
+      console.error('Pedido not saved: An error occurred');
     }
+    //}
     openPedidoDetails();
   } catch (error) {
-    // Handle network errors
     console.error('Network error:', error);
-  }  
+  } finally {
+    setButtonDisabled(false);
+  }
 };
 
 const handleCancelarPedido = async (mesaInput,clienteInput, totalInput) => {
   try {
-    const confirmMessage = "Are you sure you want to cancel this pedido?";
+    setButtonDisabled(true);
+    //const confirmMessage = "Are you sure you want to cancel this pedido?";
     // Call the insertCategory function to send the POST request
-    if (window.confirm(confirmMessage)) {
-      const response = await updateCancelarPedido({
-          pedido_id : idPedido, 
-          updatedMesa: mesaInput, 
-          updatedCliente: clienteInput, 
-          updatedTotal: totalInput
-        });
+    //if (window.confirm(confirmMessage)) {
+    const response = await updateCancelarPedido({
+        pedido_id : idPedido, 
+        updatedMesa: mesaInput, 
+        updatedCliente: clienteInput, 
+        updatedTotal: totalInput
+      });
 
-      // Check if the response is successful and handle it as needed
-      if (response) {
-        // Optionally, you can add code to update your UI or take other actions upon success   
-        alert("Pedido Cancelado.");    
-      } else {
-        // Handle the case when the request was not successful (e.g., display an error message)
-        console.error('Pedido not saved: An error occurred');
-      }
+    // Check if the response is successful and handle it as needed
+    if (response) {
+      // Optionally, you can add code to update your UI or take other actions upon success   
+      alert("Pedido Cancelado.");    
+    } else {
+      // Handle the case when the request was not successful (e.g., display an error message)
+      console.error('Pedido not saved: An error occurred');
     }
+    //}
     openPedidoDetails();
   } catch (error) {
-    // Handle network errors
     console.error('Network error:', error);
-  }  
+  } finally {
+    setButtonDisabled(false);
+  }
 };
 
 useEffect(() => {
@@ -150,7 +154,8 @@ useEffect(() => {
             className="btn btn-primary mt-3" 
             onClick={() => {
                 handlePagarPedido(mesaInput, clienteInput, totalInput)
-            }}>
+            }}
+            disabled={buttonDisabled}>
             Pagar Pedido
           </button>
         </div>
@@ -159,7 +164,8 @@ useEffect(() => {
             className="btn btn-secondary mt-3" 
             onClick={() => {
                 handleCancelarPedido(mesaInput, clienteInput, totalInput)
-            }}>
+            }}
+            disabled={buttonDisabled}>
             Cancelar Pedido
           </button>
         </div> 
@@ -245,7 +251,7 @@ useEffect(() => {
               <button
                 className="btn btn-primary mt-3" // Add margin top class
                 onClick={() => handleUpdate(mesaInput, clienteInput, totalInput, detallePedidoData)}
-              >
+                disabled={buttonDisabled}>
                 Update
               </button>
             </div>
