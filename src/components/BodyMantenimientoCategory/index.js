@@ -167,6 +167,17 @@ function BodyMantenimientoCategory({
                           >
                             Delete
                         </button>
+                      &nbsp;
+                      {editRow === rowIndex ? (
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => setEditRow(false)}
+                        >
+                          Cancel
+                        </button>
+                      ):(
+                        <span></span>
+                      )}
 					            </td>
                     </tr>
                   );

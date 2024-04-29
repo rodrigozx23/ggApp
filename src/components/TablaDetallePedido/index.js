@@ -270,7 +270,7 @@ return (
                         >
                           Edit
                         </button>
-                        )}
+                      )}
                         &nbsp;
                         <button
                           className="btn btn-warning"
@@ -278,6 +278,17 @@ return (
                         >
                           Delete
                         </button>
+                        &nbsp;
+                      {editRow === index ? (
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => setEditRow(false)}
+                        >
+                          Cancel
+                        </button>
+                      ):(
+                          <span></span>
+                      )}
                     </td>
                 </tr>
               );
