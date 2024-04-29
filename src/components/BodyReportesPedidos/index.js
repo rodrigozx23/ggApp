@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { fetchPedidos } from '../../services/apiService';
+import { DateRangePicker }  from '../DateRangePicker';
 
 function BodyReportesPedidos()
 {
     const [pedidoReporteData, setPedidoReporteData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedDate, setSelectedDate] = useState(null);
+    //const [selectedDate, setSelectedDate] = useState(null);
+    //const [startDate, setStartDate] = useState(null);
+    //const [endDate, setEndDate] = useState(null); 
 
     useEffect(() => {
       const fetchData = async () => {
@@ -38,7 +39,7 @@ function BodyReportesPedidos()
                 cliente: item.cliente,
                 mesa: item.mesa,
                 estadoPedido: item.estado_pedido, // 0, 1, 2
-                descripcionEstadoPedido: (item.estado_pedido == 0) ? "Abierto" : ((item.estado_pedido == 2) ? "Vendido" : "Cancelado"),
+                descripcionEstadoPedido: (item.estado_pedido == 1) ? "Abierto" : ((item.estado_pedido == 2) ? "Vendido" : "Cancelado"),
                 fecha: formattedDate,
                 hora: formattedTime,
                 total: item.total,
@@ -75,15 +76,13 @@ function BodyReportesPedidos()
       setFilteredData(filtered);
     };
 
-    const handleSearchDate = (date) => {
-      setSelectedDate(date);
+    const handleSearchDate = (start, end) => {
+      // Your logic for filtering data based on the selected date range
       const filtered = pedidoReporteData.filter(item => {
         const itemDate = new Date(item.fecha_creacion);
         return (
-          date === null || 
-          (itemDate.getFullYear() === date.getFullYear() && 
-          itemDate.getMonth() === date.getMonth() && 
-          itemDate.getDate() === date.getDate())
+          (!start || itemDate >= start) &&
+          (!end || itemDate <= end)
         );
       });
       setFilteredData(filtered);
@@ -101,66 +100,76 @@ return (
         <p>Loading...</p>
       ): pedidoReporteData.length > 0 ? (
         <div>
-          <div className="mb-3">
-              <input type="text" placeholder="Search by Cliente" onChange={e => handleSearch(e, 'cliente')} />
-              <input type="text" placeholder="Search by Total" onChange={e => handleSearch(e, 'total')} />
-               <DatePicker 
-                selected={selectedDate}
-                onChange={date => handleSearchDate(date)}
-                dateFormat="dd/MM/yyyy"
-                placeholderText="Search by Fecha"
-                isClearable
-              />
-              <input type="text" placeholder="Search by Estado" onChange={e => handleSearch(e, 'descripcionEstadoPedido')} />
+          <div className="row mb-3">
+            <div className="col-md-3">
+              <div className="input-group">
+                <input type="text" className="form-control" placeholder="Search by Cliente" onChange={e => handleSearch(e, 'cliente')} />
+              </div>
             </div>
-            <div className="table-responsive">
-              <table id="tbReportePedido" className="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                    <th>Id</th>
-                    <th>Cliente</th>
-                    <th>Total</th>
-                    <th>Fecha</th>
-                    <th>Hora</th> 
-                    <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {filteredData.map((row, rowIndex) => {
-                  return (
-                    <tr key={rowIndex}>
-                    <td>{row.id}</td>
-                    <td>
-                      {                    
-                        row.cliente					
-                      }
-                    </td>	
-                    <td>
-                      {                    
-                        row.total					
-                      }
-                    </td>	
-                    <td>
-                      {                    
-                        row.fecha					
-                      }
-                    </td>
-                    <td>
-                      {                    
-                        row.hora					
-                      }
-                    </td>
-                    <td>
-                      {                    
-                        row.descripcionEstadoPedido					
-                      }
-                    </td>
-                    </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div> 
+            <div className="col-md-3">
+              <div className="input-group">
+                <input type="text" className="form-control" placeholder="Search by Total" onChange={e => handleSearch(e, 'total')} />
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div className="input-group">
+                <DateRangePicker handleSearchDate={handleSearchDate} />
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div className="input-group">
+                <input type="text" className="form-control" placeholder="Search by Estado" onChange={e => handleSearch(e, 'descripcionEstadoPedido')} />
+              </div>
+            </div>
+          </div>
+          <div className="table-responsive">
+            <table id="tbReportePedido" className="table table-striped table-bordered">
+              <thead>
+                  <tr>
+                  <th>Id</th>
+                  <th>Cliente</th>
+                  <th>Total</th>
+                  <th>Fecha</th>
+                  <th>Hora</th> 
+                  <th>Estado</th>
+                  </tr>
+              </thead>
+              <tbody>
+              {filteredData.map((row, rowIndex) => {
+                return (
+                  <tr key={rowIndex}>
+                  <td>{row.id}</td>
+                  <td>
+                    {                    
+                      row.cliente					
+                    }
+                  </td>	
+                  <td>
+                    {                    
+                      row.total					
+                    }
+                  </td>	
+                  <td>
+                    {                    
+                      row.fecha					
+                    }
+                  </td>
+                  <td>
+                    {                    
+                      row.hora					
+                    }
+                  </td>
+                  <td>
+                    {                    
+                      row.descripcionEstadoPedido					
+                    }
+                  </td>
+                  </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div> 
         </div>
       ) : (
         <p>No Reporte data available.</p>

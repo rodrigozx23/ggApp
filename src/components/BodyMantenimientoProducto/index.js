@@ -240,7 +240,7 @@ function BodyMantenimientoProducto({
 						}
 					</td>
                     <td>
-                      {editRow === rowIndex ? (
+                    {editRow === rowIndex ? (
 						<button
 							className="btn btn-success"
 							onClick={() => handleSave(rowIndex, row.id)}
@@ -258,14 +258,25 @@ function BodyMantenimientoProducto({
 						>
                         Edit
                         </button>
-                      )}
-					  &nbsp;
+                    )}
+						&nbsp;
 						<button
 							className="btn btn-warning"
 							onClick={() => handleDelete(rowIndex, row.id)}
 							>
 							Delete
 						</button>
+						&nbsp;
+					{editRow === rowIndex ? (
+						<button
+							className="btn btn-danger"
+							onClick={() => setEditRow(false)}
+						>
+							Cancel
+						</button>
+					):(
+						<span></span>
+					)}
                     </td>
                   </tr>
                 );

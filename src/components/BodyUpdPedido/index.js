@@ -259,7 +259,8 @@ useEffect(() => {
               <button
                 className="btn btn-danger mt-3" // Add margin top class
                 onClick={() => {
-                  openPedidoDetails()
+                  openPedidoDetails();
+                  setEditRow(false);
                 }}
               >
                 Return
