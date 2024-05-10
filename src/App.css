@@ -10,6 +10,8 @@
   background-color: #333;
   padding: 10px;
   list-style: none;
+  position: relative; /* Ensure stacking context */
+  z-index: 1000; /* Adjust the z-index value as needed */
 }
 
 .menu-item {
@@ -34,6 +36,7 @@
   padding: 0;
   list-style: none;
   display: none;
+  z-index: 2000;
 }
 
 .submenu-button {
