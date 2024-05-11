@@ -104,7 +104,7 @@ const PedidosDetalleForm = ({ onAddToTable }) => {
               <div className="col-md-10"> 
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Quantity"
                   value={quantityFormInput}
                   onChange={
@@ -121,7 +121,7 @@ const PedidosDetalleForm = ({ onAddToTable }) => {
               <div className="col-md-10"> 
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Unit Price"
                   value={unitPriceFormInput}
                   readOnly

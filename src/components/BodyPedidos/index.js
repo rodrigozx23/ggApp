@@ -70,7 +70,7 @@ function BodyPedidos({
   const activeOrders = pedidoData.filter(order => order.estadoPedido == "1");
 
   return (
-    <div className="row mt-3">
+    <div className="row mt-3 content">
       <div className="col-md-10">      
       </div>
       <div className="col-md-2">

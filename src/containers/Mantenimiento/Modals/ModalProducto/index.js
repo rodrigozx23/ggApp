@@ -93,14 +93,14 @@ function ModalProducto({
   return(
 		<div className="modal">
             <div className="modal-content">
-              <div class="modal-header">
+              <div className="modal-header">
                   <div className="row">
                     <div className="col-md-12"> 
                       <h2>Crear Producto</h2>
                     </div>          
                   </div>
                 </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <div className="container">
                   <div className="row mt-3">
                     <div className="form-group">
@@ -175,7 +175,7 @@ function ModalProducto({
                   </div>
                 </div>                              
               </div>
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button
                   className="btn btn-success mt-3" // Add margin top class               
                   onClick={() => handleInsert(descripcionInput, quantityInput, unitPriceInput, categoryId)}

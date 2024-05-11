@@ -50,7 +50,7 @@ const handleInsert = async (mesaInput, clienteInput, totalInput, model) => {
 
 
   return(
-	  <div className="container">
+	  <div className="content">
         <div className="col-md-10">
           <h2>Crear Pedido</h2>
         </div>

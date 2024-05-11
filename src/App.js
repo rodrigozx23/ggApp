@@ -18,6 +18,7 @@ import { BodyPedidosMenu } from './components/BodyPedidosMenu';
 import { BodyReportesPedidos } from './components/BodyReportesPedidos';
 
 import './App.css';
+import { Alert } from 'bootstrap';
 
 const PASSWORD = process.env.REACT_APP_LOGIN_PASSWORD;
 const user1 = process.env.REACT_APP_ADMIN_USER;
@@ -241,28 +242,40 @@ function App() {
     setIsLoggedIn(false);
   };
 
+  const handleKeyDown = (event) => {
+    event.stopPropagation()
+    if (event.key === 'Enter') {
+      handleLogin();
+    }
+  };
+
   return (
     <div>
     {!isLoggedIn ? (
-      <div className='center-container'>
-        <div className="login-form">
-          <input
-            type="text"
-            placeholder="Nombre de usuario"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button onClick={handleLogin}>Iniciar sesión</button>
+      <div className='container'>
+       <div className="container-title">
+        <img className='logo' src={require("./images/gglogo.jpg")} />
+        <div className="text-and-form">
+          <h1 className='title'>Admnistrativo</h1>
         </div>
       </div>
+      <div className='center-container' onKeyDown={handleKeyDown} >
+        <div className="login-form">
+          
+        <div className="placeholder-group">
+          <input type="text" id="username" className="placeholder-control" required value={username} onChange={(e) => setUsername(e.target.value)}></input>
+          <label htmlFor="username" className="floating-label">Username</label>
+        </div>
+        <div className="placeholder-group">
+          <input type="password" id="password" className="placeholder-control" required value={password} onChange={(e) => setPassword(e.target.value)}></input>
+          <label htmlFor="password" className="floating-label">Password</label>
+        </div>
+            <button className='responsive-button' tabIndex={0}onClick={handleLogin}>Iniciar sesión</button>
+        </div>
+      </div>
+      </div>
     ) : (
-      <div className="container"> {/* Add Bootstrap container */}
+      <div className="containerGlob"> {/* Add Bootstrap container */}
         <header className="App-header">
       
         <MenuBar

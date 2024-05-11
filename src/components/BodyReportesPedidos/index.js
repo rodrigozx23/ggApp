@@ -89,7 +89,7 @@ function BodyReportesPedidos()
     };
 
 return (
-  <div className="row mt-3">
+  <div className="row mt-3 content">
 	  <div className="col-md-10">
 	  	<h2>Reporte</h2>
 	  </div>

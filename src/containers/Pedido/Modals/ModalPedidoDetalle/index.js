@@ -15,14 +15,14 @@ function ModalPedidoDetalle({
   return (
     <div className="modal">
         <div className="modal-content">
-          <div class="modal-header">
+          <div className="modal-header">
             <div className="row">
               <div className="col-md-12"> 
                 <h2>Pedido Detalle</h2>
               </div>          
             </div>
           </div>
-        <div class="modal-body">
+        <div className="modal-body">
           <div className="row">
             <div className="form-group">
                 <PedidosDetalleForm           
@@ -36,7 +36,7 @@ function ModalPedidoDetalle({
             </div>         
           </div>
         </div>
-        <div class="modal-footer">
+        <div className="modal-footer">
             <button
                 className="btn btn-primary mt-3" // Add margin top class               
                 onClick={() => {

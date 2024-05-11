@@ -144,7 +144,7 @@ useEffect(() => {
 	}, [setDetallePedidoData]);
 
   return(
-	  <div className="container">  
+	  <div className="container content">  
       <div className='row'>
         <div className="col-md-8">      
             <h2>Actualizar Pedido</h2>

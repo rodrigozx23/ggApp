@@ -13,84 +13,41 @@ function MenuBar({
 }){
 	return(
 		<ul className="menu-bar">
-          <li className="menu-item">
-            <button
-              className="menu-button"
-              onClick={() => setShowAlmacenOptions(!showAlmacenOptions)}
-            >
-              ALMACEN
-            </button>
-            {showAlmacenOptions && (
-              <ul className="submenu">
-                <li>
+
+                <li className="menu-item">
                   <button
-                    className="submenu-button"
+                    className="menu-button"
+					          onClick={openPedidosDetails}
+                  >
+                    PEDIDOS
+                  </button>
+                </li>
+                <li className="menu-item">
+                  <button
+                    className="menu-button"
+					          onClick={openReportePedidos}
+                  >
+                    Reporte Pedido
+                  </button>
+          </li>
+                <li className="menu-item">
+                  <button
+                    className="menu-button"
                     onClick={openCategoriaDetails}
                   >
                     CATEGORIA
                   </button>
                 </li>
-                <li>
+                <li className="menu-item">
                   <button
-                    className="submenu-button"
+                    className="menu-button"
 					          onClick={openProductosDetails}
                   >
                     PRODUCTOS
                   </button>
-                </li>
-              </ul>
-            )}
           </li>
-          <li className="menu-item">
-            <button
-              className="menu-button"
-              onClick={() => setShowMenuOptions(!showMenuOptions)}
-            >
-              PEDIDOS
-            </button>
-            {showMenuOptions && (
-              <ul className="submenu">
-                <li>
-                  <button
-                    className="submenu-button"
-                    onClick={openPedidosMenuDetails}
-                  >
-                    GG Menú
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className="submenu-button"
-					          onClick={openPedidosDetails}
-                  >
-                    GG Café
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className="submenu-button"
-					          onClick={openReportePedidos}
-                  >
-                    Reporte Pedido
-                  </button>
-                </li>
-              </ul>
-            )}
-          </li>
-          <li className="menu-item">
-          <button
-              className="menu-button"
-              onClick={() => setShowMenuOptions(!showMenuOptions)}
-            >
-              {user}!
-            </button>
-            {showMenuOptions && (
-              <ul className="submenu">
-                <li>                
-                  <button className="menu-button" onClick={handleLogout}>Cerrar sesión</button>	 
-                </li>
-              </ul>
-            )}
+          <li className="menu-item down">           
+          <button className="menu-button" onClick={handleLogout}>Cerrar sesión</button>	 
           </li>
         </ul>
 	)	
