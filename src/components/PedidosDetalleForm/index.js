@@ -20,7 +20,8 @@ const PedidosDetalleForm = ({ onAddToTable }) => {
       try {
         const data = await fetchProdutos(); // Assuming fetchProdutos correctly fetches the data
         if (Array.isArray(data)) {
-          const modifiedData = data.map(item => ({ id: item.id, description: item.descripcion, unitprice: item.precio }));
+          const modifiedData = data.filter(item => item.id_categoria !== 14)
+          .map(item => ({ id: item.id, description: item.descripcion, unitprice: item.precio }));
           // Extract products descriptions from the response and set them in state
           const descriptions = modifiedData.map(item => item.description);
           const ids = modifiedData.map((item) => item.id);

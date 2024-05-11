@@ -14,8 +14,10 @@ import { BodyCrearPedido } from './components/BodyCrearPedido';
 import { BodyUpdPedido } from './components/BodyUpdPedido';
 import { ModalPedidoDetalle } from './containers/Pedido/Modals/ModalPedidoDetalle';
 
-import { BodyPedidosMenu } from './components/BodyPedidosMenu';
+import { BodyCrearPedidoMenu } from './containers/Pedido/BodyCrearPedidoMenu';
 import { BodyReportesPedidos } from './components/BodyReportesPedidos';
+
+import { checkLogin } from './services/apiService';
 
 import './App.css';
 
@@ -227,10 +229,12 @@ function App() {
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLogin = () => {
-    // Aquí deberías implementar la lógica para validar las credenciales
-    // por ejemplo, con una llamada a un backend o utilizando Firebase
-    if ((username === user1 && password === PASSWORD)||(username === user2 && password === PASSWORD)) {
+  const handleLogin = async () => {
+    const response = await checkLogin({ 
+      username: username,
+      password: password
+    });
+    if (response) {
       setIsLoggedIn(true);
     } else {
       alert('Nombre de usuario o contraseña incorrectos');
@@ -361,7 +365,13 @@ function App() {
             )}
 
             {showPedidosMenuDetails && (
-              <BodyPedidosMenu/>
+              <BodyCrearPedidoMenu
+                mesaInput = {mesaInput}
+                setMesaInput = {setMesaInput}		
+                totalInput = {totalInput}
+                setTotalInput = {setTotalInput}			              
+                openPedidoDetails = {openPedidoDetails}
+              />
             )}
           <TableDataProvider value={detallePedidoData}>
             <div>

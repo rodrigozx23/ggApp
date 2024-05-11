@@ -150,26 +150,34 @@ const handleDelete = async (rowIndex, pedidodet_id) => {
 
       // Set totalInput state with the calculated totalSum
       setTotalInput(totalSum);
-
-      const updatedingData = await deletePedidoDetalle(pedidodet_id);
-      if (updatedingData) {
-        alert("Success");
+      if(pedidodet_id!==0){
+        const updatedingData = await deletePedidoDetalle(pedidodet_id);
+        if (updatedingData) {
+          alert("Success");
+          const updatedPedidoDetalleData = [...data];
+          updatedPedidoDetalleData.splice(rowIndex, 1);
+          setData(updatedPedidoDetalleData);
+  
+          const updatedUniqueProducts = uniqueProducts.slice();
+          updatedUniqueProducts.splice(rowIndex, 1);
+          setUniqueProducts(updatedUniqueProducts);
+  
+          // Exit edit mode
+          setUpdatedData({});
+          setEditRow(null);
+        } else {
+          console.error('pedido detalle not saved: An error occurred');
+        }
+      }else{
         const updatedPedidoDetalleData = [...data];
         updatedPedidoDetalleData.splice(rowIndex, 1);
         setData(updatedPedidoDetalleData);
-
+        
         const updatedUniqueProducts = uniqueProducts.slice();
         updatedUniqueProducts.splice(rowIndex, 1);
         setUniqueProducts(updatedUniqueProducts);
-
-        // Exit edit mode
-        setUpdatedData({});
-        setEditRow(null);
-      } else {
-        console.error('pedido detalle not saved: An error occurred');
       }
     }
-
   } catch (error) {
     // Handle errors from the updateProduct function
     console.error('Error updating PedidoDetalle:', error);

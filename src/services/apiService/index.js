@@ -287,7 +287,7 @@ export const insertPedido = async ({ pedido_id, updatedMesa, updatedCliente, upd
           user_id_creacion: user,
           fecha_modificacion: date,
           user_id_modificacion: user,
-          estado_pedido : 1
+          estado_pedido : parseInt(updatedEstadoPedido)
         }),
     });
     if (response.ok) {
@@ -599,7 +599,7 @@ export const deletePedidoDetalle = async ( pedidodetalle_id ) => {
     }
   } catch (error) {
     // Handle network errors
-    throw new Error('Network error: ${error.message}');
+    throw new Error('Network error: '+ error.message);
   }
 };
 
@@ -630,7 +630,7 @@ export const updatePagarPedido = async ({ pedido_id, updatedMesa, updatedCliente
     }
   } catch (error) {
     // Handle network errors
-    throw new Error('Network error: ${error.message}');
+    throw new Error('Network error: '+ error.message);
   }
 };
 
@@ -661,6 +661,29 @@ export const updateCancelarPedido = async ({ pedido_id, updatedMesa, updatedClie
     }
   } catch (error) {
     // Handle network errors
-    throw new Error('Network error: ${error.message}');
+    throw new Error('Network error: '+ error.message);
+  }
+};
+
+//LOGIN
+export const checkLogin = async ({ username, password}) => {
+  try {
+    const headers = new Headers();
+    headers.append('user', username);
+    headers.append('pass', password);
+    headers.append('Accept', '*/*');
+    headers.append('Content-Type', 'application/json');
+    const response = await fetch(url+'/gg/login', {
+      method: 'GET',
+      headers: headers,
+    });
+    if (response.ok) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    // Handle network errors
+    throw new Error('Network error: '+ error.message);
   }
 };
