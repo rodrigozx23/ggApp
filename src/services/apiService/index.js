@@ -287,7 +287,8 @@ export const insertPedido = async ({ pedido_id, updatedMesa, updatedCliente, upd
           user_id_creacion: user,
           fecha_modificacion: date,
           user_id_modificacion: user,
-          estado_pedido : parseInt(updatedEstadoPedido)
+          estado_pedido : parseInt(updatedEstadoPedido),
+          comentarios : ''
         }),
     });
     if (response.ok) {
@@ -437,7 +438,8 @@ export const updatePedido = async ({ pedido_id, updatedMesa, updatedCliente, upd
           fecha_modificacion: date,
           user_id_modificacion: user,
           estado_pedido : 1,
-          estado: true 
+          estado: true,
+          comentarios : '' 
         }
         )
     });
