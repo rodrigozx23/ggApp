@@ -38,7 +38,7 @@ const handleInsert = async (mesaInput, clienteInput, totalInput, model) => {
         const responsePD = await insertPedidoDetalle({ pedido_id: response.id, model: model})
       } else {
         // Handle the case when the request was not successful (e.g., display an error message)
-        console.error('Category not saved: An error occurred');
+        console.error('Pedido not saved: An error occurred');
       }
     }
     openPedidoDetails();
