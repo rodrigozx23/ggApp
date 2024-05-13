@@ -21,14 +21,14 @@ body{
 
 .App-header {
   position: absolute;
-  width: 10%;
+  width: 15%;
   height: 100%; 
   /*For selected use BGC 005C64*/
   background-color: #136971;
 }
 
 .content {
-  margin-left: 11%;
+  margin-left: 20%;
   padding-right: 20px;
   padding-top: 20px;
 }
@@ -42,7 +42,7 @@ body{
   height: 100%;
   list-style: none;
   padding-left: 0;
-  display: flex; /* Enable flexbox layout */
+  display: flex;
   flex-direction: column;
 }
 
@@ -50,17 +50,35 @@ body{
   height: 100px;
   align-content: center;
   text-align: center;
+  margin-top: 20px;
 }
 
 .menu-button {
   background-color: transparent;
   border: none;
-  padding: 10px;
+  padding: 15px;
   text-decoration: none;
   font-size: 16px;
   cursor: pointer;
   color: #fff;
   font-size: x-large;
+}
+
+.btn-pedidos{
+  width: 110%;
+  height: 100%;
+  margin-left: -5%; 
+  margin-top: 20px; 
+  background-color: #21B3BF;
+  font-size: xx-large;
+  font-weight: bold;
+  border: none;
+}
+
+.active {
+  background-color: #0E5258 !important;
+  border-radius: 16px;
+  cursor: pointer;
 }
 
 .down{

@@ -1,3 +1,6 @@
+import React, { useState } from 'react';
+import styles from '../../App.css';
+
 function MenuBar({
   showAlmacenOptions,
   setShowAlmacenOptions,
@@ -6,43 +9,71 @@ function MenuBar({
   openCategoriaDetails,
   openProductosDetails,
   openPedidosDetails,
+  openCrearPedidoDetails,
   openPedidosMenuDetails,
   openReportePedidos,
   user,
   handleLogout
 }){
+
+  const [activeIndex, setActiveIndex] = useState(null); // Initially no active button
+
+  const handleClick = (index) => {
+    setActiveIndex(index); // Update active index on click
+  };
+
 	return(
 		<ul className="menu-bar">
-
                 <li className="menu-item">
-                  <button
-                    className="menu-button"
-					          onClick={openPedidosDetails}
-                  >
+                  <button 
+                    className="btn-pedidos" 
+                    onClick={() => {
+                        openCrearPedidoDetails()
+                    }}>
+                  Agregar Pedido
+                  </button>
+                </li>
+                <li className="menu-item">
+                    <button
+                    key={0}
+                    className={`menu-button ${activeIndex === 0 ? 'active' : ''}`}
+					          onClick={() => {
+                        openPedidosDetails()
+                        handleClick(0)
+                    }}>
                     PEDIDOS
                   </button>
                 </li>
                 <li className="menu-item">
                   <button
-                    className="menu-button"
-					          onClick={openReportePedidos}
-                  >
+                    key={1}
+                    className={`menu-button ${activeIndex === 1 ? 'active' : ''}`}
+					          onClick={() => {
+                      openReportePedidos()
+                      handleClick(1)
+                  }}>
                     Reporte Pedido
                   </button>
           </li>
                 <li className="menu-item">
                   <button
-                    className="menu-button"
-                    onClick={openCategoriaDetails}
-                  >
+                    key={2}
+                    className={`menu-button ${activeIndex === 2 ? 'active' : ''}`}
+                    onClick={() => {
+                      openCategoriaDetails()
+                      handleClick(2)
+                  }}>
                     CATEGORIA
                   </button>
                 </li>
                 <li className="menu-item">
                   <button
-                    className="menu-button"
-					          onClick={openProductosDetails}
-                  >
+                    key={3}
+                    className={`menu-button ${activeIndex === 3 ? 'active' : ''}`}
+					          onClick={() => {
+                      openProductosDetails()
+                      handleClick(3)
+                  }}>
                     PRODUCTOS
                   </button>
           </li>
