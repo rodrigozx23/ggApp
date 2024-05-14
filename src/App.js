@@ -373,6 +373,7 @@ function App() {
                 setEditRow = {setEditRow}
                 openCrearPedidoDetails = {openCrearPedidoDetails}
                 openUpdPedidoDetails = {openUpdPedidoDetails}
+                openReportePedidos = {openReportePedidos}
                 pedidoData={ pedidoData }
                 setPedidoData={setPedidoData}
               />
@@ -444,7 +445,10 @@ function App() {
           </TableDataProvider>
 
           <div>
-            {showReportePedido && (<BodyReportesPedidos/>)}
+            {showReportePedido && (<BodyReportesPedidos
+              openPedidosDetails = { openPedidosDetails }             
+              openReportePedidos = { openReportePedidos }
+            />)}
           </div>
 
         </div>
