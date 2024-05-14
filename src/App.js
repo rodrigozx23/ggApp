@@ -260,7 +260,7 @@ function App() {
        <div className="container-title">
         <img className='logo' src={require("./images/gg-logo.png")} />
         <div className="text-and-form">
-          <h1 className='title'>Admnistrativo</h1>
+          <h1 className='title'>Administrativo</h1>
         </div>
       </div>
       <div className='center-container' onKeyDown={handleKeyDown} >

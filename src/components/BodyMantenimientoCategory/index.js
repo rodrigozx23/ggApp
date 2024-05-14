@@ -117,7 +117,6 @@ function BodyMantenimientoCategory({
             <table className="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th>Id</th>
                   <th>Description</th>
                   <th>Actions</th>
                 </tr>
@@ -126,7 +125,6 @@ function BodyMantenimientoCategory({
                 {categoryData.map((row, rowIndex) => {
                   return (
                     <tr key={rowIndex}>
-                      <td>{row.id}</td>
                       <td>
                         {editRow === rowIndex ? (
                           // Show input field when in edit mode

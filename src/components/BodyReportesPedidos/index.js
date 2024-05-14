@@ -150,7 +150,6 @@ return (
             <table id="tbReportePedido" className="table table-striped table-bordered">
               <thead>
                   <tr>
-                  <th>Id</th>
                   <th>Cliente</th>
                   <th>Total</th>
                   <th>Fecha</th>
@@ -162,7 +161,6 @@ return (
               {filteredData.map((row, rowIndex) => {
                 return (
                   <tr key={rowIndex}>
-                  <td>{row.id}</td>
                   <td>
                     {                    
                       row.cliente					

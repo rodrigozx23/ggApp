@@ -170,7 +170,6 @@ function BodyMantenimientoProducto({
           <table className="table table-striped table-bordered">
             <thead>
                <tr>
-                  <th>Id</th>
                   <th>Description</th>
 				  <th>Quantity</th>
 				  <th>UnitPrice</th>
@@ -182,7 +181,6 @@ function BodyMantenimientoProducto({
               {filteredData.map((row, rowIndex) => {
                 return (
 				  <tr key={rowIndex}>
-					<td>{row.id}</td>
 					<td>
 						{
 							editRow === rowIndex ? (

@@ -189,7 +189,6 @@ return (
         <table id="tbDetallePedido" className="table table-striped table-bordered">
         <thead>
             <tr>
-            <th>ID</th>
             <th>Descripción Producto</th>
             <th>Cantidad</th>
             <th>Precio Unitario</th>
@@ -201,7 +200,6 @@ return (
           {type == "" ? (
            uniqueProducts.map((row, index) => (
             <tr key={index}>
-              <td>{index + 1}</td>
               <td>{row}</td>
               <td>{descriptionToTotalMap[row].Quantity}</td>
               <td>{descriptionToTotalMap[row].UnitPrice.toFixed(2)}</td>
