@@ -87,8 +87,8 @@ body{
 
 .btn-pedrep{
   border-width: 0.5px;
-  width: 20%;
-  height: 65%;
+  width: 300px;
+  height: 80px;
   transform: translateX(120%);
   font-size: xx-large;
   font-weight: bold;
@@ -108,14 +108,14 @@ body{
   color: #1A929C;
 }
 
-.btn-rped{
+.btn-rrep{
   border-radius: 0px 8px 8px 0px;
   border-color: #1A929C;
   background-color: #1A929C;
   color: #fff;
 }
 
-.btn-rrep{
+.btn-rped{
   border-radius: 8px 0px 0px 8px;
   border-color: #1A929C;
   background-color: #fff;

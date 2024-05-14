@@ -92,28 +92,7 @@ function BodyReportesPedidos({
     };
 
 return (
-  <div className="row mt-3 content">
-    <div className="col-md-12">    
-	      <button 
-          className="btn-pedrep btn-rrep" 
-          onClick={() => {
-            openPedidosDetails()
-          }}>
-        Pedidos
-        </button>      
-	      <button 
-          className="btn-pedrep btn-rped" 
-          onClick={() => {
-            openReportePedidos()
-          }}>
-        Reporte
-        </button> 
-    </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+  <div>
 	  <div className="col-md-10">
 	  	<h2>Reporte</h2>
 	  </div>

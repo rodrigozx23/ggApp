@@ -138,7 +138,7 @@ function BodyMantenimientoProducto({
 
   return (
   
-    <div className="row mt-3 content">
+    <div>
 	  <div className="col-md-10">
 	  	<h1><b>Product</b></h1>
 	  </div>
