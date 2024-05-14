@@ -7,6 +7,7 @@ function BodyPedidos({
   setEditRow,
   openCrearPedidoDetails,
   openUpdPedidoDetails,
+  openReportePedidos,
   pedidoData, 
   setPedidoData
 }) {
@@ -85,7 +86,7 @@ function BodyPedidos({
 	      <button 
           className="btn-pedrep btn-rep" 
           onClick={() => {
-              openCrearPedidoDetails()
+              openReportePedidos()
           }}>
         Reporte
         </button> 

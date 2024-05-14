@@ -107,6 +107,20 @@ body{
   color: #1A929C;
 }
 
+.btn-rped{
+  border-radius: 0px 8px 8px 0px;
+  border-color: #1A929C;
+  background-color: #1A929C;
+  color: #fff;
+}
+
+.btn-rrep{
+  border-radius: 8px 0px 0px 8px;
+  border-color: #1A929C;
+  background-color: #fff;
+  color: #1A929C;
+}
+
 .menu-button.active {
   font-size: 0;
   background-color: #0E5258 !important;
