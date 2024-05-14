@@ -57,12 +57,14 @@ const CategoryAutoCompleteInput = ({
             name="category_id" // You can set a name for the hidden input
             value={selectedCategoryId}
         />
-        <input
-            className="custom-input"
-            placeholder="Category"
-            value={value}
-            onChange={onInputChange}
-        />
+
+        <br/>
+
+        <div className="placeholder-group">
+          <input type="text" required id="category" className="placeholder-control category" onChange={onInputChange}></input>
+          <label className="floating-label">Category</label>
+        </div>
+
         <div className="suggestions-container">
             {suggestionsList && suggestionsList.length > 0 ? (
                 suggestionsList.map((suggestion, index) => (

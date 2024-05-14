@@ -274,7 +274,7 @@ function App() {
           <input type="password" id="password" className="placeholder-control" required value={password} onChange={(e) => setPassword(e.target.value)}></input>
           <label htmlFor="password" className="floating-label">Password</label>
         </div>
-            <button className='responsive-button' tabIndex={0}onClick={handleLogin}>Iniciar sesión</button>
+            <button className='responsive-button' tabIndex={0} onClick={handleLogin}>Iniciar sesión</button>
         </div>
       </div>
       </div>
