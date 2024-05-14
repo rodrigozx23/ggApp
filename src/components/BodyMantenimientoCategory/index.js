@@ -102,7 +102,7 @@ function BodyMantenimientoCategory({
   return (
     <div className="row mt-3 content">
       <div className="col-md-10">
-        <h2>Category</h2>
+        <h1><b>Category</b></h1>
       </div>
       <div className="col-md-2">
         <button className="btn btn-primary mt-3" onClick={() => openModal(modalType)}>

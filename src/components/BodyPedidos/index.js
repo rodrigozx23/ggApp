@@ -79,7 +79,6 @@ function BodyPedidos({
 	      <button 
           className="btn-pedrep btn-ped" 
           onClick={() => {
-              openCrearPedidoDetails()
           }}>
         Pedidos
         </button>      

@@ -66,6 +66,7 @@ body{
 
 .menu-button img {
   margin-bottom: 16px;
+  margin-right: 8px;
 }
 
 .bold {
@@ -131,6 +132,7 @@ body{
 
 .menu-button.active img {
   margin-bottom: 0px !important;
+  margin-right: 0px !important;
 }
 
 .down{
@@ -342,6 +344,10 @@ body{
   transition: 0.2s ease all;
   color: gray; /* Style the placeholder text */
   opacity: 0.5; /* Set initial opacity for a subtle placeholder effect */
+}
+
+.floating-label.category {
+  margin-top: 2px;
 }
 
 .placeholder-control:not(:empty) ~ .floating-label,
