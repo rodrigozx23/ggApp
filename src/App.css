@@ -87,8 +87,8 @@ body{
 
 .btn-pedrep{
   border-width: 0.5px;
-  width: 20%;
-  height: 65%;
+  width: 300px;
+  height: 80px;
   transform: translateX(120%);
   font-size: xx-large;
   font-weight: bold;
