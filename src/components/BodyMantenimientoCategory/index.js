@@ -100,7 +100,7 @@ function BodyMantenimientoCategory({
   };
 
   return (
-    <div className="row mt-3 content">
+    <div>
       <div className="col-md-10">
         <h1><b>Category</b></h1>
       </div>

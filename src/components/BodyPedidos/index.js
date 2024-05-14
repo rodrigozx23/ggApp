@@ -74,27 +74,7 @@ function BodyPedidos({
   const activeOrders = pedidoData.filter(order => order.estadoPedido == "1");
 
   return (
-    <div className="row mt-3 content">
-      <div className="col-md-12">    
-	      <button 
-          className="btn-pedrep btn-ped" 
-          onClick={() => {
-          }}>
-        Pedidos
-        </button>      
-	      <button 
-          className="btn-pedrep btn-rep" 
-          onClick={() => {
-              openReportePedidos()
-          }}>
-        Reporte
-        </button> 
-      </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+    <div>
       <div className="col-md-12 mt-3">
         <h1><b>Pedidos Activos</b></h1>
       </div>
