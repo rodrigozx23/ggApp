@@ -64,6 +64,10 @@ body{
   font-size: xx-large;
 }
 
+.menu-button img {
+  margin-bottom: 16px;
+}
+
 .bold {
   font-weight: bold;
 }
@@ -80,11 +84,39 @@ body{
   border-radius: 16px;
 }
 
-.active {
+.btn-pedrep{
+  border-width: 0.5px;
+  width: 20%;
+  height: 65%;
+  transform: translateX(120%);
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.btn-ped{
+  border-radius: 8px 0px 0px 8px;
+  border-color: #1A929C;
+  background-color: #1A929C;
+  color: #fff;
+}
+
+.btn-rep{
+  border-radius: 0px 8px 8px 0px;
+  border-color: #1A929C;
+  background-color: #fff;
+  color: #1A929C;
+}
+
+.menu-button.active {
+  font-size: 0;
   background-color: #0E5258 !important;
   border-radius: 16px;
   cursor: pointer;
   font-weight: bold;
+}
+
+.menu-button.active img {
+  margin-bottom: 0px !important;
 }
 
 .down{
@@ -312,11 +344,13 @@ body{
   margin: 10px;
   padding: 0px;
   width: 280px;
+  border-width: 0.5px;
+  border-color: rgba(14, 125, 112, 0.6);
 }
 
 .ordersButBotton{
-  background-color: rgba(78, 168, 157, 0.6);
-  color: #126B73;
+  background-color: rgba(14, 125, 112, 0.6);
+  color: #0A3539;
   margin: 0px !important;
   padding: 0px 0px 40px 0px;
   font-weight: bold;
@@ -325,6 +359,13 @@ body{
 .right{
   float: right;
   margin: 8px;
+}
+
+.right.up{
+  transform: translateY(-150%);
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 0px;
 }
 
 .left{

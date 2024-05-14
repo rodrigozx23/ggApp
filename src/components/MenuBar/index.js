@@ -33,6 +33,10 @@ function MenuBar({
                   Agregar Pedido
                   </button>
                 </li>
+                <br />
+                <br />
+                <br />
+                <br />
                 <li className="menu-item">
                     <button
                     key={0}
@@ -41,9 +45,11 @@ function MenuBar({
                         openPedidosDetails()
                         handleClick(0)
                     }}>
+                    <img className='icMenu' src={require("../../images/ic-timer.png")} />
                     Pedidos
                   </button>
                 </li>
+                {/* 
                 <li className="menu-item">
                   <button
                     key={1}
@@ -54,7 +60,7 @@ function MenuBar({
                   }}>
                     Reporte
                   </button>
-          </li>
+                </li>*/}
                 <li className="menu-item">
                   <button
                     key={2}
@@ -63,6 +69,7 @@ function MenuBar({
                       openCategoriaDetails()
                       handleClick(2)
                   }}>
+                    <img className='icMenu' src={require("../../images/ic-list.png")} />
                     Categoria
                   </button>
                 </li>
@@ -74,6 +81,7 @@ function MenuBar({
                       openProductosDetails()
                       handleClick(3)
                   }}>
+                    <img className='icMenu' src={require("../../images/ic-fast-food.png")} />
                     Productos
                   </button>
           </li>

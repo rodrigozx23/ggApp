@@ -58,13 +58,14 @@ function BodyPedidos({
   const PedidoButton = ({ cliente, mesa, fecha, hora, total, onClick  }) => {
     return (
       <button className='ordersButton' onClick={onClick}>
-         <p><span className='left'>{fecha}</span> <span className='right'>Total: {total} soles</span></p>
+         <p><span className='left'>{fecha}</span> <span className='right'><b>Total: {total} soles</b></span></p>
          <br />
-         <p style={{ margin: '0px' }}>Cliente: {cliente}
+         <p style={{ margin: '0px 0px 0px 8px', textAlign: 'left' }}>Cliente: {cliente}
          <br />
          Mesa: {mesa}</p>
          <br />
-         <p className='ordersButBotton'><span className='left'><b>Salon/Delivery</b></span><span className='right'>{ hora }</span></p>
+         <span className='right up'>{ hora }</span>
+         <p className='ordersButBotton'><span className='left'><b>Salon/Delivery</b></span></p>
       </button>
     );
   };
@@ -75,24 +76,31 @@ function BodyPedidos({
     <div className="row mt-3 content">
       <div className="col-md-12">    
 	      <button 
-          className="btn btn-primary mt-3" 
+          className="btn-pedrep btn-ped" 
           onClick={() => {
               openCrearPedidoDetails()
           }}>
         Pedidos
         </button>      
 	      <button 
-          className="btn btn-primary mt-3" 
+          className="btn-pedrep btn-rep" 
           onClick={() => {
               openCrearPedidoDetails()
           }}>
         Reporte
         </button> 
       </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <div className="col-md-12 mt-3">
-      <h3>Pedidos Activos</h3>
+        <h1><b>Pedidos Activos</b></h1>
       </div>
       <div className="col-md-12 mt-3">
+      <br />
+      <br />
       {loading ? (
           <p>Loading...</p>
         ) : (          

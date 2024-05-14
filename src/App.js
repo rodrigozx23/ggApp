@@ -258,7 +258,7 @@ function App() {
     {!isLoggedIn ? (
       <div className='container'>
        <div className="container-title">
-        <img className='logo' src={require("./images/gglogo.png")} />
+        <img className='logo' src={require("./images/gg-logo.png")} />
         <div className="text-and-form">
           <h1 className='title'>Admnistrativo</h1>
         </div>
