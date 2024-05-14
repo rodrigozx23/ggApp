@@ -41,7 +41,7 @@ function MenuBar({
                         openPedidosDetails()
                         handleClick(0)
                     }}>
-                    PEDIDOS
+                    Pedidos
                   </button>
                 </li>
                 <li className="menu-item">
@@ -52,7 +52,7 @@ function MenuBar({
                       openReportePedidos()
                       handleClick(1)
                   }}>
-                    Reporte Pedido
+                    Reporte
                   </button>
           </li>
                 <li className="menu-item">
@@ -63,7 +63,7 @@ function MenuBar({
                       openCategoriaDetails()
                       handleClick(2)
                   }}>
-                    CATEGORIA
+                    Categoria
                   </button>
                 </li>
                 <li className="menu-item">
@@ -74,11 +74,11 @@ function MenuBar({
                       openProductosDetails()
                       handleClick(3)
                   }}>
-                    PRODUCTOS
+                    Productos
                   </button>
           </li>
           <li className="menu-item down">           
-          <button className="menu-button" onClick={handleLogout}>Cerrar sesión</button>	 
+          <button className="menu-button bold" onClick={handleLogout}>Cerrar sesión</button>	 
           </li>
         </ul>
 	)	
