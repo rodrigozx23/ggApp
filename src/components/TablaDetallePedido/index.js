@@ -93,26 +93,16 @@ const handleSave = async (rowIndex, pedidodet_id, p_quantity, p_unitPrice) => {
   var quantity = !updatedData['quantity'] ? p_quantity: updatedData['quantity'];
   var unitprice =  !updatedData['unitprice']  ? p_unitPrice : updatedData['unitprice'];
   var total = quantity * unitprice;
-  
-  try {
-    const updatedingData = await updateDetallePed({
-      pedido_id: id,
-      pedidodet_id,
-      updatedQuantity: parseInt(quantity),
-      updatedUnitPrice: parseFloat(unitprice),
-      updatedTotal: total.toFixed(2),
-    });
-
+  console.log(id)
+  if(!id){
+    console.log(" Update the PedidoDetalle ")
     // Update the PedidoDetalle data after a successful update
     const updatedPedidoDetalleData = [...data]; // Assuming data is your original array
     updatedPedidoDetalleData[rowIndex] = {
       ...updatedPedidoDetalleData[rowIndex],
-      idProducto: updatedingData.idProducto,
-      Quantity: updatedingData.quantity,
-      UnitPrice: updatedingData.unitprice,
-      Total: updatedingData.total,
-      estadoPedidoDetalle: updatedingData.estadoPedidoDetalle,
-      status: updatedingData.status,
+      Quantity: quantity,
+      UnitPrice: unitprice,
+      Total: total,
       status_row: false,
     };
     // Update the state with the modified data
@@ -126,9 +116,43 @@ const handleSave = async (rowIndex, pedidodet_id, p_quantity, p_unitPrice) => {
     // Exit edit mode
     setUpdatedData({});
     setEditRow(null);
-  } catch (error) {
-    // Handle errors from the updateProduct function
-    console.error('Error updating PedidoDetalle:', error);
+  }else{
+    try {
+      const updatedingData = await updateDetallePed({
+        pedido_id: id,
+        pedidodet_id,
+        updatedQuantity: parseInt(quantity),
+        updatedUnitPrice: parseFloat(unitprice),
+        updatedTotal: total.toFixed(2),
+      });
+  
+      // Update the PedidoDetalle data after a successful update
+      const updatedPedidoDetalleData = [...data]; // Assuming data is your original array
+      updatedPedidoDetalleData[rowIndex] = {
+        ...updatedPedidoDetalleData[rowIndex],
+        idProducto: updatedingData.idProducto,
+        Quantity: updatedingData.quantity,
+        UnitPrice: updatedingData.unitprice,
+        Total: updatedingData.total,
+        estadoPedidoDetalle: updatedingData.estadoPedidoDetalle,
+        status: updatedingData.status,
+        status_row: false,
+      };
+      // Update the state with the modified data
+      setData(updatedPedidoDetalleData);
+  
+      // Calculate the total sum after the modification
+      const totalSum = updatedPedidoDetalleData.reduce((sum, row) => sum + row.Total, 0);
+      // Set totalInput state with the calculated totalSum
+      setTotalInput(totalSum);
+  
+      // Exit edit mode
+      setUpdatedData({});
+      setEditRow(null);
+    } catch (error) {
+      // Handle errors from the updateProduct function
+      console.error('Error updating PedidoDetalle:', error);
+    }
   }
 };
 
@@ -201,10 +225,88 @@ return (
            uniqueProducts.map((row, index) => (
             <tr key={index}>
               <td>{row}</td>
-              <td>{descriptionToTotalMap[row].Quantity}</td>
-              <td>{descriptionToTotalMap[row].UnitPrice.toFixed(2)}</td>
+              <td>
+                {
+                  editRow === index ? (
+                  // Show input field when in edit mode
+                    <input
+                      type="text"
+                      value={updatedData['quantity'] || descriptionToTotalMap[row].Quantity }
+                      onChange={(e) => {
+                      const inputValue = e.target.value;
+                      if (/^\d*\.?\d*$/.test(inputValue)) {
+                        const updatedValue = { ...updatedData };
+                        updatedValue['quantity'] = inputValue;
+                        setUpdatedData(updatedValue);
+                      }
+                    }}
+                    />
+                  ) : (                       
+                    descriptionToTotalMap[row].Quantity
+                  )
+                }
+              </td>
+              <td>
+                {
+                  editRow === index ? (
+                  // Show input field when in edit mode
+                    <input
+                      type="text"
+                      value={updatedData['unitprice'] ||  descriptionToTotalMap[row].UnitPrice }
+                      onChange={(e) => {
+                      const inputValue = e.target.value;
+                      if (/^\d*\.?\d*$/.test(inputValue)) {
+                        const updatedValue = { ...updatedData };
+                        updatedValue['unitprice'] = inputValue;
+                        setUpdatedData(updatedValue);
+                      }
+                    }}
+                    />
+                  ) : (                       
+                    descriptionToTotalMap[row].UnitPrice
+                  )//<!--<td>{descriptionToTotalMap[row].UnitPrice.toFixed(2)}</td>-->
+                }  
+              </td>
               <td>{descriptionToTotalMap[row].Total.toFixed(2)}</td>
-              <td>{/* Add actions buttons here */}</td>
+              <td>
+                      {editRow === index ? (
+                        <button
+                          className="btn btn-success"
+                          onClick={() => handleSave(index, descriptionToTotalMap[row].id, descriptionToTotalMap[row].Quantity, descriptionToTotalMap[row].UnitPrice)}
+                        >
+                        Save
+                        </button>
+                        ) : (
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => {
+                          // Enter edit mode and set the initial values
+                          setEditRow(index);
+                          setUpdatedData({ ...uniqueProducts[index] });
+                          }}
+                        >
+                          Edit
+                        </button>
+                      )}
+                        &nbsp;
+                        <button
+                          className="btn btn-warning"
+                          onClick={() => handleDelete(index, descriptionToTotalMap[row].id)}
+                        >
+                          Delete
+                        </button>
+                        &nbsp;
+                      {editRow === index ? (
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => setEditRow(false)}
+                        >
+                          Cancel
+                        </button>
+                      ):(
+                          <span></span>
+                      )}
+              </td>
             </tr>
           ))
           ) : (
@@ -213,7 +315,6 @@ return (
                 <tr key={index}>
                   <td>{descriptionToTotalMap[row].id}</td>
                   <td>{descriptionToTotalMap[row].Description}</td>
-
                   <td>
                     {
                       editRow === index ? (
@@ -295,7 +396,7 @@ return (
                       ):(
                           <span></span>
                       )}
-                    </td>
+                  </td>
                 </tr>
               );
             })
