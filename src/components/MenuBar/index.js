@@ -17,7 +17,6 @@ function MenuBar({
 }){
 
   const [activeIndex, setActiveIndex] = useState(null); // Initially no active button
-
   const handleClick = (index) => {
     setActiveIndex(index); // Update active index on click
   };
@@ -28,8 +27,9 @@ function MenuBar({
             <button 
               className="btn-pedidos" 
               onClick={() => {
-                  openCrearPedidoDetails()
-              }}>
+                openCrearPedidoDetails();
+              }}
+            >
             Agregar Pedido
             </button>
           </li>
