@@ -41,7 +41,7 @@ if (type == ""){
   }
 
 } else {
-
+  console.log(data);
   data.forEach((product) => {
     const { id, Description, Quantity, UnitPrice, Total } = product;
     const quantity = parseFloat(Quantity);
@@ -213,6 +213,7 @@ return (
         <table id="tbDetallePedido" className="table table-striped table-bordered">
         <thead>
             <tr>
+            <th>#</th>
             <th>Descripción Producto</th>
             <th>Cantidad</th>
             <th>Precio Unitario</th>
@@ -224,6 +225,7 @@ return (
           {type == "" ? (
            uniqueProducts.map((row, index) => (
             <tr key={index}>
+              <td>{index+1}</td>
               <td>{row}</td>
               <td>
                 {

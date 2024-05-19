@@ -19,6 +19,7 @@ import { BodyReportesPedidos } from './components/BodyReportesPedidos';
 
 import { checkLogin } from './services/apiService';
 import { ModalPedido } from './containers/Pedido/ModalPedido';
+import { ModalPedidoUpd } from './containers/Pedido/ModalPedidoUpd';
 
 import './App.css';
 import { Alert } from 'bootstrap';
@@ -69,8 +70,8 @@ function App() {
   const [pedidos, setPedidos] = useState(true);
 
   const [showTogleMenu, setShowTogleMenu] = useState(false);
-  const [showCrear, setShow] = useState(false);
-	
+  const [showCrear, setShowCrear] = useState(false);
+	const [showActualizar, setShowActualizar] = useState(false);
   const openReportePedidos = () => {
     setShowReportePedido(true);
     setShowTogleMenu(true);
@@ -81,7 +82,8 @@ function App() {
     setShowPedidosDetails(false);
     setShowCrearPedidoDetails(false);
     setShowUpdPedidoDetails(false);
-    setShow(false);
+    setShowCrear(false);
+    setShowActualizar(false);
   };
 
   const openCategoriaDetails = () => {
@@ -95,7 +97,8 @@ function App() {
     setMemoDetails(categoriaDetails);
     setShowReportePedido(false);
     setShowTogleMenu(false);
-    setShow(false);
+    setShowCrear(false);
+    setShowActualizar(false);
   };
 
   const openProductosDetails = () => {
@@ -109,7 +112,8 @@ function App() {
     setMemoDetails(productosDetails);
     setShowReportePedido(false);
     setShowTogleMenu(false);
-    setShow(false);
+    setShowCrear(false);
+    setShowActualizar(false);
   };
 
   const openPedidosDetails = () => {
@@ -123,7 +127,8 @@ function App() {
     setMemoDetails(pedidosDetails);
     setShowReportePedido(false);
     setShowTogleMenu(true);
-    setShow(false);
+    setShowCrear(false);
+    setShowActualizar(false);
   };
 
   const openPedidosMenuDetails = () => {
@@ -137,7 +142,8 @@ function App() {
     setMemoDetails(pedidosDetails);
     setShowReportePedido(false);
     setShowTogleMenu(false);
-    setShow(false);
+    setShowCrear(false);
+    setShowActualizar(false);
   };
 
   const openModal = (modalType) => {
@@ -173,11 +179,13 @@ function App() {
     setDetallePedidoData([]);
     setShowReportePedido(false);
     setShowTogleMenu(false);
-    setShow(true);
+    setShowCrear(true);
+    setShowActualizar(false);
   }
 
   const openUpdPedidoDetails = (iorder, iCliente, imesa, itotal) => {
-    setShowUpdPedidoDetails(true);
+    setShowActualizar(true);
+    setShowUpdPedidoDetails(false);
     setShowCrearPedidoDetails(false);
     setShowModalPedidoDetalle(false);
     setShowPedidosDetails(false);
@@ -190,7 +198,7 @@ function App() {
     setClienteInput(iCliente);
     setShowReportePedido(false);
     setShowTogleMenu(false);
-    setShow(false);
+    setShowCrear(false);
   }
 
   const openPedidoDetails =() => {
@@ -203,7 +211,8 @@ function App() {
     setShowCategoriaDetails(false);
     setShowProductosDetails(false);
     setShowReportePedido(false);
-    setShow(false);
+    setShowCrear(false);
+    setShowActualizar(false);
   }
 
   const saveDetallePedidoData = (data) => {
@@ -338,7 +347,30 @@ function App() {
               />
             )}         
           </TableDataProvider>      
-           
+                                   
+          <TableDataProvider value={detallePedidoData}>
+            {showActualizar && (
+              <ModalPedidoUpd // Create a separate Modal for Pedidos
+                editRow={editRow}
+                setEditRow = {setEditRow}
+                mesaInput = {mesaInput}
+                setMesaInput = {setMesaInput}		
+                totalInput = {totalInput}
+                setTotalInput = {setTotalInput}			
+                clienteInput = {clienteInput}
+                setClienteInput = {setClienteInput}	
+                idPedido = {idPedido}
+                setIdPedido = {setIdPedido}	
+                openModal = { openModal }
+                setPedidoData={setPedidoData}
+                modalType="pedidosUpd"
+                openPedidoDetails = {openPedidoDetails}                 
+                detallePedidoData={detallePedidoData}
+                setDetallePedidoData = { setDetallePedidoData }
+              />
+            )}       
+          </TableDataProvider>
+
           <div className="row mt-3 content">
             {showTogleMenu && 
               (
