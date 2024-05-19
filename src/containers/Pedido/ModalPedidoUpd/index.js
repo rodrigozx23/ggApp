@@ -48,12 +48,12 @@ const handleAddToTable = () => {
     const existingProductIndex = detallePedidoData.findIndex(
       item => item.Description === descripcionInput && parseFloat(item.UnitPrice) === parseFloat(precioUnitarioInput)
     );
-
     if (existingProductIndex !== -1) {
       // If item with the same description exists, update its quantity instead of adding a new one
       const updatedPedidodetalleData = [...detallePedidoData];
       updatedPedidodetalleData[existingProductIndex].Quantity = parseInt(updatedPedidodetalleData[existingProductIndex].Quantity) + parseInt(cantidadInput);
       updatedPedidodetalleData[existingProductIndex].Total = parseFloat(updatedPedidodetalleData[existingProductIndex].UnitPrice) * parseFloat(updatedPedidodetalleData[existingProductIndex].Quantity);
+      updatedPedidodetalleData[existingProductIndex].status_row = true;
       setDetallePedidoData(updatedPedidodetalleData);
       // Calculate the total sum after the modification
       const totalSum = updatedPedidodetalleData.reduce((sum, row) => sum + row.Total, 0);
@@ -68,6 +68,7 @@ const handleAddToTable = () => {
         UnitPrice: parseFloat(precioUnitarioInput),
         Total: parseFloat(cantidadInput) * parseFloat(precioUnitarioInput),
         status_row: true,
+        new_row: true,
       };
       
       setDetallePedidoData(prevData => {
@@ -79,7 +80,6 @@ const handleAddToTable = () => {
         return newData;
       });
     }
-
     setCantidadInput("");
     setDescripcionInput("");
   }
@@ -127,7 +127,6 @@ useEffect(() => {
         }        
         setProductDescriptions(descriptions);
         setProductIds(ids);
-        setTotalInput(0);
       } else {
         console.error('Error: Data received from the API is not an array.');
       }

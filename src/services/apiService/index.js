@@ -17,7 +17,6 @@ export const fetchCategories = async () => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
     throw new Error('API request failed: ' + error.message);
   }
 };
@@ -314,7 +313,7 @@ export const insertPedidoDetalle = async ({ pedido_id, model }) => {
         body: JSON.stringify(
           { 
             id_pedido: parseInt(pedido_id), 
-            id_producto: parseInt(item.idProducto),
+            id_producto: parseInt(item.id),
             cantidad: parseInt(item.Quantity),
             precio_unitario: parseFloat(item.UnitPrice), 
             precio_total: parseFloat(item.Total),
@@ -392,7 +391,6 @@ export const getPedidoDetalles = async (pedido_id) => {
     //const data = await response.json();
      
     const pedidosDetalle = await response.json();
-
     const responseProd = await fetch(url+'/gg/producto', {
       method: 'GET' // Adjust the method accordingly
     });
@@ -400,11 +398,9 @@ export const getPedidoDetalles = async (pedido_id) => {
       throw new Error(`API request failed with status ${responseProd.status}`);
     }
     const productos = await responseProd.json();
-
     // Find the object in data with matching id_categoria
     const newArray = pedidosDetalle.detalle.map(pedido => {
       const matchingProducto = productos.find(producto => producto.id === pedido.id_producto);
-      
       if (matchingProducto) {
         return {
           ...pedido,
@@ -413,7 +409,7 @@ export const getPedidoDetalles = async (pedido_id) => {
       }
   
       return pedido;
-    });    
+    });
     return newArray;
 
     //return data.detalle;
@@ -461,7 +457,7 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
   const results = [];
   try {
     for (const item of model) {
-      if(item.id){
+      if(!item.new_row){
         if(item.status_row){
           const response = await fetch(url+'/gg/pedido_detalle/'+item.id, {
             method: 'PUT',
@@ -488,7 +484,7 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
               const errorData = await response.json(); // Parse the error response as JSON if available
               throw new Error('Failed to update PedidoDetalle: '+ errorData.message);
             }
-        }     
+        }
       } 
       else{
         const response = await fetch(url+'/gg/pedido_detalle', {
@@ -496,7 +492,7 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
         body: JSON.stringify(
             { 
               id_pedido: parseInt(pedido_id), 
-              id_producto: parseInt(item.idProducto),
+              id_producto: parseInt(item.id),
               cantidad: parseInt(item.Quantity),
               precio_unitario: parseFloat(item.UnitPrice), 
               precio_total: parseFloat(item.Total),

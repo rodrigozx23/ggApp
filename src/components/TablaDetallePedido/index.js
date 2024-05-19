@@ -20,18 +20,20 @@ const [updatedData, setUpdatedData] = useState({});
 const [uniqueProducts, setUniqueProducts] = useState([]);
 
 if (type == ""){
-
   if(data != null){
     data.forEach((product) => {
-      const { Description, Quantity, UnitPrice } = product;
+      const { id, Description, Quantity, UnitPrice } = product;
       const quantity = parseFloat(Quantity);
       const unitPrice = parseFloat(UnitPrice);
+      const prodId = parseInt(id);
     
       if (descriptionToTotalMap[Description]) {
+        descriptionToTotalMap[Description].idProducto = prodId;
         descriptionToTotalMap[Description].Quantity += quantity;
         descriptionToTotalMap[Description].Total += quantity * unitPrice;   
       } else {
         descriptionToTotalMap[Description] = {
+          id: prodId,
           Quantity: quantity,
           UnitPrice: unitPrice,
           Total: quantity * unitPrice,
@@ -41,7 +43,6 @@ if (type == ""){
   }
 
 } else {
-  console.log(data);
   data.forEach((product) => {
     const { id, Description, Quantity, UnitPrice, Total } = product;
     const quantity = parseFloat(Quantity);
@@ -93,9 +94,7 @@ const handleSave = async (rowIndex, pedidodet_id, p_quantity, p_unitPrice) => {
   var quantity = !updatedData['quantity'] ? p_quantity: updatedData['quantity'];
   var unitprice =  !updatedData['unitprice']  ? p_unitPrice : updatedData['unitprice'];
   var total = quantity * unitprice;
-  console.log(id)
   if(!id){
-    console.log(" Update the PedidoDetalle ")
     // Update the PedidoDetalle data after a successful update
     const updatedPedidoDetalleData = [...data]; // Assuming data is your original array
     updatedPedidoDetalleData[rowIndex] = {

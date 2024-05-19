@@ -38,7 +38,6 @@ function BodyMantenimientoCategory({
         console.error('Cat Error: Data received from the API is not an array.');
       }
 	  } catch (error) {
-      console.log(error);
 		  console.error('Cat Error fetching data:', error);
 	  }
 	};
