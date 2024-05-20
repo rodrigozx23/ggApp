@@ -176,7 +176,6 @@ const handleDelete = async (rowIndex, pedidodet_id) => {
       if(pedidodet_id!==0){
         const updatedingData = await deletePedidoDetalle(pedidodet_id);
         if (updatedingData) {
-          alert("Success");
           const updatedPedidoDetalleData = [...data];
           updatedPedidoDetalleData.splice(rowIndex, 1);
           setData(updatedPedidoDetalleData);

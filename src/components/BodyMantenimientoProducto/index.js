@@ -81,7 +81,6 @@ function BodyMantenimientoProducto({
 		  
 			const updatedData = await deleteProducts(id);
 			if (updatedData) {
-			  alert("Success");
 			  //const updatedProductData = [...productData];
 			  //updatedProductData[rowIndex] = updatedData;
 			  //setProductData(updatedProductData);

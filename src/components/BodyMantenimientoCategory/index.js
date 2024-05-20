@@ -76,7 +76,6 @@ function BodyMantenimientoCategory({
       
         const updatedData = await deleteCategory(id);
         if (updatedData) {
-          alert("Success");
           //const updatedCategoryData = [...categoryData];
           //updatedCategoryData[rowIndex] = updatedData;
           //setCategoryData(updatedCategoryData);
