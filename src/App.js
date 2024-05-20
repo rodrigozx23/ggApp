@@ -213,6 +213,7 @@ function App() {
     setShowReportePedido(false);
     setShowCrear(false);
     setShowActualizar(false);
+    setPedidos(true);
   }
 
   const saveDetallePedidoData = (data) => {

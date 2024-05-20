@@ -158,6 +158,7 @@ function BodyMantenimientoProducto({
 						// Call handleSearch when a category is selected
 						handleSearch({ target: { value: selectedCategoryDescription } }, 'category');
 					}}
+					autoComplete="off"				
 				/>
 			</div>
 		</div>

@@ -197,17 +197,17 @@ const handlePagarPedido = async (mesaInput,clienteInput, totalInput) => {
     // Check if the response is successful and handle it as needed
     if (response) {
       // Optionally, you can add code to update your UI or take other actions upon success
-      alert("Pedido Pagado.");          
+      //alert("Pedido Pagado.");          
     } else {
       // Handle the case when the request was not successful (e.g., display an error message)
       console.error('Pedido not saved: An error occurred');
     }
     //}
-    openPedidoDetails();
   } catch (error) {
     console.error('Network error:', error);
   } finally {
     setButtonDisabled(false);
+    openPedidoDetails();
   }
 };
 
@@ -227,17 +227,17 @@ const handleCancelarPedido = async (mesaInput,clienteInput, totalInput) => {
     // Check if the response is successful and handle it as needed
     if (response) {
       // Optionally, you can add code to update your UI or take other actions upon success   
-      alert("Pedido Cancelado.");    
+      //alert("Pedido Cancelado.");    
     } else {
       // Handle the case when the request was not successful (e.g., display an error message)
       console.error('Pedido not saved: An error occurred');
     }
     //}
-    openPedidoDetails();
   } catch (error) {
     console.error('Network error:', error);
   } finally {
     setButtonDisabled(false);
+    openPedidoDetails();
   }
 };
 

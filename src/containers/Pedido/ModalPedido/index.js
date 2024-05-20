@@ -122,26 +122,26 @@ function ModalPedido({
 
   const handleInsert = async (clienteInput, mesaInput, totalInput, model) => {
     try {
-      const confirmMessage = "Are you sure you want to save this pedido?";
+      //const confirmMessage = "Are you sure you want to save this pedido?";
       // Call the insertCategory function to send the POST request
-      if (window.confirm(confirmMessage)) {
-        const response = await insertPedido({ 
-          pedido_id: "0",
-          updatedMesa: mesaInput,
-          updatedCliente: clienteInput,
-          updatedTotal: totalInput,
-          updatedEstadoPedido: "1"
-        });
-  
-        // Check if the response is successful and handle it as needed
-        if (response) {
-          // Optionally, you can add code to update your UI or take other actions upon success
-          const responsePD = await insertPedidoDetalle({ pedido_id: response.id, model: model})
-        } else {
-          // Handle the case when the request was not successful (e.g., display an error message)
-          console.error('Pedido not saved: An error occurred');
-        }
+      //if (window.confirm(confirmMessage)) {
+      const response = await insertPedido({ 
+        pedido_id: "0",
+        updatedMesa: mesaInput,
+        updatedCliente: clienteInput,
+        updatedTotal: totalInput,
+        updatedEstadoPedido: "1"
+      });
+
+      // Check if the response is successful and handle it as needed
+      if (response) {
+        // Optionally, you can add code to update your UI or take other actions upon success
+        const responsePD = await insertPedidoDetalle({ pedido_id: response.id, model: model})
+      } else {
+        // Handle the case when the request was not successful (e.g., display an error message)
+        console.error('Pedido not saved: An error occurred');
       }
+      //}
       openPedidoDetails();
     } catch (error) {
       // Handle network errors
