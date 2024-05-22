@@ -1,6 +1,6 @@
 // TablaDetalle.js
 import React, { useEffect, useState } from 'react';
-import { updateDetallePed, deletePedidoDetalle } from '../../services/apiService';
+import { updateDetallePed, deletePedidoDetalle,updatePedido } from '../../services/apiService';
 
 function TablaDetallePedido(
   {
@@ -12,6 +12,8 @@ function TablaDetallePedido(
     setEditRow = null,
     totalInput,
     setTotalInput,
+    mesaInput = null,
+    clienteInput = null
   }) 
 {
 
@@ -126,9 +128,36 @@ const handleSave = async (rowIndex, pedidodet_id, p_quantity, p_unitPrice) => {
     // Exit edit mode
     setUpdatedData({});
     setEditRow(null);
+    if (updatedingData) {      
+      handleUpdateHeader(mesaInput,clienteInput,totalSum)      
+    } else {
+      // Handle the case when the request was not successful (e.g., display an error message)
+      console.error('Pedido detalle not saved: An error occurred');
+    }
   } catch (error) {
     // Handle errors from the updateProduct function
     console.error('Error updating PedidoDetalle:', error);
+  }
+};
+
+const handleUpdateHeader = async (mesaInput,clienteInput, totalInput) => {
+  try {
+    const response = await updatePedido({ 
+      pedido_id: id,
+      updatedCliente: clienteInput,
+      updatedMesa: mesaInput,
+      updatedTotal: totalInput,
+      updatedEstadoPedido: "1" //ESTADO CREADO
+    });
+
+    // Check if the response is successful and handle it as needed
+    if (response) {
+    } else {
+      // Handle the case when the request was not successful (e.g., display an error message)
+      console.error('Pedido not saved: An error occurred');
+    }
+  } catch (error) {
+    console.error('Network error:', error);
   }
 };
 

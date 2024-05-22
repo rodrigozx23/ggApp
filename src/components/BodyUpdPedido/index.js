@@ -230,6 +230,8 @@ useEffect(() => {
               setEditRow={setEditRow}
               totalInput = {totalInput}
               setTotalInput = {setTotalInput}
+              mesaInput = {mesaInput}
+              clienteInput = {clienteInput}
             />          
           )}
           </div>
