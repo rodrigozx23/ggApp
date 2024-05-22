@@ -325,7 +325,6 @@ export const updatePedidoDetalle = async ({ pedido_id, model }) => {
 
 export const updateDetallePed = async ({ pedidodet_id, updatedQuantity, updatedUnitPrice, updatedTotal }) => {
   try {
-	console.log('/detallepedido/'+pedidodet_id);
     const response = await fetch('http://127.0.0.1:8000/detallepedido/'+pedidodet_id, {
       method: 'PUT',
       headers: {
@@ -359,7 +358,6 @@ export const updateDetallePed = async ({ pedidodet_id, updatedQuantity, updatedU
 
 export const deletePedidoDetalle = async ( pedidodetalle_id ) => {
   try {
-	console.log('/pedidodetalles/'+pedidodetalle_id);
     const response = await fetch('http://127.0.0.1:8000/pedidodetalles/'+ pedidodetalle_id, {
       method: 'DELETE',
       headers: {
@@ -384,7 +382,6 @@ export const deletePedidoDetalle = async ( pedidodetalle_id ) => {
 
 export const deleteProducts = async ( id ) => {
   try {
-	console.log('/products/'+id);
     const response = await fetch('http://127.0.0.1:8000/products/'+ id, {
       method: 'DELETE',
       headers: {
@@ -409,7 +406,6 @@ export const deleteProducts = async ( id ) => {
 
 export const deleteCategory = async ( id ) => {
   try {
-	console.log('/categories/'+id);
     const response = await fetch('http://127.0.0.1:8000/categories/'+ id, {
       method: 'DELETE',
       headers: {
@@ -434,7 +430,6 @@ export const deleteCategory = async ( id ) => {
 
 export const updatePagarPedido = async (pedido_id) => {
   try {
-	console.log('/pedidos/'+pedido_id);
     const response = await fetch('http://127.0.0.1:8000/pagarpedidos/'+pedido_id, {
       method: 'PUT',
       headers: {

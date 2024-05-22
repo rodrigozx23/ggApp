@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { fetchPedidos } from '../../services/apiService';
 import { DateRangePicker }  from '../DateRangePicker';
 
-function BodyReportesPedidos()
+function BodyReportesPedidos({
+  openPedidosDetails,
+  openReportePedidos,
+  openUpdPedidoDetails
+})
 {
     const [pedidoReporteData, setPedidoReporteData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -89,7 +93,7 @@ function BodyReportesPedidos()
     };
 
 return (
-  <div className="row mt-3">
+  <div>
 	  <div className="col-md-10">
 	  	<h2>Reporte</h2>
 	  </div>
@@ -126,44 +130,53 @@ return (
             <table id="tbReportePedido" className="table table-striped table-bordered">
               <thead>
                   <tr>
-                  <th>Id</th>
                   <th>Cliente</th>
                   <th>Total</th>
                   <th>Fecha</th>
                   <th>Hora</th> 
                   <th>Estado</th>
+                  <th>Editar</th>
                   </tr>
               </thead>
               <tbody>
               {filteredData.map((row, rowIndex) => {
                 return (
                   <tr key={rowIndex}>
-                  <td>{row.id}</td>
-                  <td>
-                    {                    
-                      row.cliente					
-                    }
-                  </td>	
-                  <td>
-                    {                    
-                      row.total					
-                    }
-                  </td>	
-                  <td>
-                    {                    
-                      row.fecha					
-                    }
-                  </td>
-                  <td>
-                    {                    
-                      row.hora					
-                    }
-                  </td>
-                  <td>
-                    {                    
-                      row.descripcionEstadoPedido					
-                    }
-                  </td>
+                    <td>
+                      {                    
+                        row.cliente					
+                      }
+                    </td>	
+                    <td>
+                      {                    
+                        row.total					
+                      }
+                    </td>	
+                    <td>
+                      {                    
+                        row.fecha					
+                      }
+                    </td>
+                    <td>
+                      {                    
+                        row.hora					
+                      }
+                    </td>
+                    <td>
+                      {                    
+                        row.descripcionEstadoPedido					
+                      }
+                    </td>
+                    <td>
+                      {
+                      <button
+                          className="btn btn-success"
+                          onClick={() => openUpdPedidoDetails(row.id, row.cliente, row.mesa, row.total)}
+                      >
+                        Editar
+                      </button>       		
+                      }
+                    </td>
                   </tr>
                   );
                 })}

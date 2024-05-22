@@ -19,7 +19,8 @@ function BodyMantenimientoProducto({
 	const [categoryDescriptions, setCategoryDescriptions] = useState([]);
 	const [selectedCategoryDescription, setSelectedCategoryDescription] = useState(''); // Added state
 	const [categoryInput, setCategoryInput] = useState('');
-	
+	const [filteredData, setFilteredData] = useState([]);
+
 	useEffect(() => {
 	const fetchData = async () => {
 	  try {
@@ -29,7 +30,7 @@ function BodyMantenimientoProducto({
 		  // Check if the response is an array
 		  const modifiedData = data.map(item => ({ id: item.id, description: item.descripcion, quantity: item.stock, unitprice: item.precio, category: item.descripcion_cat}));
 		  setProductData(modifiedData);
-		  
+		  setFilteredData(modifiedData);
 		  setLoading(false)
 		} else {
 		  console.error('Error: Data received from the API is not an array.');
@@ -63,7 +64,7 @@ function BodyMantenimientoProducto({
 		  const updatedProductData = [...productData];
 		  updatedProductData[rowIndex] = modifiedData;
 		  setProductData(updatedProductData);
-		  
+		  setFilteredData(updatedProductData);
 		  // Exit edit mode
 		  setEditRow(null);
 		} catch (error) {
@@ -80,7 +81,6 @@ function BodyMantenimientoProducto({
 		  
 			const updatedData = await deleteProducts(id);
 			if (updatedData) {
-			  alert("Success");
 			  //const updatedProductData = [...productData];
 			  //updatedProductData[rowIndex] = updatedData;
 			  //setProductData(updatedProductData);
@@ -124,16 +124,43 @@ function BodyMantenimientoProducto({
 		fetchData();
 	}, []);
 
+	const handleSearch = (event, key) => {
+		const searchValue = event.target.value.toLowerCase();
+		const filtered = productData.filter(
+			item => {
+				const itemValue = item[key]; // Get the value of item[key]
+				return itemValue && itemValue.toString().toLowerCase().includes(searchValue); // Check if itemValue exists before calling toString()
+			}
+		);
+		setFilteredData(filtered);
+	};
+
   return (
   
-    <div className="row mt-3">
+    <div>
 	  <div className="col-md-10">
-	  	<h2>Product</h2>
+	  	<h1><b>Product</b></h1>
 	  </div>
 	  <div className="col-md-2">
 	    <button className="btn btn-primary mt-3" onClick={() => openModal(modalType)}>
           Add Product
         </button>
+	  </div>
+	  <div className="row mb-3">
+		<div className="col-md-3">
+			<div className="input-group">
+				<CategoryAutoCompleteInput
+					categoryDescriptions={categoryDescriptions}
+					categoryIds={categoryIds}
+					selectedCategoryDescription={updatedData['category'] || ''}
+					onCategorySelect={(selectedCategoryDescription, id) => {
+						// Call handleSearch when a category is selected
+						handleSearch({ target: { value: selectedCategoryDescription } }, 'category');
+					}}
+					autoComplete="off"				
+				/>
+			</div>
+		</div>
 	  </div>
       <div className="col-md-12 mt-3">
 	    {loading ? (
@@ -143,7 +170,6 @@ function BodyMantenimientoProducto({
           <table className="table table-striped table-bordered">
             <thead>
                <tr>
-                  <th>Id</th>
                   <th>Description</th>
 				  <th>Quantity</th>
 				  <th>UnitPrice</th>
@@ -152,10 +178,9 @@ function BodyMantenimientoProducto({
                 </tr>
             </thead>
             <tbody>
-              {productData.map((row, rowIndex) => {
+              {filteredData.map((row, rowIndex) => {
                 return (
 				  <tr key={rowIndex}>
-					<td>{row.id}</td>
 					<td>
 						{
 							editRow === rowIndex ? (

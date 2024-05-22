@@ -1,3 +1,6 @@
+import React, { useState } from 'react';
+import styles from '../../App.css';
+
 function MenuBar({
   showAlmacenOptions,
   setShowAlmacenOptions,
@@ -6,91 +9,96 @@ function MenuBar({
   openCategoriaDetails,
   openProductosDetails,
   openPedidosDetails,
+  openCrearPedidoDetails,
   openPedidosMenuDetails,
   openReportePedidos,
   user,
   handleLogout
 }){
+
+  const [activeIndex, setActiveIndex] = useState(null); // Initially no active button
+  const handleClick = (index) => {
+    setActiveIndex(index); // Update active index on click
+  };
+
 	return(
 		<ul className="menu-bar">
           <li className="menu-item">
-            <button
-              className="menu-button"
-              onClick={() => setShowAlmacenOptions(!showAlmacenOptions)}
+            <button 
+              className="btn-pedidos" 
+              onClick={() => {
+                openCrearPedidoDetails();
+              }}
             >
-              ALMACEN
+            Agregar Pedido
             </button>
-            {showAlmacenOptions && (
-              <ul className="submenu">
-                <li>
-                  <button
-                    className="submenu-button"
-                    onClick={openCategoriaDetails}
-                  >
-                    CATEGORIA
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className="submenu-button"
-					          onClick={openProductosDetails}
-                  >
-                    PRODUCTOS
-                  </button>
-                </li>
-              </ul>
-            )}
+          </li>
+          <br />
+          <br />
+          <br />
+          <br />
+          <li className="menu-item">
+              <button
+              key={0}
+              className={`menu-button ${activeIndex === 0 ? 'active' : ''}`}
+              onClick={() => {
+                  openPedidosDetails()
+                  handleClick(0)
+              }}>
+              <img className='icMenu' src={require("../../images/ic-timer.png")} />
+              Pedidos
+            </button>
+          </li>
+          {/* 
+          <li className="menu-item">
+            <button
+              key={1}
+              className={`menu-button ${activeIndex === 1 ? 'active' : ''}`}
+              onClick={() => {
+                openReportePedidos()
+                handleClick(1)
+            }}>
+              Reporte
+            </button>
+          </li>*/}
+          <li className="menu-item">
+            <button
+              key={1}
+              className={`menu-button ${activeIndex === 1 ? 'active' : ''}`}
+              onClick={() => {
+                openCategoriaDetails()
+                handleClick(1)
+            }}>
+              <img className='icMenu' src={require("../../images/ic-list.png")} />
+              Categoria
+            </button>
           </li>
           <li className="menu-item">
             <button
-              className="menu-button"
-              onClick={() => setShowMenuOptions(!showMenuOptions)}
-            >
-              PEDIDOS
+              key={2}
+              className={`menu-button ${activeIndex === 2 ? 'active' : ''}`}
+              onClick={() => {
+                openProductosDetails()
+                handleClick(2)
+            }}>
+              <img className='icMenu' src={require("../../images/ic-fast-food.png")} />
+              Productos
             </button>
-            {showMenuOptions && (
-              <ul className="submenu">
-                <li>
-                  <button
-                    className="submenu-button"
-                    onClick={openPedidosMenuDetails}
-                  >
-                    GG Menú
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className="submenu-button"
-					          onClick={openPedidosDetails}
-                  >
-                    GG Café
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className="submenu-button"
-					          onClick={openReportePedidos}
-                  >
-                    Reporte Pedido
-                  </button>
-                </li>
-              </ul>
-            )}
           </li>
           <li className="menu-item">
-          <button
-              className="menu-button"
-              onClick={() => setShowMenuOptions(!showMenuOptions)}
-            >
-              {user}!
+            <button
+              key={3}
+              className={`menu-button ${activeIndex === 3 ? 'active' : ''}`}
+              onClick={() => {
+                openPedidosMenuDetails()
+                handleClick(3)
+            }}>
+              <img className='icMenu' src={require("../../images/ic-fast-food.png")} />
+              Menu Add
             </button>
-            {showMenuOptions && (
-              <ul className="submenu">
-                <li>                
-                  <button className="menu-button" onClick={handleLogout}>Cerrar sesión</button>	 
-                </li>
-              </ul>
-            )}
+          </li>
+          <li className="menu-item down">           
+          <button className="menu-button bold" onClick={handleLogout}>Cerrar sesión</button>	 
           </li>
         </ul>
 	)	

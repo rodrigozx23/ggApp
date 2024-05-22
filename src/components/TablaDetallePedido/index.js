@@ -1,6 +1,6 @@
 // TablaDetalle.js
 import React, { useEffect, useState } from 'react';
-import { updateDetallePed, deletePedidoDetalle,updatePedido } from '../../services/apiService';
+import { updateDetallePed, deletePedidoDetalle, updatePedido } from '../../services/apiService';
 
 function TablaDetallePedido(
   {
@@ -11,7 +11,7 @@ function TablaDetallePedido(
     editRow = null, 
     setEditRow = null,
     totalInput,
-    setTotalInput,
+    setTotalInput,    
     mesaInput = null,
     clienteInput = null
   }) 
@@ -22,18 +22,20 @@ const [updatedData, setUpdatedData] = useState({});
 const [uniqueProducts, setUniqueProducts] = useState([]);
 
 if (type == ""){
-
   if(data != null){
     data.forEach((product) => {
-      const { Description, Quantity, UnitPrice } = product;
+      const { id, Description, Quantity, UnitPrice } = product;
       const quantity = parseFloat(Quantity);
       const unitPrice = parseFloat(UnitPrice);
+      const prodId = parseInt(id);
     
       if (descriptionToTotalMap[Description]) {
+        descriptionToTotalMap[Description].idProducto = prodId;
         descriptionToTotalMap[Description].Quantity += quantity;
         descriptionToTotalMap[Description].Total += quantity * unitPrice;   
       } else {
         descriptionToTotalMap[Description] = {
+          id: prodId,
           Quantity: quantity,
           UnitPrice: unitPrice,
           Total: quantity * unitPrice,
@@ -43,7 +45,6 @@ if (type == ""){
   }
 
 } else {
-
   data.forEach((product) => {
     const { id, Description, Quantity, UnitPrice, Total } = product;
     const quantity = parseFloat(Quantity);
@@ -95,26 +96,14 @@ const handleSave = async (rowIndex, pedidodet_id, p_quantity, p_unitPrice) => {
   var quantity = !updatedData['quantity'] ? p_quantity: updatedData['quantity'];
   var unitprice =  !updatedData['unitprice']  ? p_unitPrice : updatedData['unitprice'];
   var total = quantity * unitprice;
-  
-  try {
-    const updatedingData = await updateDetallePed({
-      pedido_id: id,
-      pedidodet_id,
-      updatedQuantity: parseInt(quantity),
-      updatedUnitPrice: parseFloat(unitprice),
-      updatedTotal: total.toFixed(2),
-    });
-
+  if(!id){
     // Update the PedidoDetalle data after a successful update
     const updatedPedidoDetalleData = [...data]; // Assuming data is your original array
     updatedPedidoDetalleData[rowIndex] = {
       ...updatedPedidoDetalleData[rowIndex],
-      idProducto: updatedingData.idProducto,
-      Quantity: updatedingData.quantity,
-      UnitPrice: updatedingData.unitprice,
-      Total: updatedingData.total,
-      estadoPedidoDetalle: updatedingData.estadoPedidoDetalle,
-      status: updatedingData.status,
+      Quantity: quantity,
+      UnitPrice: unitprice,
+      Total: total,
       status_row: false,
     };
     // Update the state with the modified data
@@ -128,15 +117,70 @@ const handleSave = async (rowIndex, pedidodet_id, p_quantity, p_unitPrice) => {
     // Exit edit mode
     setUpdatedData({});
     setEditRow(null);
-    if (updatedingData) {      
-      handleUpdateHeader(mesaInput,clienteInput,totalSum)      
+  }else{
+    try {
+      const updatedingData = await updateDetallePed({
+        pedido_id: id,
+        pedidodet_id,
+        updatedQuantity: parseInt(quantity),
+        updatedUnitPrice: parseFloat(unitprice),
+        updatedTotal: total.toFixed(2),
+      });
+  
+      // Update the PedidoDetalle data after a successful update
+      const updatedPedidoDetalleData = [...data]; // Assuming data is your original array
+      updatedPedidoDetalleData[rowIndex] = {
+        ...updatedPedidoDetalleData[rowIndex],
+        idProducto: updatedingData.idProducto,
+        Quantity: updatedingData.quantity,
+        UnitPrice: updatedingData.unitprice,
+        Total: updatedingData.total,
+        estadoPedidoDetalle: updatedingData.estadoPedidoDetalle,
+        status: updatedingData.status,
+        status_row: false,
+      };
+      // Update the state with the modified data
+      setData(updatedPedidoDetalleData);
+  
+      // Calculate the total sum after the modification
+      const totalSum = updatedPedidoDetalleData.reduce((sum, row) => sum + row.Total, 0);
+      // Set totalInput state with the calculated totalSum
+      setTotalInput(totalSum);
+  
+      // Exit edit mode
+      setUpdatedData({});
+      setEditRow(null);
+      if (updatedingData) {      
+        handleUpdateHeader(mesaInput,clienteInput,totalSum)      
+      } else {
+        // Handle the case when the request was not successful (e.g., display an error message)
+        console.error('Pedido detalle not saved: An error occurred');
+      }
+    } catch (error) {
+      // Handle errors from the updateProduct function
+      console.error('Error updating PedidoDetalle:', error);
+    }
+  }
+};
+
+const handleUpdateHeader = async (mesaInput,clienteInput, totalInput) => {
+  try {
+    const response = await updatePedido({ 
+      pedido_id: id,
+      updatedCliente: clienteInput,
+      updatedMesa: mesaInput,
+      updatedTotal: totalInput,
+      updatedEstadoPedido: "1" //ESTADO CREADO
+    });
+
+    // Check if the response is successful and handle it as needed
+    if (response) {
     } else {
       // Handle the case when the request was not successful (e.g., display an error message)
-      console.error('Pedido detalle not saved: An error occurred');
+      console.error('Pedido not saved: An error occurred');
     }
   } catch (error) {
-    // Handle errors from the updateProduct function
-    console.error('Error updating PedidoDetalle:', error);
+    console.error('Network error:', error);
   }
 };
 
@@ -182,7 +226,6 @@ const handleDelete = async (rowIndex, pedidodet_id) => {
       if(pedidodet_id!==0){
         const updatedingData = await deletePedidoDetalle(pedidodet_id);
         if (updatedingData) {
-          alert("Success");
           const updatedPedidoDetalleData = [...data];
           updatedPedidoDetalleData.splice(rowIndex, 1);
           setData(updatedPedidoDetalleData);
@@ -218,7 +261,7 @@ return (
         <table id="tbDetallePedido" className="table table-striped table-bordered">
         <thead>
             <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Descripción Producto</th>
             <th>Cantidad</th>
             <th>Precio Unitario</th>
@@ -230,12 +273,90 @@ return (
           {type == "" ? (
            uniqueProducts.map((row, index) => (
             <tr key={index}>
-              <td>{index + 1}</td>
+              <td>{index+1}</td>
               <td>{row}</td>
-              <td>{descriptionToTotalMap[row].Quantity}</td>
-              <td>{descriptionToTotalMap[row].UnitPrice.toFixed(2)}</td>
+              <td>
+                {
+                  editRow === index ? (
+                  // Show input field when in edit mode
+                    <input
+                      type="text"
+                      value={updatedData['quantity'] || descriptionToTotalMap[row].Quantity }
+                      onChange={(e) => {
+                      const inputValue = e.target.value;
+                      if (/^\d*\.?\d*$/.test(inputValue)) {
+                        const updatedValue = { ...updatedData };
+                        updatedValue['quantity'] = inputValue;
+                        setUpdatedData(updatedValue);
+                      }
+                    }}
+                    />
+                  ) : (                       
+                    descriptionToTotalMap[row].Quantity
+                  )
+                }
+              </td>
+              <td>
+                {
+                  editRow === index ? (
+                  // Show input field when in edit mode
+                    <input
+                      type="text"
+                      value={updatedData['unitprice'] ||  descriptionToTotalMap[row].UnitPrice }
+                      onChange={(e) => {
+                      const inputValue = e.target.value;
+                      if (/^\d*\.?\d*$/.test(inputValue)) {
+                        const updatedValue = { ...updatedData };
+                        updatedValue['unitprice'] = inputValue;
+                        setUpdatedData(updatedValue);
+                      }
+                    }}
+                    />
+                  ) : (                       
+                    descriptionToTotalMap[row].UnitPrice
+                  )//<!--<td>{descriptionToTotalMap[row].UnitPrice.toFixed(2)}</td>-->
+                }  
+              </td>
               <td>{descriptionToTotalMap[row].Total.toFixed(2)}</td>
-              <td>{/* Add actions buttons here */}</td>
+              <td>
+                      {editRow === index ? (
+                        <button
+                          className="btn btn-success"
+                          onClick={() => handleSave(index, descriptionToTotalMap[row].id, descriptionToTotalMap[row].Quantity, descriptionToTotalMap[row].UnitPrice)}
+                        >
+                        Save
+                        </button>
+                        ) : (
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => {
+                          // Enter edit mode and set the initial values
+                          setEditRow(index);
+                          setUpdatedData({ ...uniqueProducts[index] });
+                          }}
+                        >
+                          Edit
+                        </button>
+                      )}
+                        &nbsp;
+                        <button
+                          className="btn btn-warning"
+                          onClick={() => handleDelete(index, descriptionToTotalMap[row].id)}
+                        >
+                          Delete
+                        </button>
+                        &nbsp;
+                      {editRow === index ? (
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => setEditRow(false)}
+                        >
+                          Cancel
+                        </button>
+                      ):(
+                          <span></span>
+                      )}
+              </td>
             </tr>
           ))
           ) : (
@@ -244,7 +365,6 @@ return (
                 <tr key={index}>
                   <td>{descriptionToTotalMap[row].id}</td>
                   <td>{descriptionToTotalMap[row].Description}</td>
-
                   <td>
                     {
                       editRow === index ? (
@@ -326,7 +446,7 @@ return (
                       ):(
                           <span></span>
                       )}
-                    </td>
+                  </td>
                 </tr>
               );
             })

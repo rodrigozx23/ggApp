@@ -7,6 +7,7 @@ function BodyPedidos({
   setEditRow,
   openCrearPedidoDetails,
   openUpdPedidoDetails,
+  openReportePedidos,
   pedidoData, 
   setPedidoData
 }) {
@@ -55,14 +56,17 @@ function BodyPedidos({
     fetchData();
   }, [setPedidoData]);
 
-  const PedidoButton = ({ cliente, mesa, fecha, hora, onClick  }) => {
+  const PedidoButton = ({ cliente, mesa, fecha, hora, total, onClick  }) => {
     return (
-      <button style={{ margin: '5px' }} onClick={onClick}>
-         {fecha} - { hora }
+      <button className='ordersButton' onClick={onClick}>
+         <p><span className='left'>{fecha}</span> <span className='right'><b>Total: {total} soles</b></span></p>
          <br />
-         Cliente: {cliente} 
-         <br /> 
-         Mesa# {mesa}        
+         <p style={{ margin: '0px 0px 0px 8px', textAlign: 'left' }}>Cliente: {cliente}
+         <br />
+         Mesa: {mesa}</p>
+         <br />
+         <span className='right up'>{ hora }</span>
+         <p className='ordersButBotton'><span className='left'><b>Salon/Delivery</b></span></p>
       </button>
     );
   };
@@ -70,25 +74,18 @@ function BodyPedidos({
   const activeOrders = pedidoData.filter(order => order.estadoPedido == "1");
 
   return (
-    <div className="row mt-3">
-      <div className="col-md-10">      
-      </div>
-      <div className="col-md-2">
-	      <button 
-          className="btn btn-primary mt-3" 
-          onClick={() => {
-              openCrearPedidoDetails()
-          }}>
-        Add Pedido
-        </button>
-	    </div>     
+    <div>
       <div className="col-md-12 mt-3">
-      <h3>Pedidos Activos - Mesas</h3>
+        <h1><b>Pedidos Activos</b></h1>
+      </div>
+      <div className="col-md-12 mt-3">
+      <br />
+      <br />
       {loading ? (
           <p>Loading...</p>
         ) : (          
           activeOrders.map(order => (
-            <PedidoButton key={order.id} cliente={order.cliente} mesa={order.mesa} fecha={order.fecha} hora = {order.hora}
+            <PedidoButton key={order.id} cliente={order.cliente} mesa={order.mesa} fecha={order.fecha} hora = {order.hora} total = {order.total}
             onClick={() => {
               openUpdPedidoDetails(order.id, order.cliente, order.mesa, order.total)
             }} />

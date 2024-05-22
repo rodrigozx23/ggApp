@@ -38,7 +38,6 @@ function BodyMantenimientoCategory({
         console.error('Cat Error: Data received from the API is not an array.');
       }
 	  } catch (error) {
-      console.log(error);
 		  console.error('Cat Error fetching data:', error);
 	  }
 	};
@@ -77,7 +76,6 @@ function BodyMantenimientoCategory({
       
         const updatedData = await deleteCategory(id);
         if (updatedData) {
-          alert("Success");
           //const updatedCategoryData = [...categoryData];
           //updatedCategoryData[rowIndex] = updatedData;
           //setCategoryData(updatedCategoryData);
@@ -100,9 +98,9 @@ function BodyMantenimientoCategory({
   };
 
   return (
-    <div className="row mt-3">
+    <div>
       <div className="col-md-10">
-        <h2>Category</h2>
+        <h1><b>Category</b></h1>
       </div>
       <div className="col-md-2">
         <button className="btn btn-primary mt-3" onClick={() => openModal(modalType)}>
@@ -117,7 +115,6 @@ function BodyMantenimientoCategory({
             <table className="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th>Id</th>
                   <th>Description</th>
                   <th>Actions</th>
                 </tr>
@@ -126,7 +123,6 @@ function BodyMantenimientoCategory({
                 {categoryData.map((row, rowIndex) => {
                   return (
                     <tr key={rowIndex}>
-                      <td>{row.id}</td>
                       <td>
                         {editRow === rowIndex ? (
                           // Show input field when in edit mode

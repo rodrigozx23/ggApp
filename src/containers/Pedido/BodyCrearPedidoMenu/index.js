@@ -140,7 +140,7 @@ function BodyCrearPedidoMenu({
   
 
   return(
-	  <div className="container">
+	  <div>
         <div className="col-md-10">
           <h2>Crear Menu</h2>
         </div>
