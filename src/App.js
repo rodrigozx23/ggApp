@@ -422,6 +422,7 @@ function App() {
               <BodyReportesPedidos
                 openPedidosDetails = { openPedidosDetails }             
                 openReportePedidos = { openReportePedidos }
+                openUpdPedidoDetails = { openUpdPedidoDetails }
               />
             )}
             </div>
@@ -436,6 +437,129 @@ function App() {
               />
             )}
 
+        <TableDataProvider value={detallePedidoData}>
+          <div>
+          {showCrearPedidoDetails && (
+            <BodyCrearPedido // Create a separate Modal for Pedidos
+              mesaInput = {mesaInput}
+              setMesaInput = {setMesaInput}		
+              totalInput = {totalInput}
+              setTotalInput = {setTotalInput}			
+              openModal = { openModal }
+              setPedidoData={setPedidoData}
+              modalType="pedidos"
+              openPedidoDetails = {openPedidoDetails}                 
+              detallePedidoData={detallePedidoData}
+              setDetallePedidoData = { setDetallePedidoData }
+            />
+          )}
+          {showModalPedidoDetalle &&(
+            <ModalPedidoDetalle
+              setShowModalPedidoDetalle = {setShowModalPedidoDetalle}
+              setDetallePedidoData={saveDetallePedidoData} 
+            /> 
+          )}          
+          </div>
+        </TableDataProvider>
+            
+        <TableDataProvider value={detallePedidoData}>
+          <div>
+          {showUpdPedidoDetails && (
+            <BodyUpdPedido // Create a separate Modal for Pedidos
+              editRow={editRow}
+              setEditRow = {setEditRow}
+              mesaInput = {mesaInput}
+              setMesaInput = {setMesaInput}		
+              totalInput = {totalInput}
+              setTotalInput = {setTotalInput}			
+              clienteInput = {clienteInput}
+              setClienteInput = {setClienteInput}	
+              idPedido = {idPedido}
+              setIdPedido = {setIdPedido}	
+              openModal = { openModal }
+              setPedidoData={setPedidoData}
+              modalType="pedidosUpd"
+              openPedidoDetails = {openPedidoDetails}                 
+              detallePedidoData={detallePedidoData}
+              setDetallePedidoData = { setDetallePedidoData }
+            />
+          )}
+          {showModalPedidoDetalle &&(
+            <ModalPedidoDetalle
+              setShowModalPedidoDetalle = {setShowModalPedidoDetalle}
+              setDetallePedidoData={saveDetallePedidoData} 
+            /> 
+          )}          
+          </div>
+        </TableDataProvider>
+
+        <TableDataProvider>
+          <div>
+            {showCategoriaDetails && (
+              <BodyMantenimientoCategory
+              editRow={editRow}
+              updatedDescription={updatedDescription}
+              setUpdatedDescription={setUpdatedDescription}
+              openModal={openModal}
+              setEditRow = {setEditRow}
+              modalType="categoria"
+              categoryData={categoryData}
+              setCategoryData={setCategoryData}
+              />
+            )}
+          
+            {showModalCategoria && (
+              <ModalCategoria
+              descripcionInput = {descripcionInput}
+              setDescripcionInput = {setDescripcionInput}			
+              setShowModalCategoria = {setShowModalCategoria}
+              setCategoryData={setCategoryData}
+              />
+            )}
+          </div>
+        </TableDataProvider>
+        
+        <TableDataProvider>
+          <div>
+            {showProductosDetails && (
+              <BodyMantenimientoProducto // Reuse BodyMantenimiento for PRODUCTOS
+                //getTableProps={getTableProps}
+                //getTableBodyProps={getTableBodyProps}
+                //headerGroups={headerGroups}
+                //rows={rows}
+                //prepareRow={prepareRow}
+                editRow={editRow}
+                updatedData={updatedData} // Pass updated data state
+                setUpdatedData={setUpdatedData} // Set updated data state	
+                //memoDetails={productosDetails} // Pass PRODUCTOS data
+                //setMemoDetails={setProductosDetails} // Update PRODUCTOS state
+                openModal={openModal}
+                setEditRow = {setEditRow}
+                modalType="productos"
+                productData={productData}
+                setProductData={setProductData}
+              />
+            )}
+                    
+            {showModalProductos && (
+              <ModalProducto // Create a separate Modal for PRODUCTOS
+                descripcionInput={descripcionInput}
+                setDescripcionInput={setDescripcionInput}
+                quantityInput={quantityInput}
+                setQuantityInput={setQuantityInput}
+                unitPriceInput={unitPriceInput}
+                setUnitPriceInput={setUnitPriceInput}
+                categoryInput={categoryInput}
+                setCategoryInput={setCategoryInput}
+                setShowModalProductos={setShowModalProductos}
+                //saveProductosDetail={saveProductosDetail}
+                setProductData={setProductData}
+              />
+            )}
+          </div>
+        </TableDataProvider>
+        
+          <div>
             <TableDataProvider value={detallePedidoData}>
               <div>
               {showCrearPedidoDetails && (
@@ -491,73 +615,9 @@ function App() {
               )}          
               </div>
             </TableDataProvider>
-
-            <TableDataProvider>
-            <div>
-              {showCategoriaDetails && (
-                <BodyMantenimientoCategory
-                editRow={editRow}
-                updatedDescription={updatedDescription}
-                setUpdatedDescription={setUpdatedDescription}
-                openModal={openModal}
-                setEditRow = {setEditRow}
-                modalType="categoria"
-                categoryData={categoryData}
-                setCategoryData={setCategoryData}
-                />
-              )}
-            
-              {showModalCategoria && (
-                <ModalCategoria
-                descripcionInput = {descripcionInput}
-                setDescripcionInput = {setDescripcionInput}			
-                setShowModalCategoria = {setShowModalCategoria}
-                setCategoryData={setCategoryData}
-                />
-              )}
-            </div>
-            </TableDataProvider>
-            
-            <TableDataProvider>
-              <div>
-                {showProductosDetails && (
-                  <BodyMantenimientoProducto // Reuse BodyMantenimiento for PRODUCTOS
-                    //getTableProps={getTableProps}
-                    //getTableBodyProps={getTableBodyProps}
-                    //headerGroups={headerGroups}
-                    //rows={rows}
-                    //prepareRow={prepareRow}
-                    editRow={editRow}
-                    updatedData={updatedData} // Pass updated data state
-                    setUpdatedData={setUpdatedData} // Set updated data state	
-                    //memoDetails={productosDetails} // Pass PRODUCTOS data
-                    //setMemoDetails={setProductosDetails} // Update PRODUCTOS state
-                    openModal={openModal}
-                    setEditRow = {setEditRow}
-                    modalType="productos"
-                    productData={productData}
-                    setProductData={setProductData}
-                  />
-                )}
-                        
-                {showModalProductos && (
-                  <ModalProducto // Create a separate Modal for PRODUCTOS
-                    descripcionInput={descripcionInput}
-                    setDescripcionInput={setDescripcionInput}
-                    quantityInput={quantityInput}
-                    setQuantityInput={setQuantityInput}
-                    unitPriceInput={unitPriceInput}
-                    setUnitPriceInput={setUnitPriceInput}
-                    categoryInput={categoryInput}
-                    setCategoryInput={setCategoryInput}
-                    setShowModalProductos={setShowModalProductos}
-                    //saveProductosDetail={saveProductosDetail}
-                    setProductData={setProductData}
-                  />
-                )}
-              </div>
-            </TableDataProvider>
           </div>
+        </div>
+
         </body>        
       </div>
     )}
