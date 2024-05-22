@@ -184,27 +184,6 @@ const handleUpdateHeader = async (mesaInput,clienteInput, totalInput) => {
   }
 };
 
-const handleUpdateHeader = async (mesaInput,clienteInput, totalInput) => {
-  try {
-    const response = await updatePedido({ 
-      pedido_id: id,
-      updatedCliente: clienteInput,
-      updatedMesa: mesaInput,
-      updatedTotal: totalInput,
-      updatedEstadoPedido: "1" //ESTADO CREADO
-    });
-
-    // Check if the response is successful and handle it as needed
-    if (response) {
-    } else {
-      // Handle the case when the request was not successful (e.g., display an error message)
-      console.error('Pedido not saved: An error occurred');
-    }
-  } catch (error) {
-    console.error('Network error:', error);
-  }
-};
-
 const handleDelete = async (rowIndex, pedidodet_id) => {
   try {
     const confirmMessage = "Are you sure you want to delete this pedido detalle?";
