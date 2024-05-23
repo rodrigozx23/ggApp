@@ -49,18 +49,6 @@ function MenuBar({
               Pedidos
             </button>
           </li>
-          {/* 
-          <li className="menu-item">
-            <button
-              key={1}
-              className={`menu-button ${activeIndex === 1 ? 'active' : ''}`}
-              onClick={() => {
-                openReportePedidos()
-                handleClick(1)
-            }}>
-              Reporte
-            </button>
-          </li>*/}
           <li className="menu-item">
             <button
               key={1}
@@ -83,18 +71,6 @@ function MenuBar({
             }}>
               <img className='icMenu' src={require("../../images/ic-fast-food.png")} />
               Productos
-            </button>
-          </li>
-          <li className="menu-item">
-            <button
-              key={3}
-              className={`menu-button ${activeIndex === 3 ? 'active' : ''}`}
-              onClick={() => {
-                openPedidosMenuDetails()
-                handleClick(3)
-            }}>
-              <img className='icMenu' src={require("../../images/ic-fast-food.png")} />
-              Menu Add
             </button>
           </li>
           <li className="menu-item down">           
