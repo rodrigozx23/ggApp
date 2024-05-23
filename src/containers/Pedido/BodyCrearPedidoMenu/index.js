@@ -35,10 +35,10 @@ function BodyCrearPedidoMenu({
         const existingProductIndex = pedidodetalleData.findIndex(
           item => item.Description === descripcionInput && parseFloat(item.UnitPrice) === parseFloat(precioUnitarioInput)
         );
-    
         if (existingProductIndex !== -1) {
           // If item with the same description exists, update its quantity instead of adding a new one
           const updatedPedidodetalleData = [...pedidodetalleData];
+          updatedPedidodetalleData[existingProductIndex].idProducto = idProductoInput;
           updatedPedidodetalleData[existingProductIndex].Quantity = parseInt(updatedPedidodetalleData[existingProductIndex].Quantity) + parseInt(cantidadInput);
           updatedPedidodetalleData[existingProductIndex].Total = parseFloat(updatedPedidodetalleData[existingProductIndex].UnitPrice) * parseFloat(updatedPedidodetalleData[existingProductIndex].Quantity);
           setPedidodetalleData(updatedPedidodetalleData);
@@ -49,7 +49,7 @@ function BodyCrearPedidoMenu({
         } else {
           // If no item with the same description exists, add a new one
           const newProduct = {
-            id: idProductoInput,
+            idProducto: idProductoInput,
             Description: descripcionInput,
             Quantity: parseInt(cantidadInput),
             UnitPrice: parseFloat(precioUnitarioInput),
