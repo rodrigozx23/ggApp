@@ -44,7 +44,8 @@ function BodyReportesPedidosDetalle({
                 descripcionEstadoPedido: (item.estado_pedido == 0 ? "Vendido" : "Otro"),
                 fecha: formattedDate,
                 hora: formattedTime,
-                fecha_creacion : item.fecha_creacion
+                fecha_creacion : item.fecha_creacion,
+                descripcion_cat: (item.descripcion_cat ? item.descripcion_cat : "Cat NN"), 
               };
             });
 
@@ -117,6 +118,11 @@ return (
                 <DateRangePicker handleSearchDate={handleSearchDate} />
               </div>
             </div>
+            <div className="col-md-3">
+              <div className="input-group">
+                <input type="text" className="form-control" placeholder="Search by Categoria" onChange={e => handleSearch(e, 'descripcion_cat')} />
+              </div>
+            </div>
           </div>
           <div className="table-responsive">
             <table id="tbReportePedidoDetalle" className="table table-striped table-bordered">
@@ -130,6 +136,7 @@ return (
                   <th>Total</th>
                   <th>Fecha</th>
                   <th>Hora</th> 
+                  <th>Categoria</th> 
                   </tr>
               </thead>
               <tbody>
@@ -138,42 +145,47 @@ return (
                   <tr key={rowIndex}>
                     <td>
                       {                    
-                        row.id					
+                        row.id
                       }
                     </td>	
                     <td>
                       {                    
-                        row.idPedido					
+                        row.idPedido
                       }
                     </td>	
                     <td>
                       {                    
-                        row.descripcion					
+                        row.descripcion
                       }
                     </td>	
                     <td>
                       {                    
-                        row.cantidad				
+                        row.cantidad
                       }
                     </td>
                     <td>
                       {                    
-                        row.precio_unitario					
+                        row.precio_unitario
                       }
                     </td>
                     <td>
                       {                    
-                        row.precio_total					
+                        row.precio_total
                       }
                     </td>
                     <td>
                       {                    
-                        row.fecha					
+                        row.fecha
                       }
                     </td>
                     <td>
                       {                    
-                        row.hora					
+                        row.hora
+                      }
+                    </td>
+                    <td>
+                      {                    
+                        row.descripcion_cat			
                       }
                     </td>
                   </tr>

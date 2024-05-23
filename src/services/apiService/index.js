@@ -370,18 +370,40 @@ export const fetchPedidoDetalles = async () => {
     }
     const productos = await responseProd.json();
     // Find the object in data with matching id_categoria
-    const newArray = pedidosDetalle.map(pedido => {
+    const newPedidosDetalle = pedidosDetalle.map(pedido => {
       const matchingProducto = productos.find(producto => producto.id === pedido.id_producto);
       if (matchingProducto) {
         return {
           ...pedido,
           descripcion: matchingProducto.descripcion,
+          id_categoria: matchingProducto.id_categoria
         };
       }
   
       return pedido;
     });
-    console.log(newArray);
+
+    const responseCat = await fetch(url+'/gg/categoria', {
+      method: 'GET' // Adjust the method accordingly
+    });
+    if (!responseCat.ok) {
+      throw new Error(`API request failed with status ${responseCat.status}`);
+    }
+    const categories = await responseCat.json();
+
+    // Find the object in data with matching id_categoria
+    const newArray = newPedidosDetalle.map(product => {
+      const matchingCategory = categories.find(category => category.id === product.id_categoria);
+      
+      if (matchingCategory) {
+        return {
+          ...product,
+          descripcion_cat: matchingCategory.descripcion,
+        };
+      }
+  
+      return product;
+    });
     return newArray;
 
   } catch (error) {
