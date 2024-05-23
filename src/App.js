@@ -20,6 +20,7 @@ import { BodyReportesPedidos } from './components/BodyReportesPedidos';
 import { checkLogin } from './services/apiService';
 import { ModalPedido } from './containers/Pedido/ModalPedido';
 import { ModalPedidoUpd } from './containers/Pedido/ModalPedidoUpd';
+import { BodyReportesPedidosDetalle } from './containers/Reportes/BodyReportesPedidosDetalle';
 
 import './App.css';
 import { Alert } from 'bootstrap';
@@ -44,6 +45,7 @@ function App() {
   const [showModalPedidoDetalle, setShowModalPedidoDetalle] = useState(false);
 
   const [showReportePedido, setShowReportePedido] = useState(false);
+  const [showReportePedidoDetalle, setShowReportePedidoDetalle] = useState(false);
 
   const [categoryData, setCategoryData] = useState([]);
   const [productData, setProductData] = useState([]);  
@@ -72,7 +74,24 @@ function App() {
   const [showTogleMenu, setShowTogleMenu] = useState(false);
   const [showCrear, setShowCrear] = useState(false);
 	const [showActualizar, setShowActualizar] = useState(false);
+
+  const openReportePedidosDetalle = () => {
+    setShowReportePedidoDetalle(true);
+    setShowReportePedido(false);
+    setShowTogleMenu(true);
+    setShowCategoriaDetails(false);
+    setShowPedidosMenuDetails(false);
+    setShowModalCategoria(false);
+    setShowProductosDetails(false);
+    setShowPedidosDetails(false);
+    setShowCrearPedidoDetails(false);
+    setShowUpdPedidoDetails(false);
+    setShowCrear(false);
+    setShowActualizar(false);
+  };
+
   const openReportePedidos = () => {
+    setShowReportePedidoDetalle(false);
     setShowReportePedido(true);
     setShowTogleMenu(true);
     setShowCategoriaDetails(false);
@@ -323,7 +342,6 @@ function App() {
           openPedidosDetails = { openPedidosDetails }
           openCrearPedidoDetails = { openCrearPedidoDetails }
           openPedidosMenuDetails = { openPedidosMenuDetails }
-          openReportePedidos = { openReportePedidos }
           user = {username}
           handleLogout = {handleLogout}
         />        
@@ -384,15 +402,23 @@ function App() {
                     setPedidos(true);
                   }}>
                 Pedidos
-                </button>      
+                </button>
                 <button 
                   className={pedidos ? "btn-pedrep btn-rep" : "btn-pedrep btn-rrep"}
                   onClick={() => {
                     openReportePedidos();
                     setPedidos(false);
                   }}>
-                Reporte
-                </button>  
+                Reporte Pedido
+                </button>
+                <button 
+                  className={pedidos ? "btn-pedrep btn-rep" : "btn-pedrep btn-rrep"}
+                  onClick={() => {
+                    openReportePedidosDetalle();
+                    setPedidos(false);
+                  }}>
+                Reporte Detalle
+                </button>
                 </div>           
                 <br />
                 <br />
@@ -426,6 +452,15 @@ function App() {
               />
             )}
             </div>
+            <div>
+            {showReportePedidoDetalle && (
+              <BodyReportesPedidosDetalle
+                openPedidosDetails = { openPedidosDetails }             
+                openReportePedidos = { openReportePedidos }
+              />
+            )}
+            </div>
+
 
             {showPedidosMenuDetails && (
               <BodyCrearPedidoMenu

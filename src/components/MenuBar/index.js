@@ -11,7 +11,6 @@ function MenuBar({
   openPedidosDetails,
   openCrearPedidoDetails,
   openPedidosMenuDetails,
-  openReportePedidos,
   user,
   handleLogout
 }){
