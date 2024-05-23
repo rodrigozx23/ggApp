@@ -118,6 +118,7 @@ function App() {
     setShowTogleMenu(false);
     setShowCrear(false);
     setShowActualizar(false);
+    setShowReportePedidoDetalle(false);
   };
 
   const openProductosDetails = () => {
@@ -133,6 +134,7 @@ function App() {
     setShowTogleMenu(false);
     setShowCrear(false);
     setShowActualizar(false);
+    setShowReportePedidoDetalle(false);
   };
 
   const openPedidosDetails = () => {
@@ -148,6 +150,7 @@ function App() {
     setShowTogleMenu(true);
     setShowCrear(false);
     setShowActualizar(false);
+    setShowReportePedidoDetalle(false);
   };
 
   const openPedidosMenuDetails = () => {
@@ -163,6 +166,7 @@ function App() {
     setShowTogleMenu(false);
     setShowCrear(false);
     setShowActualizar(false);
+    setShowReportePedidoDetalle(false);
   };
 
   const openModal = (modalType) => {
@@ -200,6 +204,7 @@ function App() {
     setShowTogleMenu(false);
     setShowCrear(true);
     setShowActualizar(false);
+    setShowReportePedidoDetalle(false);
   }
 
   const openUpdPedidoDetails = (iorder, iCliente, imesa, itotal) => {
@@ -218,6 +223,7 @@ function App() {
     setShowReportePedido(false);
     setShowTogleMenu(false);
     setShowCrear(false);
+    setShowReportePedidoDetalle(false);
   }
 
   const openPedidoDetails =() => {
@@ -233,6 +239,7 @@ function App() {
     setShowCrear(false);
     setShowActualizar(false);
     setPedidos(true);
+    setShowReportePedidoDetalle(false);
   }
 
   const saveDetallePedidoData = (data) => {
