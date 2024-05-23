@@ -1,6 +1,6 @@
 // TablaDetalle.js
 import React, { useEffect, useState } from 'react';
-import { updateDetallePed, deletePedidoDetalle,updatePedido } from '../../services/apiService';
+import { updateDetallePed, deletePedidoDetalle, updatePedido } from '../../services/apiService';
 
 function TablaDetallePedido(
   {
@@ -11,7 +11,7 @@ function TablaDetallePedido(
     editRow = null, 
     setEditRow = null,
     totalInput,
-    setTotalInput,
+    setTotalInput,    
     mesaInput = null,
     clienteInput = null
   }) 

@@ -356,12 +356,56 @@ export const fetchPedidos = async () => {
 
 export const fetchPedidoDetalles = async () => {
   try {
-    const response = await fetch(url+'/gg/pedidodetalles/');
+    const response = await fetch(url+'/gg/pedido_detalle');
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
-    const data = await response.json();
-    return data;
+    
+    const pedidosDetalle = await response.json();
+    const responseProd = await fetch(url+'/gg/producto', {
+      method: 'GET' // Adjust the method accordingly
+    });
+    if (!responseProd.ok) {
+      throw new Error(`API request failed with status ${responseProd.status}`);
+    }
+    const productos = await responseProd.json();
+    // Find the object in data with matching id_categoria
+    const newPedidosDetalle = pedidosDetalle.map(pedido => {
+      const matchingProducto = productos.find(producto => producto.id === pedido.id_producto);
+      if (matchingProducto) {
+        return {
+          ...pedido,
+          descripcion: matchingProducto.descripcion,
+          id_categoria: matchingProducto.id_categoria
+        };
+      }
+  
+      return pedido;
+    });
+
+    const responseCat = await fetch(url+'/gg/categoria', {
+      method: 'GET' // Adjust the method accordingly
+    });
+    if (!responseCat.ok) {
+      throw new Error(`API request failed with status ${responseCat.status}`);
+    }
+    const categories = await responseCat.json();
+
+    // Find the object in data with matching id_categoria
+    const newArray = newPedidosDetalle.map(product => {
+      const matchingCategory = categories.find(category => category.id === product.id_categoria);
+      
+      if (matchingCategory) {
+        return {
+          ...product,
+          descripcion_cat: matchingCategory.descripcion,
+        };
+      }
+  
+      return product;
+    });
+    return newArray;
+
   } catch (error) {
     throw new Error('API request failed: ' + error.message);
   }
