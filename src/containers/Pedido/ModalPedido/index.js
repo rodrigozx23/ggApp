@@ -31,6 +31,9 @@ function ModalPedido({
   const [productDescriptions, setProductDescriptions] = useState([]);
   const [productIds, setProductIds] = useState([]);
 
+  const [serviceType, setServiceType] = useState('Salon');
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
   const handleAddToTable = () => {
       // Prepare the data and pass it to the parent component
       if((descripcionInput.length === 0) || 
@@ -80,33 +83,52 @@ function ModalPedido({
       }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchProdutos(); // Assuming fetchProdutos correctly fetches the data
-        if (Array.isArray(data)) {
-          const modifiedData = data.filter(item => item.id_categoria !== 0)
-          .map(item => ({ id: item.id, description: item.descripcion, unitprice: item.precio, idCategoria: item.id_categoria }));
-          // Extract products descriptions from the response and set them in state
-          const descriptions = modifiedData.map(item => item.description);
-          const ids = modifiedData.map((item) => item.id);
-          const unitPrices = modifiedData.map(item => item.unitprice);
-          setProductData(modifiedData);
-          for (let i = 0; i < ids.length; i++) {
-            idToUnitPriceMap[ids[i]] = unitPrices[i];
-          }        
-          setProductDescriptions(descriptions);
-          setProductIds(ids);
-          setTotalInput(0);
-        } else {
-          console.error('Error: Data received from the API is not an array.');
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
+  const handleServiceTypeChange = (e) => {
+    const newServiceType = e.target.value;
+    if(newServiceType == 'Salon'){
+      setServiceType(newServiceType);
+      setClienteInput('');
+    }else{
+      setServiceType(newServiceType);
+      setClienteInput(newServiceType);
+    }
+  };
+
+  const populateProducts = async () => {
+    try {
+      const data = await fetchProdutos(); // Assuming fetchProdutos correctly fetches the data
+      if (Array.isArray(data)) {
+        const modifiedData = data.filter(item => {
+            if (serviceType === 'Menu') {
+                return item.id_categoria === 14;
+            } else {
+                return item.id_categoria !== 14;
+            }
+          }
+        )
+        .map(item => ({ id: item.id, description: item.descripcion, unitprice: item.precio, idCategoria: item.id_categoria }));
+        // Extract products descriptions from the response and set them in state
+        const descriptions = modifiedData.map(item => item.description);
+        const ids = modifiedData.map((item) => item.id);
+        const unitPrices = modifiedData.map(item => item.unitprice);
+        setProductData(modifiedData);
+        for (let i = 0; i < ids.length; i++) {
+          idToUnitPriceMap[ids[i]] = unitPrices[i];
+        }        
+        setProductDescriptions(descriptions);
+        setProductIds(ids);
+        setTotalInput(0);
+      } else {
+        console.error('Error: Data received from the API is not an array.');
       }
-    };
-    fetchData();
-  }, []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    populateProducts()
+  }, [serviceType]);
 
   const handleProductSelect = (description, id) => {
     const selectedUnitPrice = idToUnitPriceMap[id];
@@ -147,6 +169,36 @@ function ModalPedido({
       // Handle network errors
       console.error('Network error:', error);
     }  
+  };
+
+  const handlePagarPedido = async (mesaInput, clienteInput, totalInput, model) => {
+    console.log(model);
+    try {
+      setButtonDisabled(true);
+      // Call the insertCategory function to send the POST request
+      const response = await insertPedido({ 
+        pedido_id: "0",
+        updatedMesa: mesaInput,
+        updatedCliente: clienteInput,
+        updatedTotal: totalInput,
+        updatedEstadoPedido: "2" //ESTADO PAGADO
+      });
+
+      // Check if the response is successful and handle it as needed
+      if (response) {
+        // Optionally, you can add code to update your UI or take other actions upon success
+        const responsePD = await insertPedidoDetalle({ pedido_id: response.id, model: model})
+      } else {
+        // Handle the case when the request was not successful (e.g., display an error message)
+        console.error('Pedido not saved: An error occurred');
+      }      
+    } catch (error) {
+      // Handle network errors
+      console.error('Network error:', error);
+    } finally {
+      setButtonDisabled(false);
+      openPedidoDetails();
+    }
   };
 
   return(
@@ -210,7 +262,56 @@ function ModalPedido({
                                         value={clienteInput}
                                         onChange={(e) => setClienteInput(e.target.value)}/>     
                                     </div>
-                                </div>           
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-2"> 
+                                        <p>Tipo de Servicio</p>
+                                    </div>
+                                    <div className="col-md-10"> 
+                                      <div className="form-check form-check-inline">
+                                          <input
+                                              className="form-check-input"
+                                              type="radio"
+                                              name="serviceType"
+                                              id="menuOption"
+                                              value="Menu"
+                                              checked={serviceType === 'Menu'}
+                                              onChange={handleServiceTypeChange}
+                                          />
+                                          <label className="form-check-label" htmlFor="menuOption">
+                                              Menu
+                                          </label>
+                                      </div>
+                                      <div className="form-check form-check-inline">
+                                          <input
+                                              className="form-check-input"
+                                              type="radio"
+                                              name="serviceType"
+                                              id="deliveryOption"
+                                              value="Delivery"
+                                              checked={serviceType === 'Delivery'}
+                                              onChange={handleServiceTypeChange}
+                                          />
+                                          <label className="form-check-label" htmlFor="deliveryOption">
+                                              Delivery
+                                          </label>
+                                      </div>
+                                      <div className="form-check form-check-inline">
+                                          <input
+                                              className="form-check-input"
+                                              type="radio"
+                                              name="serviceType"
+                                              id="salonOption"
+                                              value="Salon"
+                                              checked={serviceType === 'Salon'}
+                                              onChange={handleServiceTypeChange}
+                                          />
+                                          <label className="form-check-label" htmlFor="salonOption">
+                                              Salon
+                                          </label>
+                                      </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -270,6 +371,17 @@ function ModalPedido({
                         <div className="col align-self-center">
                             <div className="col-md-12">
                                 <button className="btn btn-success" onClick={handleAddToTable}>+ Agregar Producto</button>
+                            </div>
+                            <br />
+                            <div className="col-md-12">
+                              <button 
+                                  className="btn btn-primary" 
+                                  onClick={() => {
+                                      handlePagarPedido(mesaInput, clienteInput, totalInput, detallePedidoData)
+                                  }}
+                                  disabled={buttonDisabled}>
+                                  Pagar Pedido
+                              </button>
                             </div>
                         </div>    
                     </div>
