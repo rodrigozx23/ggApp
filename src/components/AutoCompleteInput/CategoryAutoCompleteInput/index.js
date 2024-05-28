@@ -61,7 +61,7 @@ const CategoryAutoCompleteInput = ({
         <br/>
 
         <div className="placeholder-group">
-          <input type="text" required id="category" className="placeholder-control category" onChange={onInputChange}></input>
+          <input type="text" required id="category" className="placeholder-control category" onChange={onInputChange} value={value}></input>
           <label className="floating-label category">Categoria</label>
         </div>
 
