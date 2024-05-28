@@ -184,6 +184,7 @@ function App() {
   }
 
   const closeCrearPedido = () => {
+    setShowPedidosDetails(true);
     setMesaInput('');
     setTotalInput('');
     setDetallePedidoData([]);
