@@ -190,11 +190,6 @@ const handleDelete = async (rowIndex, pedidodet_id) => {
     // Call the insertCategory function to send the POST request
     if (window.confirm(confirmMessage)) {
 
-      if(uniqueProducts.length == 1) {
-        alert("No se puede eliminar este registro debe tener minimo de un producto en el detalle.");
-        return;
-      }
-
       // Calculate the total sum excluding the deleted row
       const totalSum = uniqueProducts
       .filter((_, index) => index !== rowIndex)
@@ -202,7 +197,13 @@ const handleDelete = async (rowIndex, pedidodet_id) => {
 
       // Set totalInput state with the calculated totalSum
       setTotalInput(totalSum);
-      if(pedidodet_id!==0){
+      if(pedidodet_id > 0){
+
+        if(uniqueProducts.length == 1) {
+          alert("No se puede eliminar este registro debe tener minimo de un producto en el detalle.");
+          return;
+        }
+
         const updatedingData = await deletePedidoDetalle(pedidodet_id);
         if (updatedingData) {
           const updatedPedidoDetalleData = [...data];
@@ -216,6 +217,7 @@ const handleDelete = async (rowIndex, pedidodet_id) => {
           // Exit edit mode
           setUpdatedData({});
           setEditRow(null);
+          handleUpdateHeader(mesaInput,clienteInput,totalSum)
         } else {
           console.error('pedido detalle not saved: An error occurred');
         }
@@ -320,7 +322,7 @@ return (
                         &nbsp;
                         <button
                           className="btn btn-warning"
-                          onClick={() => handleDelete(index, descriptionToTotalMap[row].id)}
+                          onClick={() => handleDelete(index, null)}
                         >
                           Delete
                         </button>

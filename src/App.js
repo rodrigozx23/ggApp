@@ -75,6 +75,8 @@ function App() {
   const [showCrear, setShowCrear] = useState(false);
 	const [showActualizar, setShowActualizar] = useState(false);
 
+  const [estadoModal, setEstadoModal] = useState('');	
+
   const openReportePedidosDetalle = () => {
     setShowReportePedidoDetalle(true);
     setShowReportePedido(false);
@@ -88,6 +90,7 @@ function App() {
     setShowUpdPedidoDetails(false);
     setShowCrear(false);
     setShowActualizar(false);
+    setEstadoModal('openReportePedidosDetalle');
   };
 
   const openReportePedidos = () => {
@@ -103,6 +106,7 @@ function App() {
     setShowUpdPedidoDetails(false);
     setShowCrear(false);
     setShowActualizar(false);
+    setEstadoModal('openReportePedidos');
   };
 
   const openCategoriaDetails = () => {
@@ -119,6 +123,7 @@ function App() {
     setShowCrear(false);
     setShowActualizar(false);
     setShowReportePedidoDetalle(false);
+    setEstadoModal('openCategoriaDetails');
   };
 
   const openProductosDetails = () => {
@@ -135,6 +140,7 @@ function App() {
     setShowCrear(false);
     setShowActualizar(false);
     setShowReportePedidoDetalle(false);
+    setEstadoModal('openProductosDetails');
   };
 
   const openPedidosDetails = () => {
@@ -151,6 +157,7 @@ function App() {
     setShowCrear(false);
     setShowActualizar(false);
     setShowReportePedidoDetalle(false);
+    setEstadoModal('openPedidosDetails');
   };
 
   const openPedidosMenuDetails = () => {
@@ -167,6 +174,7 @@ function App() {
     setShowCrear(false);
     setShowActualizar(false);
     setShowReportePedidoDetalle(false);
+    setEstadoModal('openPedidosMenuDetails');
   };
 
   const openModal = (modalType) => {
@@ -224,6 +232,7 @@ function App() {
     setShowTogleMenu(false);
     setShowCrear(false);
     setShowReportePedidoDetalle(false);
+    setEstadoModal('openPedidosDetails');
   }
 
   const openPedidoDetails =() => {
@@ -240,6 +249,7 @@ function App() {
     setShowActualizar(false);
     setPedidos(true);
     setShowReportePedidoDetalle(false);
+    setEstadoModal('openPedidoDetails');
   }
 
   const saveDetallePedidoData = (data) => {
@@ -310,6 +320,31 @@ function App() {
     }
   };
 
+  const closeModalPedidos = () => {
+    const value = estadoModal; 
+    if(value == 'openPedidoDetails'){
+      openPedidoDetails();
+    }
+    else if (value == 'openReportePedidos')
+    {
+      openReportePedidos();
+    }
+    else if (value == 'openReportePedidosDetalle')
+    {
+      openReportePedidosDetalle()
+    }
+    else if (value == 'openCategoriaDetails')
+    {
+      openCategoriaDetails()
+    }
+    else if (value == 'openProductosDetails')
+    {
+      openProductosDetails()
+    }else{
+      openPedidoDetails();
+    }
+  }
+
   return (
     <div>
     {!isLoggedIn ? (
@@ -367,7 +402,7 @@ function App() {
                 openModal = { openModal }
                 setPedidoData={setPedidoData}
                 modalType="pedidos"
-                openPedidoDetails = {openPedidoDetails}
+                closeModalPedidos = {closeModalPedidos}
                 detallePedidoData={detallePedidoData}
                 setDetallePedidoData = { setDetallePedidoData }
               />
@@ -390,7 +425,7 @@ function App() {
                 openModal = { openModal }
                 setPedidoData={setPedidoData}
                 modalType="pedidosUpd"
-                openPedidoDetails = {openPedidoDetails}                 
+                closeModalPedidos = {closeModalPedidos}                 
                 detallePedidoData={detallePedidoData}
                 setDetallePedidoData = { setDetallePedidoData }
               />
@@ -475,34 +510,9 @@ function App() {
                 setMesaInput = {setMesaInput}		
                 totalInput = {totalInput}
                 setTotalInput = {setTotalInput}			              
-                openPedidoDetails = {openPedidoDetails}
+                closeModalPedidos = {closeModalPedidos}
               />
             )}
-
-        <TableDataProvider value={detallePedidoData}>
-          <div>
-          {showCrearPedidoDetails && (
-            <BodyCrearPedido // Create a separate Modal for Pedidos
-              mesaInput = {mesaInput}
-              setMesaInput = {setMesaInput}		
-              totalInput = {totalInput}
-              setTotalInput = {setTotalInput}			
-              openModal = { openModal }
-              setPedidoData={setPedidoData}
-              modalType="pedidos"
-              openPedidoDetails = {openPedidoDetails}                 
-              detallePedidoData={detallePedidoData}
-              setDetallePedidoData = { setDetallePedidoData }
-            />
-          )}
-          {showModalPedidoDetalle &&(
-            <ModalPedidoDetalle
-              setShowModalPedidoDetalle = {setShowModalPedidoDetalle}
-              setDetallePedidoData={saveDetallePedidoData} 
-            /> 
-          )}          
-          </div>
-        </TableDataProvider>
             
         <TableDataProvider value={detallePedidoData}>
           <div>
@@ -600,66 +610,8 @@ function App() {
             )}
           </div>
         </TableDataProvider>
-        
-          <div>
-            <TableDataProvider value={detallePedidoData}>
-              <div>
-              {showCrearPedidoDetails && (
-                <BodyCrearPedido // Create a separate Modal for Pedidos
-                  mesaInput = {mesaInput}
-                  setMesaInput = {setMesaInput}		
-                  totalInput = {totalInput}
-                  setTotalInput = {setTotalInput}			
-                  openModal = { openModal }
-                  setPedidoData={setPedidoData}
-                  modalType="pedidos"
-                  openPedidoDetails = {openPedidoDetails}                 
-                  detallePedidoData={detallePedidoData}
-                  setDetallePedidoData = { setDetallePedidoData }
-                />
-              )}
-              {showModalPedidoDetalle &&(
-                <ModalPedidoDetalle
-                  setShowModalPedidoDetalle = {setShowModalPedidoDetalle}
-                  setDetallePedidoData={saveDetallePedidoData} 
-                /> 
-              )}          
-              </div>
-            </TableDataProvider>
-            
-            <TableDataProvider value={detallePedidoData}>
-              <div>
-              {showUpdPedidoDetails && (
-                <BodyUpdPedido // Create a separate Modal for Pedidos
-                  editRow={editRow}
-                  setEditRow = {setEditRow}
-                  mesaInput = {mesaInput}
-                  setMesaInput = {setMesaInput}		
-                  totalInput = {totalInput}
-                  setTotalInput = {setTotalInput}			
-                  clienteInput = {clienteInput}
-                  setClienteInput = {setClienteInput}	
-                  idPedido = {idPedido}
-                  setIdPedido = {setIdPedido}	
-                  openModal = { openModal }
-                  setPedidoData={setPedidoData}
-                  modalType="pedidosUpd"
-                  openPedidoDetails = {openPedidoDetails}                 
-                  detallePedidoData={detallePedidoData}
-                  setDetallePedidoData = { setDetallePedidoData }
-                />
-              )}
-              {showModalPedidoDetalle &&(
-                <ModalPedidoDetalle
-                  setShowModalPedidoDetalle = {setShowModalPedidoDetalle}
-                  setDetallePedidoData={saveDetallePedidoData} 
-                /> 
-              )}          
-              </div>
-            </TableDataProvider>
-          </div>
-        </div>
 
+        </div>
         </body>        
       </div>
     )}

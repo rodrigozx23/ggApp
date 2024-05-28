@@ -19,7 +19,7 @@ function ModalPedidoUpd({
   openModal,
 	setPedidoData,
   modalType,
-  openPedidoDetails,
+  closeModalPedidos,
   detallePedidoData,
   setDetallePedidoData
 }){  
@@ -173,7 +173,7 @@ const handleUpdate = async (mesaInput,clienteInput, totalInput, model) => {
       console.error('Pedido not saved: An error occurred');
     }
     //}
-    openPedidoDetails();
+    closeModalPedidos();
   } catch (error) {
     console.error('Network error:', error);
   } finally {
@@ -207,7 +207,7 @@ const handlePagarPedido = async (mesaInput,clienteInput, totalInput) => {
     console.error('Network error:', error);
   } finally {
     setButtonDisabled(false);
-    openPedidoDetails();
+    closeModalPedidos();
   }
 };
 
@@ -237,7 +237,7 @@ const handleCancelarPedido = async (mesaInput,clienteInput, totalInput) => {
     console.error('Network error:', error);
   } finally {
     setButtonDisabled(false);
-    openPedidoDetails();
+    closeModalPedidos();
   }
 };
 
@@ -251,8 +251,9 @@ return(
                         <button
                             className="btn btn-danger mt-3" // Add margin top class
                             onClick={() => {
-                            openPedidoDetails()
-                            }}
+                              closeModalPedidos();
+                              setEditRow(false);
+                            }}                    
                         >
                         ↵ Volver
                         </button>
@@ -414,24 +415,13 @@ return(
                   />
                 </div>
                 <div className="row mt-3">
-                  <div className="col-md-10"></div>
+                  <div className="col-md-11"></div>
                   <div className="col-md-1">
                     <button
                       className="btn btn-primary mt-3" // Add margin top class
                       onClick={() => handleUpdate(mesaInput, clienteInput, totalInput, detallePedidoData)}
                       disabled={buttonDisabled}>
                       Update
-                    </button>
-                  </div>
-                  <div className="col-md-1">
-                    <button
-                      className="btn btn-danger mt-3" // Add margin top class
-                      onClick={() => {
-                        openPedidoDetails();
-                        setEditRow(false);
-                      }}
-                    >
-                      Return
                     </button>
                   </div>
                 </div>
