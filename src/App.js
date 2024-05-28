@@ -293,6 +293,16 @@ function App() {
     }
   };
 
+  const openModal = (modalType) => {
+    if (modalType === 'categoria') {
+      setShowModalCategoria(true);
+      setShowCategoriaDetails(true);
+    } else if (modalType === 'productos') {
+      setShowModalProductos(true);
+      setShowProductosDetails(true);
+    }
+  };
+
   return (
     <div>
     {!isLoggedIn ? (
@@ -472,6 +482,7 @@ function App() {
               updatedDescription={updatedDescription}
               setUpdatedDescription={setUpdatedDescription}
               setEditRow = {setEditRow}
+              openModal = {openModal}
               modalType="categoria"
               categoryData={categoryData}
               setCategoryData={setCategoryData}
@@ -492,18 +503,12 @@ function App() {
         <TableDataProvider>
           <div>
             {showProductosDetails && (
-              <BodyMantenimientoProducto // Reuse BodyMantenimiento for PRODUCTOS
-                //getTableProps={getTableProps}
-                //getTableBodyProps={getTableBodyProps}
-                //headerGroups={headerGroups}
-                //rows={rows}
-                //prepareRow={prepareRow}
+              <BodyMantenimientoProducto
                 editRow={editRow}
-                updatedData={updatedData} // Pass updated data state
-                setUpdatedData={setUpdatedData} // Set updated data state	
-                //memoDetails={productosDetails} // Pass PRODUCTOS data
-                //setMemoDetails={setProductosDetails} // Update PRODUCTOS state
+                updatedData={updatedData}
+                setUpdatedData={setUpdatedData}
                 setEditRow = {setEditRow}
+                openModal = {openModal}
                 modalType="productos"
                 productData={productData}
                 setProductData={setProductData}
@@ -511,7 +516,7 @@ function App() {
             )}
                     
             {showModalProductos && (
-              <ModalProducto // Create a separate Modal for PRODUCTOS
+              <ModalProducto
                 descripcionInput={descripcionInput}
                 setDescripcionInput={setDescripcionInput}
                 quantityInput={quantityInput}
@@ -521,7 +526,6 @@ function App() {
                 categoryInput={categoryInput}
                 setCategoryInput={setCategoryInput}
                 setShowModalProductos={setShowModalProductos}
-                //saveProductosDetail={saveProductosDetail}
                 setProductData={setProductData}
               />
             )}

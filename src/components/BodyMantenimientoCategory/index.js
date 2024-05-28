@@ -3,16 +3,9 @@ import { fetchCategories, updateCategory, deleteCategory } from '../../services/
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function BodyMantenimientoCategory({
-  //getTableProps,
-  //getTableBodyProps,
-  //headerGroups,
-  //rows,
-  //prepareRow,
   editRow,
   updatedDescription,
   setUpdatedDescription,
-  //memoDetails,
-  //setMemoDetails,
   openModal,
   setEditRow,
   modalType,
