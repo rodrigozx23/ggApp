@@ -77,6 +77,8 @@ function App() {
 
   const [activeIndex, setActiveIndex] = useState(null);
 
+  const [isInPedidos, setisInPedidos] = useState(false);
+
   const handleActiveIndex = (index) => {
     setActiveIndex(index);
   };
@@ -94,6 +96,7 @@ function App() {
     setShowUpdPedidoDetails(false);
     setShowCrear(false);
     setShowActualizar(false);
+    setisInPedidos(false);
   };
 
   const openReportePedidos = () => {
@@ -109,6 +112,7 @@ function App() {
     setShowUpdPedidoDetails(false);
     setShowCrear(false);
     setShowActualizar(false);
+    setisInPedidos(false);
   };
 
   const openCategoriaDetails = () => {
@@ -125,6 +129,7 @@ function App() {
     setShowCrear(false);
     setShowActualizar(false);
     setShowReportePedidoDetalle(false);
+    setisInPedidos(false);
   };
 
   const openProductosDetails = () => {
@@ -141,6 +146,7 @@ function App() {
     setShowCrear(false);
     setShowActualizar(false);
     setShowReportePedidoDetalle(false);
+    setisInPedidos(false);
   };
 
   const openPedidosDetails = () => {
@@ -157,6 +163,7 @@ function App() {
     setShowCrear(false);
     setShowActualizar(false);
     setShowReportePedidoDetalle(false);
+    setisInPedidos(true);
   };
 
   const openPedidosMenuDetails = () => {
@@ -184,7 +191,9 @@ function App() {
   }
 
   const closeCrearPedido = () => {
-    setShowPedidosDetails(true);
+    if (isInPedidos === true) {
+      setShowPedidosDetails(true);
+    }
     setMesaInput('');
     setTotalInput('');
     setDetallePedidoData([]);
