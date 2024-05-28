@@ -256,7 +256,11 @@ body{
   border: none;
   border-radius: 8px;
   font-weight: bold;
-  padding: 8px 16px 8px 16px;
+  padding: 8px;
+}
+
+.btn-modal img{
+  margin-bottom: 3px;
 }
 
 .btn-cancelar{
@@ -267,7 +271,7 @@ body{
   border: none;
   border-radius: 8px;
   font-weight: bold;
-  padding: 8px 8px 8px 16px;
+  padding: 8px;
 }
 
 .btn-agregar {
@@ -279,6 +283,7 @@ body{
   border-width: 1px;
   font-weight: bold;
   color: #157F88;
+  padding: 6px;
 }
 
 .btn-update {

@@ -45,7 +45,7 @@ function BodyReportesPedidos({
                 cliente: item.cliente,
                 mesa: item.mesa,
                 estadoPedido: item.estado_pedido, // 0, 1, 2
-                descripcionEstadoPedido: (item.estado_pedido == 1) ? "Abierto" : ((item.estado_pedido == 2) ? "Vendido" : "Cancelado"),
+                descripcionEstadoPedido: (item.estado_pedido == 1) ? "Activo" : ((item.estado_pedido == 2) ? "Vendido" : "Cancelado"),
                 fecha: formattedDate,
                 hora: formattedTime,
                 total: item.total,

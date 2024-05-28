@@ -295,7 +295,7 @@ return(
                 <div className="col-md-3">
                   <div className="col-md-12">
                     <button 
-                        className="btn-pagar" 
+                        className="btn-pagar btn-modal" 
                         onClick={() => {
                             handlePagarPedido(mesaInput, clienteInput, totalInput)
                         }} disabled={buttonDisabled}>
@@ -308,7 +308,7 @@ return(
                   <br />
                   <div className="col-md-12">
                     <button 
-                        className="btn-cancelar" 
+                        className="btn-cancelar btn-modal " 
                         onClick={() => {
                             handleCancelarPedido(mesaInput, clienteInput, totalInput)
                         }} disabled={buttonDisabled}>
@@ -374,7 +374,7 @@ return(
                             <div className="col-md-1">
                             </div>
                             <div className="col-md-3">
-                              <button className="btn-agregar" onClick={handleAddToTable}>
+                              <button className="btn-agregar btn-modal" onClick={handleAddToTable}>
                                 <img className='' src={require("../../../images/ic-add.png")}/> Agregar Producto
                               </button>
                             </div>
@@ -419,7 +419,7 @@ return(
               <div className="row mt-3">
                   <div className="col-md-12">
                     <button
-                      className="btn-update" // Add margin top class
+                      className="btn-update btn-modal" // Add margin top class
                       onClick={() => handleUpdate(mesaInput, clienteInput, totalInput, detallePedidoData)}
                       disabled={buttonDisabled}>
                       <img className='' src={require("../../../images/ic-refresh.png")}/> Actualizar Pedido
