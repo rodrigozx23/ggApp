@@ -12,12 +12,13 @@ function MenuBar({
   openCrearPedidoDetails,
   openPedidosMenuDetails,
   user,
-  handleLogout
+  handleLogout,
+  handleActiveIndex,
+  activeIndex
 }){
 
-  const [activeIndex, setActiveIndex] = useState(null); // Initially no active button
   const handleClick = (index) => {
-    setActiveIndex(index); // Update active index on click
+    handleActiveIndex(index);
   };
 
 	return(

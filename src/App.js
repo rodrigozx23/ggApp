@@ -75,7 +75,11 @@ function App() {
   const [showCrear, setShowCrear] = useState(false);
 	const [showActualizar, setShowActualizar] = useState(false);
 
-  const [estadoModal, setEstadoModal] = useState('');	
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const handleActiveIndex = (index) => {
+    setActiveIndex(index);
+  };
 
   const openReportePedidosDetalle = () => {
     setShowReportePedidoDetalle(true);
@@ -90,7 +94,6 @@ function App() {
     setShowUpdPedidoDetails(false);
     setShowCrear(false);
     setShowActualizar(false);
-    setEstadoModal('openReportePedidosDetalle');
   };
 
   const openReportePedidos = () => {
@@ -106,7 +109,6 @@ function App() {
     setShowUpdPedidoDetails(false);
     setShowCrear(false);
     setShowActualizar(false);
-    setEstadoModal('openReportePedidos');
   };
 
   const openCategoriaDetails = () => {
@@ -123,7 +125,6 @@ function App() {
     setShowCrear(false);
     setShowActualizar(false);
     setShowReportePedidoDetalle(false);
-    setEstadoModal('openCategoriaDetails');
   };
 
   const openProductosDetails = () => {
@@ -140,7 +141,6 @@ function App() {
     setShowCrear(false);
     setShowActualizar(false);
     setShowReportePedidoDetalle(false);
-    setEstadoModal('openProductosDetails');
   };
 
   const openPedidosDetails = () => {
@@ -157,7 +157,6 @@ function App() {
     setShowCrear(false);
     setShowActualizar(false);
     setShowReportePedidoDetalle(false);
-    setEstadoModal('openPedidosDetails');
   };
 
   const openPedidosMenuDetails = () => {
@@ -174,45 +173,21 @@ function App() {
     setShowCrear(false);
     setShowActualizar(false);
     setShowReportePedidoDetalle(false);
-    setEstadoModal('openPedidosMenuDetails');
-  };
-
-  const openModal = (modalType) => {
-    if (modalType === 'categoria') {
-      setShowModalCategoria(true);
-      setShowCategoriaDetails(true);
-    } else if (modalType === 'productos') {
-      setShowModalProductos(true);
-      setShowProductosDetails(true);
-    }
-    else if (modalType === 'pedidos') {
-      setShowPedidosDetails(false);
-      setShowModalPedidoDetalle(true);     
-      setShowCrearPedidoDetails(true);
-    }
-    else if (modalType === 'pedidosUpd') {
-      setShowPedidosDetails(false);
-      setShowModalPedidoDetalle(true);     
-      setShowUpdPedidoDetails(true);
-    }
   };
 
   const openCrearPedidoDetails = () => {
-    setShowCrearPedidoDetails(false);
-    setShowUpdPedidoDetails(false)
-    setShowModalPedidoDetalle(false);
     setShowPedidosDetails(false);
-    setShowCategoriaDetails(false);
-    setShowProductosDetails(false);
-    setShowPedidosMenuDetails(false);
     setMesaInput('');
     setTotalInput('');
     setDetallePedidoData([]);
-    setShowReportePedido(false);
-    setShowTogleMenu(false);
     setShowCrear(true);
-    setShowActualizar(false);
-    setShowReportePedidoDetalle(false);
+  }
+
+  const closeCrearPedido = () => {
+    setMesaInput('');
+    setTotalInput('');
+    setDetallePedidoData([]);
+    setShowCrear(false);
   }
 
   const openUpdPedidoDetails = (iorder, iCliente, imesa, itotal) => {
@@ -232,7 +207,6 @@ function App() {
     setShowTogleMenu(false);
     setShowCrear(false);
     setShowReportePedidoDetalle(false);
-    setEstadoModal('openPedidosDetails');
   }
 
   const openPedidoDetails =() => {
@@ -249,7 +223,6 @@ function App() {
     setShowActualizar(false);
     setPedidos(true);
     setShowReportePedidoDetalle(false);
-    setEstadoModal('openPedidoDetails');
   }
 
   const saveDetallePedidoData = (data) => {
@@ -320,31 +293,6 @@ function App() {
     }
   };
 
-  const closeModalPedidos = () => {
-    const value = estadoModal; 
-    if(value == 'openPedidoDetails'){
-      openPedidoDetails();
-    }
-    else if (value == 'openReportePedidos')
-    {
-      openReportePedidos();
-    }
-    else if (value == 'openReportePedidosDetalle')
-    {
-      openReportePedidosDetalle()
-    }
-    else if (value == 'openCategoriaDetails')
-    {
-      openCategoriaDetails()
-    }
-    else if (value == 'openProductosDetails')
-    {
-      openProductosDetails()
-    }else{
-      openPedidoDetails();
-    }
-  }
-
   return (
     <div>
     {!isLoggedIn ? (
@@ -386,6 +334,8 @@ function App() {
           openPedidosMenuDetails = { openPedidosMenuDetails }
           user = {username}
           handleLogout = {handleLogout}
+          handleActiveIndex = {handleActiveIndex}
+          activeIndex = {activeIndex}
         />        
         </header>
         <body>
@@ -398,13 +348,14 @@ function App() {
                 mesaInput = {mesaInput}
                 setMesaInput = {setMesaInput}		
                 totalInput = {totalInput}
-                setTotalInput = {setTotalInput}			
-                openModal = { openModal }
+                setTotalInput = {setTotalInput}
                 setPedidoData={setPedidoData}
                 modalType="pedidos"
-                closeModalPedidos = {closeModalPedidos}
+                openPedidoDetails = {openPedidoDetails}
+                closeCrearPedido = {closeCrearPedido}
                 detallePedidoData={detallePedidoData}
                 setDetallePedidoData = { setDetallePedidoData }
+                handleActiveIndex = {handleActiveIndex}
               />
             )}         
           </TableDataProvider>      
@@ -421,11 +372,10 @@ function App() {
                 clienteInput = {clienteInput}
                 setClienteInput = {setClienteInput}	
                 idPedido = {idPedido}
-                setIdPedido = {setIdPedido}	
-                openModal = { openModal }
+                setIdPedido = {setIdPedido}
                 setPedidoData={setPedidoData}
                 modalType="pedidosUpd"
-                closeModalPedidos = {closeModalPedidos}                 
+                openPedidoDetails = {openPedidoDetails}           
                 detallePedidoData={detallePedidoData}
                 setDetallePedidoData = { setDetallePedidoData }
               />
@@ -509,8 +459,7 @@ function App() {
                 mesaInput = {mesaInput}
                 setMesaInput = {setMesaInput}		
                 totalInput = {totalInput}
-                setTotalInput = {setTotalInput}			              
-                closeModalPedidos = {closeModalPedidos}
+                setTotalInput = {setTotalInput}
               />
             )}
             
@@ -528,7 +477,6 @@ function App() {
               setClienteInput = {setClienteInput}	
               idPedido = {idPedido}
               setIdPedido = {setIdPedido}	
-              openModal = { openModal }
               setPedidoData={setPedidoData}
               modalType="pedidosUpd"
               openPedidoDetails = {openPedidoDetails}                 
@@ -552,7 +500,6 @@ function App() {
               editRow={editRow}
               updatedDescription={updatedDescription}
               setUpdatedDescription={setUpdatedDescription}
-              openModal={openModal}
               setEditRow = {setEditRow}
               modalType="categoria"
               categoryData={categoryData}
@@ -585,7 +532,6 @@ function App() {
                 setUpdatedData={setUpdatedData} // Set updated data state	
                 //memoDetails={productosDetails} // Pass PRODUCTOS data
                 //setMemoDetails={setProductosDetails} // Update PRODUCTOS state
-                openModal={openModal}
                 setEditRow = {setEditRow}
                 modalType="productos"
                 productData={productData}

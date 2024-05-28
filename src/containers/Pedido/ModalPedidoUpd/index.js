@@ -19,7 +19,7 @@ function ModalPedidoUpd({
   openModal,
 	setPedidoData,
   modalType,
-  closeModalPedidos,
+  openPedidoDetails,
   detallePedidoData,
   setDetallePedidoData
 }){  
@@ -173,7 +173,7 @@ const handleUpdate = async (mesaInput,clienteInput, totalInput, model) => {
       console.error('Pedido not saved: An error occurred');
     }
     //}
-    closeModalPedidos();
+    openPedidoDetails();
   } catch (error) {
     console.error('Network error:', error);
   } finally {
@@ -207,7 +207,7 @@ const handlePagarPedido = async (mesaInput,clienteInput, totalInput) => {
     console.error('Network error:', error);
   } finally {
     setButtonDisabled(false);
-    closeModalPedidos();
+    openPedidoDetails();
   }
 };
 
@@ -237,7 +237,7 @@ const handleCancelarPedido = async (mesaInput,clienteInput, totalInput) => {
     console.error('Network error:', error);
   } finally {
     setButtonDisabled(false);
-    closeModalPedidos();
+    openPedidoDetails();
   }
 };
 
@@ -251,7 +251,7 @@ return(
                         <button
                             className="btn btn-danger mt-3" // Add margin top class
                             onClick={() => {
-                              closeModalPedidos();
+                              openPedidoDetails();
                               setEditRow(false);
                             }}                    
                         >

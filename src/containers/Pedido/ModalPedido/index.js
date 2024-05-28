@@ -15,9 +15,11 @@ function ModalPedido({
     openModal,
     setPedidoData,
     modalType,
-    closeModalPedidos,
+    openPedidoDetails,
+    closeCrearPedido,
     detallePedidoData,
-    setDetallePedidoData
+    setDetallePedidoData,
+    handleActiveIndex
 }){  
   const [clienteInput, setClienteInput] = useState([]);
   const [descripcionInput, setDescripcionInput] = useState('');
@@ -164,7 +166,8 @@ function ModalPedido({
         console.error('Pedido not saved: An error occurred');
       }
       //}
-      closeModalPedidos();
+      openPedidoDetails();
+      handleActiveIndex(0);
     } catch (error) {
       // Handle network errors
       console.error('Network error:', error);
@@ -197,7 +200,8 @@ function ModalPedido({
       console.error('Network error:', error);
     } finally {
       setButtonDisabled(false);
-      closeModalPedidos();
+      openPedidoDetails();
+      handleActiveIndex(0);
     }
   };
 
@@ -211,7 +215,7 @@ function ModalPedido({
                         <button
                             className="btn btn-danger mt-3" // Add margin top class
                             onClick={() => {
-                              closeModalPedidos()
+                              closeCrearPedido()
                             }}
                         >
                         ↵ Volver
