@@ -267,6 +267,8 @@ return(
             <div className="container">
               <br />
               <div className="row">
+                <div className="col-md-1">
+                </div>
                 <div className="col-md-6">
                     <div className="col-md-10">
                       <input
@@ -288,7 +290,9 @@ return(
                       readOnly/>     
                     </div>       
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-1">
+                </div>
+                <div className="col-md-3">
                   <div className="col-md-12">
                     <button 
                         className="btn-pagar" 
@@ -298,6 +302,8 @@ return(
                         <img className='icModal' src={require("../../../images/ic-money.png")} />
                         Pagar Pedido
                     </button>
+                  </div>
+                  <div className="col-md-1">
                   </div>
                   <br />
                   <div className="col-md-12">
@@ -317,9 +323,7 @@ return(
                 <div className="col-md-3 textLeft">
                     <h4><b>Detalle</b></h4>
                 </div>
-                <div className="col-md-3">
-                </div>
-                <div className="col-md-6">
+                <div className="col-md-9">
                 </div>
               </div>
               <br />
@@ -327,6 +331,8 @@ return(
                 <div className="col-md-12">
                     <div className="form-group">
                         <div className="row">
+                            <div className="col-md-1">
+                            </div>
                             <div className="col-md-6">
                               <div className="col-md-10">
                                 <ProductAutoCompleteInput
@@ -341,11 +347,11 @@ return(
                                 />
                               </div>
                             </div>
-                            <div className="col-md-6">
-                            </div>
                         </div>
                         <br/>
                         <div className="row">
+                            <div className="col-md-1">
+                            </div>
                             <div className="col-md-6">
                               <div className="col-md-10"> 
                                   <input
@@ -365,10 +371,14 @@ return(
                                   />     
                               </div>
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-md-1">
+                            </div>
+                            <div className="col-md-3">
                               <button className="btn-agregar" onClick={handleAddToTable}>
                                 <img className='' src={require("../../../images/ic-add.png")}/> Agregar Producto
                               </button>
+                            </div>
+                            <div className="col-md-1">
                             </div>
                         </div>
                     </div>
@@ -401,7 +411,7 @@ return(
                       type="text"
                       className="form-control txtTotal"
                       placeholder="Total"
-                      value={ "Total " + totalInput.toFixed(2)}
+                      value={ "Total  " + totalInput.toFixed(2)}
                       readOnly/>
                 </div>
                 <div className="col-md-2"></div>

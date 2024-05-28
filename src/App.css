@@ -243,6 +243,7 @@ body{
   background-color: #fff;
   border: none;
   font-weight: bold;
+  font-size: larger;
   color: #157F88;
   text-decoration: underline;
 }
@@ -305,7 +306,8 @@ body{
 .txtTotal{
   text-align: center;
   font-weight: bold;
-  padding: 8px;
+  margin: 8px;
+  width: 140px;
 }
 
 .textLeft{

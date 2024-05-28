@@ -114,7 +114,7 @@ const ProductAutoCompleteInput = ({
         />
         <input
             className="custom-input"
-            placeholder="Product"
+            placeholder="Producto"
             value={value}
             onChange={onInputChange}
             onKeyDown={handleKeyDown}
