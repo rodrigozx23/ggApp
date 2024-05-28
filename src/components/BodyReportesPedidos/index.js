@@ -96,6 +96,7 @@ function BodyReportesPedidos({
 
 return (
   <div>
+    <br/>
     <div className="col-md-12">
       <button 
         className={pedidos ? "btn-pedrep btn-ped" : "btn-pedrep btn-rped"}
@@ -103,7 +104,7 @@ return (
           openReportePedidos();
           setPedidos(true);
         }}>
-      Reporte Pedido
+      Reporte Pedidos
       </button>
       <button 
         className={pedidos ? "btn-pedrep btn-rep" : "btn-pedrep btn-rrep"}
@@ -111,13 +112,14 @@ return (
           openReportePedidosDetalle();
           setPedidos(false);
         }}>
-      Reporte Detalle
+      Reporte Productos
       </button>
     </div>
-    <div className="col-md-2">
+    <div className="col-md-4">
       <br/>
       <br/>
       <br/>
+      <h1><b>Reporte Pedidos</b></h1>
       <br/>
     </div>
     <div className="col-md-12 mt-3">

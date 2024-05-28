@@ -92,12 +92,17 @@ function BodyMantenimientoCategory({
 
   return (
     <div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       <div className="col-md-10">
-        <h1><b>Category</b></h1>
+        <h1><b>Categorias</b></h1>
       </div>
       <div className="col-md-2">
         <button className="btn btn-primary mt-3" onClick={() => openModal(modalType)}>
-          Add Category
+          Add Categoria
         </button>
       </div>
       <div className="col-md-12 mt-3">
@@ -108,8 +113,8 @@ function BodyMantenimientoCategory({
             <table className="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th>Description</th>
-                  <th>Actions</th>
+                  <th>Descripcion</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>

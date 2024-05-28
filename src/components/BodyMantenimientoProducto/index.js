@@ -138,12 +138,17 @@ function BodyMantenimientoProducto({
   return (
   
     <div>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
 	  <div className="col-md-10">
-	  	<h1><b>Product</b></h1>
+	  	<h1><b>Productos</b></h1>
 	  </div>
 	  <div className="col-md-2">
 	    <button className="btn btn-primary mt-3" onClick={() => openModal(modalType)}>
-          Add Product
+          Add Producto
         </button>
 	  </div>
 	  <div className="row mb-3">
@@ -170,11 +175,11 @@ function BodyMantenimientoProducto({
           <table className="table table-striped table-bordered">
             <thead>
                <tr>
-                  <th>Description</th>
-				  <th>Quantity</th>
-				  <th>UnitPrice</th>
-				  <th>Category</th>
-                  <th>Actions</th>
+                  <th>Descripcion</th>
+				  <th>Cantidad</th>
+				  <th>Precio unitario</th>
+				  <th>Categoria</th>
+                  <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>

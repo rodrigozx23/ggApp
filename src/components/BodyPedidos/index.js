@@ -75,6 +75,10 @@ function BodyPedidos({
 
   return (
     <div>
+      <br />
+      <br />
+      <br />
+      <br />
       <div className="col-md-12 mt-3">
         <h1><b>Pedidos Activos</b></h1>
       </div>

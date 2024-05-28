@@ -87,7 +87,7 @@ body{
 
 .btn-pedrep{
   border-width: 0.5px;
-  width: 300px;
+  width: 308px;
   height: 80px;
   transform: translateX(120%);
   font-size: xx-large;
@@ -197,13 +197,13 @@ body{
 }
 
 .modal {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 20px; /* Adjusted padding */
+  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -212,13 +212,13 @@ body{
 
 .modal-content {
   background-color: #ffffff;
-  padding: 20px;
-  width: 70%; /* Adjusted width */
-  max-height: 80%; /* Added max-height */
-  overflow-y: auto; /* Added overflow-y for vertical scrolling */
-  border-radius: 5px;
+  padding: 16px;
+  width: 50%;
+  height: 80%;
+  overflow-y: auto;
+  border-radius: 8px;
   text-align: center;
-  position: relative; /* Added position */
+  position: relative;
 }
 
 .save-button {
@@ -237,6 +237,79 @@ body{
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+}
+
+.btn-volver {
+  background-color: #fff;
+  border: none;
+  font-weight: bold;
+  color: #157F88;
+  text-decoration: underline;
+}
+
+.btn-pagar{
+  height: 40px;
+  width: 180px;
+  color: #fff;
+  background-color: #0F0CA3;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  padding: 8px 16px 8px 16px;
+}
+
+.btn-cancelar{
+  height: 40px;
+  width: 180px;
+  color: #fff;
+  background-color: #B40000;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  padding: 8px 8px 8px 16px;
+}
+
+.btn-agregar {
+  height: 40px;
+  width: 180px;
+  background-color: #fff;
+  border-color: #157F88;
+  border-radius: 8px;
+  border-width: 1px;
+  font-weight: bold;
+  color: #157F88;
+}
+
+.btn-update {
+  height: 40px;
+  width: 180px;
+  background-color: #157F88;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.btn-table {
+  background-color: #fff;
+  border: none;
+  height: 30px;
+  width: 35px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.icModal{
+  padding-right: 8px;
+}
+
+.txtTotal{
+  text-align: center;
+  font-weight: bold;
+  padding: 8px;
+}
+
+.textLeft{
+  padding-right: 85px;
 }
 
 /* styles.css */
@@ -363,7 +436,7 @@ body{
 }
 
 .placeholder-control.category{
-  padding: 8px 8px 0px 8px;
+  padding: 8px 8px 8px 8px;
 }
 
 .ordersButton{

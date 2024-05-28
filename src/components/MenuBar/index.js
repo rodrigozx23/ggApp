@@ -64,26 +64,26 @@ function MenuBar({
           </li>
           <li className="menu-item">
             <button
-              key={1}
+              key={2}
               className={`menu-button ${activeIndex === 2 ? 'active' : ''}`}
               onClick={() => {
-                openCategoriaDetails()
+                openProductosDetails()
                 handleClick(2)
             }}>
-              <img className='icMenu' src={require("../../images/ic-list.png")} />
-              Categoria
+              <img className='icMenu' src={require("../../images/ic-fast-food.png")} />
+              Productos
             </button>
           </li>
           <li className="menu-item">
             <button
-              key={2}
+              key={1}
               className={`menu-button ${activeIndex === 3 ? 'active' : ''}`}
               onClick={() => {
-                openProductosDetails()
+                openCategoriaDetails()
                 handleClick(3)
             }}>
-              <img className='icMenu' src={require("../../images/ic-fast-food.png")} />
-              Productos
+              <img className='icMenu' src={require("../../images/ic-list.png")} />
+              Categorias
             </button>
           </li>
           <li className="menu-item down">           

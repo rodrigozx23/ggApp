@@ -28,7 +28,7 @@ const [loading, setLoading] = useState(true);
 const [buttonDisabled, setButtonDisabled] = useState(false);
 
 const [descripcionInput, setDescripcionInput] = useState('');
-const [cantidadInput, setCantidadInput] = useState(0);
+const [cantidadInput, setCantidadInput] = useState('');
 const [precioUnitarioInput, setPrecioUnitarioInput] = useState(0);
 const [precioTotalInput, setPrecioTotalInput] = useState(0);
 const [idProductoInput, setIdProducto] = useState(0);
@@ -246,79 +246,89 @@ return(
       <div className="modal-content">  
           <div className='modal-head'>
               <div className='row mt-3'>
-                    <div className="col-md-10"></div>
+                    <div className="col-md-4">
+                      <h4><b>Actualizar Pedido</b></h4>
+                    </div>
+                    <div className="col-md-6">
+                    </div>
                     <div className="col-md-2">
-                        <button
-                            className="btn btn-danger mt-3" // Add margin top class
-                            onClick={() => {
-                              openPedidoDetails();
-                              setEditRow(false);
-                            }}                    
-                        >
-                        ↵ Volver
-                        </button>
+                      <img className='' src={require("../../../images/ic-leftarrow.png")} />
+                      <button
+                          className="btn-volver" // Add margin top class
+                          onClick={() => {
+                            openPedidoDetails();
+                            setEditRow(false);
+                      }}>Volver
+                      </button>
                     </div>
               </div>
           </div>        
           <div className="modal-body">
             <div className="container">
-              <div className="row">
-                <div className="row col-md-6">
-                    <h2>Actualizar Pedido</h2>
-                </div>
-              </div>
               <br />
               <div className="row">
-                <div className="row col-md-1"></div>
-                <div className="row col-md-11">
-                  <div className="form-group">
-                      <div className="row">
-                        <div className="col-md-2"> 
-                          <p>Ingresa Mesa</p>
-                        </div>
-                        <div className="col-md-10">
-                          <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Mesa"
-                          value={mesaInput}
-                          onChange={(e) => setMesaInput(e.target.value)}
-                          />   
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-md-2"> 
-                          <p> Ingresa Cliente</p>
-                        </div>
-                        <div className="col-md-10"> 
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Cliente"
-                          value={clienteInput}
-                          onChange={(e) => setClienteInput(e.target.value)}
-                          readOnly/>     
-                        </div>
-                      </div>           
+                <div className="col-md-6">
+                    <div className="col-md-10">
+                      <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Mesa"
+                      value={mesaInput}
+                      onChange={(e) => setMesaInput(e.target.value)}
+                      />   
+                    </div>
+                    <br/>
+                    <div className="col-md-10"> 
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Cliente"
+                      value={clienteInput}
+                      onChange={(e) => setClienteInput(e.target.value)}
+                      readOnly/>     
+                    </div>       
+                </div>
+                <div className="col-md-6">
+                  <div className="col-md-12">
+                    <button 
+                        className="btn-pagar" 
+                        onClick={() => {
+                            handlePagarPedido(mesaInput, clienteInput, totalInput)
+                        }} disabled={buttonDisabled}>
+                        <img className='icModal' src={require("../../../images/ic-money.png")} />
+                        Pagar Pedido
+                    </button>
                   </div>
-                </div>                  
+                  <br />
+                  <div className="col-md-12">
+                    <button 
+                        className="btn-cancelar" 
+                        onClick={() => {
+                            handleCancelarPedido(mesaInput, clienteInput, totalInput)
+                        }} disabled={buttonDisabled}>
+                        <img className='' src={require("../../../images/ic-cancel-white.png")} />
+                        Cancelar Pedido
+                    </button>
+                  </div> 
+                </div>               
               </div>
               <br />
               <div className="row">
-                <div className="row col-md-2">   
-                    <h3>Detalle</h3>
+                <div className="col-md-3 textLeft">
+                    <h4><b>Detalle</b></h4>
+                </div>
+                <div className="col-md-3">
+                </div>
+                <div className="col-md-6">
                 </div>
               </div>
               <br />
-              <div className="row"> 
-                <div className="row col-md-1"></div>
-                <div className="row col-md-7">
+              <div className="row">
+                <div className="col-md-12">
                     <div className="form-group">
                         <div className="row">
-                            <div className="col-md-2"> 
-                                <p>Ingresa Descripcion</p>
-                            </div>
-                            <div className="col-md-10">
+                            <div className="col-md-6">
+                              <div className="col-md-10">
                                 <ProductAutoCompleteInput
                                 productDescriptions={productDescriptions} // Provide the product descriptions
                                 productIds={productIds} // Provide the product IDs
@@ -329,59 +339,40 @@ return(
                                 // For example, fetchProducts to fetch product suggestions
                                 // and handleProductSelect to handle the selected product
                                 />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
                             </div>
                         </div>
+                        <br/>
                         <div className="row">
-                            <div className="col-md-2"> 
-                                <p> Ingresa Cantidad</p>
+                            <div className="col-md-6">
+                              <div className="col-md-10"> 
+                                  <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Cantidad"
+                                  value={cantidadInput}
+                                  onChange={(e) => {
+                                      const newQuantity = e.target.value;
+                                      if (/^[1-9]\d*$/.test(newQuantity) || newQuantity === '') {
+                                      setCantidadInput(newQuantity);
+                                      // Calculate total price
+                                      const totalPrice = parseFloat(newQuantity) * parseFloat(precioUnitarioInput);
+                                      setPrecioTotalInput(totalPrice.toFixed(2)); // Ensure total price is formatted to two decimal place
+                                      }                                
+                                  }}
+                                  />     
+                              </div>
                             </div>
-                            <div className="col-md-10"> 
-                                <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Cantidad"
-                                value={cantidadInput}
-                                onChange={(e) => {
-                                    const newQuantity = e.target.value;
-                                    if (/^[1-9]\d*$/.test(newQuantity) || newQuantity === '') {
-                                    setCantidadInput(newQuantity);
-                                    // Calculate total price
-                                    const totalPrice = parseFloat(newQuantity) * parseFloat(precioUnitarioInput);
-                                    setPrecioTotalInput(totalPrice.toFixed(2)); // Ensure total price is formatted to two decimal place
-                                    }                                
-                                }}
-                                />     
+                            <div className="col-md-6">
+                              <button className="btn-agregar" onClick={handleAddToTable}>
+                                <img className='' src={require("../../../images/ic-add.png")}/> Agregar Producto
+                              </button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="col align-self-center">
-                  <div className="col-md-12">
-                      <button className="btn btn-success" onClick={handleAddToTable}>+ Agregar Producto</button>
-                  </div>
-                  <br />
-                  <div className="col-md-12">
-                    <button 
-                        className="btn btn-primary" 
-                        onClick={() => {
-                            handlePagarPedido(mesaInput, clienteInput, totalInput)
-                        }}
-                        disabled={buttonDisabled}>
-                        Pagar Pedido
-                    </button>
-                  </div>
-                  <br />
-                  <div className="col-md-12">
-                    <button 
-                        className="btn btn-secondary" 
-                        onClick={() => {
-                            handleCancelarPedido(mesaInput, clienteInput, totalInput)
-                        }}
-                        disabled={buttonDisabled}>
-                        Cancelar Pedido
-                    </button>
-                  </div> 
-                </div>    
+                </div> 
               </div> 
               <div className="row mt-3">
                 <div className="col-md-12 mt-3">
@@ -404,28 +395,27 @@ return(
                 </div>
               </div>                      
               <div className="row">
-                <div className="col-md-10"></div>
+                <div className="col-md-8"></div>
                 <div className="col-md-2">
                   <input
                       type="text"
-                      className="form-control"
+                      className="form-control txtTotal"
                       placeholder="Total"
-                      value={totalInput.toFixed(2)}
-                      readOnly
-                  />
+                      value={ "Total " + totalInput.toFixed(2)}
+                      readOnly/>
                 </div>
-                <div className="row mt-3">
-                  <div className="col-md-11"></div>
-                  <div className="col-md-1">
+                <div className="col-md-2"></div>
+              </div>
+              <div className="row mt-3">
+                  <div className="col-md-12">
                     <button
-                      className="btn btn-primary mt-3" // Add margin top class
+                      className="btn-update" // Add margin top class
                       onClick={() => handleUpdate(mesaInput, clienteInput, totalInput, detallePedidoData)}
                       disabled={buttonDisabled}>
-                      Update
+                      <img className='' src={require("../../../images/ic-refresh.png")}/> Actualizar Pedido
                     </button>
                   </div>
                 </div>
-              </div>
             </div>
           </div>   
         </div>      

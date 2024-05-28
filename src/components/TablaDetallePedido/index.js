@@ -392,37 +392,37 @@ return (
                   <td>
                       {editRow === index ? (
                         <button
-                          className="btn btn-success"
+                          className="btn-table"
                           onClick={() => handleSave(index, descriptionToTotalMap[row].id, descriptionToTotalMap[row].Quantity, descriptionToTotalMap[row].UnitPrice)}
                         >
-                        Save
+                        <img className='' src={require("../../images/ic-save.png")}/>
                         </button>
                         ) : (
                         <button
-                          className="btn btn-primary"
+                          className="btn-table"
                           onClick={() => {
                           // Enter edit mode and set the initial values
                           setEditRow(index);
                           setUpdatedData({ ...uniqueProducts[index] });
                           }}
                         >
-                          Edit
+                        <img className='' src={require("../../images/ic-edit.png")}/>
                         </button>
                       )}
                         &nbsp;
                         <button
-                          className="btn btn-warning"
+                          className="btn-table"
                           onClick={() => handleDelete(index, descriptionToTotalMap[row].id)}
                         >
-                          Delete
+                        <img className='' src={require("../../images/ic-delete.png")}/>
                         </button>
                         &nbsp;
                       {editRow === index ? (
                         <button
-                          className="btn btn-danger"
+                          className="btn-table"
                           onClick={() => setEditRow(false)}
                         >
-                          Cancel
+                        <img className='' src={require("../../images/ic-cancel-gg.png")}/>
                         </button>
                       ):(
                           <span></span>
