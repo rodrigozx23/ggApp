@@ -336,7 +336,7 @@ function App() {
           handleLogout = {handleLogout}
           handleActiveIndex = {handleActiveIndex}
           activeIndex = {activeIndex}
-          openReportePedidosDetalle = { openReportePedidosDetalle }
+          openReportePedidos = { openReportePedidos }
         />        
         </header>
         <body>

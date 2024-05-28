@@ -15,7 +15,7 @@ function MenuBar({
   handleLogout,
   handleActiveIndex,
   activeIndex,
-  openReportePedidosDetalle
+  openReportePedidos
 }){
 
   const handleClick = (index) => {
@@ -55,7 +55,7 @@ function MenuBar({
               key={0}
               className={`menu-button ${activeIndex === 1 ? 'active' : ''}`}
               onClick={() => {
-                  openReportePedidosDetalle()
+                  openReportePedidos()
                   handleClick(1)
               }}>
               <img className='icMenu' src={require("../../images/ic-bars.png")} />

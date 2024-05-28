@@ -101,7 +101,7 @@ return (
         className={pedidos ? "btn-pedrep btn-ped" : "btn-pedrep btn-rped"}
         onClick={() => {
           openReportePedidos();
-          setPedidos(false);
+          setPedidos(true);
         }}>
       Reporte Pedido
       </button>
