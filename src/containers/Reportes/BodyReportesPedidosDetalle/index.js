@@ -4,7 +4,10 @@ import { DateRangePicker }  from '../../../components/DateRangePicker';
 
 function BodyReportesPedidosDetalle({
   openPedidosDetails,
-  openReportePedidos
+  openReportePedidos,
+  pedidos,
+  setPedidos,
+  openReportePedidosDetalle
 })
 {
     const [pedidoDetalleReporteData, setPedidoDetalleReporteData] = useState([]);
@@ -92,10 +95,29 @@ function BodyReportesPedidosDetalle({
 
 return (
   <div>
-	  <div className="col-md-10">
-	  	<h2>Reporte Detalle</h2>
-	  </div>
+    <div className="col-md-12">
+      <button 
+        className={pedidos ? "btn-pedrep btn-ped" : "btn-pedrep btn-rped"}
+        onClick={() => {
+          openReportePedidos();
+          setPedidos(true);
+        }}>
+      Reporte Pedido
+      </button>
+      <button 
+        className={pedidos ? "btn-pedrep btn-rep" : "btn-pedrep btn-rrep"}
+        onClick={() => {
+          openReportePedidosDetalle();
+          setPedidos(false);
+        }}>
+      Reporte Detalle
+      </button>
+    </div>
 	  <div className="col-md-2">
+      <br/>
+      <br/>
+      <br/>
+      <br/>
 	  </div>
     <div className="col-md-12 mt-3">
       {loading ? (

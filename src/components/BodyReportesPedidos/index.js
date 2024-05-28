@@ -3,9 +3,11 @@ import { fetchPedidos } from '../../services/apiService';
 import { DateRangePicker }  from '../DateRangePicker';
 
 function BodyReportesPedidos({
-  openPedidosDetails,
   openReportePedidos,
-  openUpdPedidoDetails
+  openUpdPedidoDetails,
+  pedidos,
+  setPedidos,
+  openReportePedidosDetalle
 })
 {
     const [pedidoReporteData, setPedidoReporteData] = useState([]);
@@ -94,11 +96,30 @@ function BodyReportesPedidos({
 
 return (
   <div>
-	  <div className="col-md-10">
-	  	<h2>Reporte</h2>
-	  </div>
-	  <div className="col-md-2">
-	  </div>
+    <div className="col-md-12">
+      <button 
+        className={pedidos ? "btn-pedrep btn-ped" : "btn-pedrep btn-rped"}
+        onClick={() => {
+          openReportePedidos();
+          setPedidos(false);
+        }}>
+      Reporte Pedido
+      </button>
+      <button 
+        className={pedidos ? "btn-pedrep btn-rep" : "btn-pedrep btn-rrep"}
+        onClick={() => {
+          openReportePedidosDetalle();
+          setPedidos(false);
+        }}>
+      Reporte Detalle
+      </button>
+    </div>
+    <div className="col-md-2">
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+    </div>
     <div className="col-md-12 mt-3">
       {loading ? (
         <p>Loading...</p>

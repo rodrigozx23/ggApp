@@ -14,7 +14,8 @@ function MenuBar({
   user,
   handleLogout,
   handleActiveIndex,
-  activeIndex
+  activeIndex,
+  openReportePedidosDetalle
 }){
 
   const handleClick = (index) => {
@@ -50,12 +51,24 @@ function MenuBar({
             </button>
           </li>
           <li className="menu-item">
-            <button
-              key={1}
+              <button
+              key={0}
               className={`menu-button ${activeIndex === 1 ? 'active' : ''}`}
               onClick={() => {
+                  openReportePedidosDetalle()
+                  handleClick(1)
+              }}>
+              <img className='icMenu' src={require("../../images/ic-bars.png")} />
+              Reportes
+            </button>
+          </li>
+          <li className="menu-item">
+            <button
+              key={1}
+              className={`menu-button ${activeIndex === 2 ? 'active' : ''}`}
+              onClick={() => {
                 openCategoriaDetails()
-                handleClick(1)
+                handleClick(2)
             }}>
               <img className='icMenu' src={require("../../images/ic-list.png")} />
               Categoria
@@ -64,10 +77,10 @@ function MenuBar({
           <li className="menu-item">
             <button
               key={2}
-              className={`menu-button ${activeIndex === 2 ? 'active' : ''}`}
+              className={`menu-button ${activeIndex === 3 ? 'active' : ''}`}
               onClick={() => {
                 openProductosDetails()
-                handleClick(2)
+                handleClick(3)
             }}>
               <img className='icMenu' src={require("../../images/ic-fast-food.png")} />
               Productos

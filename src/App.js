@@ -336,6 +336,7 @@ function App() {
           handleLogout = {handleLogout}
           handleActiveIndex = {handleActiveIndex}
           activeIndex = {activeIndex}
+          openReportePedidosDetalle = { openReportePedidosDetalle }
         />        
         </header>
         <body>
@@ -383,42 +384,7 @@ function App() {
           </TableDataProvider>
 
           <div className="row mt-3 content">
-            {showTogleMenu && 
-              (
-              <div>
-                <div className="col-md-12">    
-                <button 
-                  className={pedidos ? "btn-pedrep btn-ped" : "btn-pedrep btn-rped"}
-                  onClick={() => {
-                    openPedidoDetails();
-                    setPedidos(true);
-                  }}>
-                Pedidos
-                </button>
-                <button 
-                  className={pedidos ? "btn-pedrep btn-rep" : "btn-pedrep btn-rrep"}
-                  onClick={() => {
-                    openReportePedidos();
-                    setPedidos(false);
-                  }}>
-                Reporte Pedido
-                </button>
-                <button 
-                  className={pedidos ? "btn-pedrep btn-rep" : "btn-pedrep btn-rrep"}
-                  onClick={() => {
-                    openReportePedidosDetalle();
-                    setPedidos(false);
-                  }}>
-                Reporte Detalle
-                </button>
-                </div>           
-                <br />
-                <br />
-                <br />
-                <br />
-              </div>
-              )
-            }
+            {showTogleMenu}
 
             {showPedidosDetails && 
               (
@@ -437,10 +403,12 @@ function App() {
 
             <div>
             {showReportePedido && (
-              <BodyReportesPedidos
-                openPedidosDetails = { openPedidosDetails }             
+              <BodyReportesPedidos         
                 openReportePedidos = { openReportePedidos }
                 openUpdPedidoDetails = { openUpdPedidoDetails }
+                pedidos = { pedidos }
+                setPedidos = { setPedidos }
+                openReportePedidosDetalle = { openReportePedidosDetalle }
               />
             )}
             </div>
@@ -449,6 +417,9 @@ function App() {
               <BodyReportesPedidosDetalle
                 openPedidosDetails = { openPedidosDetails }             
                 openReportePedidos = { openReportePedidos }
+                pedidos = { pedidos }
+                setPedidos = { setPedidos }
+                openReportePedidosDetalle = { openReportePedidosDetalle }
               />
             )}
             </div>
