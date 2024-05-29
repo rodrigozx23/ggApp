@@ -246,10 +246,12 @@ return(
       <div className="modal-content">  
           <div className='modal-head'>
               <div className='row mt-3'>
-                    <div className="col-md-4">
+                    <div className="col-md-1">
+                    </div>
+                    <div className="col-md-4 textLeft">
                       <h4><b>Actualizar Pedido</b></h4>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                     </div>
                     <div className="col-md-2">
                       <img className='' src={require("../../../images/ic-leftarrow.png")} />
@@ -261,6 +263,8 @@ return(
                       }}>Volver
                       </button>
                     </div>
+                    <div className="col-md-1">
+                    </div>
               </div>
           </div>        
           <div className="modal-body">
@@ -270,25 +274,23 @@ return(
                 <div className="col-md-1">
                 </div>
                 <div className="col-md-6">
-                    <div className="col-md-10">
-                      <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Mesa"
-                      value={mesaInput}
-                      onChange={(e) => setMesaInput(e.target.value)}
-                      />   
+                  <div className="col-md-2">
+                  </div>
+                  <div className="col-md-10">
+                    <div className="placeholder-group">
+                      <input type="text" id="mesa" className="placeholder-control form-control" required value={mesaInput} onChange={(e) => setMesaInput(e.target.value)}></input>
+                      <label htmlFor="mesa" className="floating-label">Mesa</label>
                     </div>
-                    <br/>
-                    <div className="col-md-10"> 
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Cliente"
-                      value={clienteInput}
-                      onChange={(e) => setClienteInput(e.target.value)}
-                      readOnly/>     
-                    </div>       
+                  </div>
+                  <br/>
+                  <div className="col-md-2">
+                  </div>
+                  <div className="col-md-10">
+                    <div className="placeholder-group">
+                      <input type="text" id="cliente" className="placeholder-control form-control" required value={clienteInput} onChange={(e) => setClienteInput(e.target.value)} readOnly></input>
+                      <label htmlFor="cliente" className="floating-label">Cliente</label>
+                    </div>
+                  </div>       
                 </div>
                 <div className="col-md-1">
                 </div>
@@ -320,10 +322,12 @@ return(
               </div>
               <br />
               <div className="row">
-                <div className="col-md-3 textLeft">
+                <div className="col-md-1">
+                </div>
+                <div className="col-md-4 textLeft">
                     <h4><b>Detalle</b></h4>
                 </div>
-                <div className="col-md-9">
+                <div className="col-md-7">
                 </div>
               </div>
               <br />
@@ -353,22 +357,19 @@ return(
                             <div className="col-md-1">
                             </div>
                             <div className="col-md-6">
-                              <div className="col-md-10"> 
-                                  <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Cantidad"
-                                  value={cantidadInput}
-                                  onChange={(e) => {
+                              <div className="col-md-10">                                
+                                <div className="placeholder-group">
+                                  <input type="text" id="cantidad" className="placeholder-control form-control" required value={cantidadInput} onChange={(e) => {
                                       const newQuantity = e.target.value;
                                       if (/^[1-9]\d*$/.test(newQuantity) || newQuantity === '') {
-                                      setCantidadInput(newQuantity);
-                                      // Calculate total price
-                                      const totalPrice = parseFloat(newQuantity) * parseFloat(precioUnitarioInput);
-                                      setPrecioTotalInput(totalPrice.toFixed(2)); // Ensure total price is formatted to two decimal place
-                                      }                                
-                                  }}
-                                  />     
+                                        setCantidadInput(newQuantity);
+                                        // Calculate total price
+                                        const totalPrice = parseFloat(newQuantity) * parseFloat(precioUnitarioInput);
+                                        setPrecioTotalInput(totalPrice.toFixed(2)); // Ensure total price is formatted to two decimal place
+                                      }
+                                  }}></input>
+                                  <label htmlFor="cantidad" className="floating-label">Cantidad</label>
+                                </div>
                               </div>
                             </div>
                             <div className="col-md-1">

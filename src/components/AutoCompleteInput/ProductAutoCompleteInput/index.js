@@ -19,15 +19,6 @@ const ProductAutoCompleteInput = ({
     setValue(selectedProductDescription);
   }, [selectedProductDescription]);
 
-  useEffect(() => {
-    if (suggestionsList.length > 0) {
-      setHighlightedIndex(0); // Set the first suggestion as default highlighted
-      inputRef.current.setAttribute('autocomplete', 'on');
-    }else{
-      inputRef.current.setAttribute('autocomplete', 'off');
-    }
-  }, [suggestionsList]);
-
   const getSuggestions = (inputValue) => {
     const inputValueLowerCase = inputValue.trim().toLowerCase();  
     return productDescriptions.filter((description) =>
@@ -112,32 +103,28 @@ const ProductAutoCompleteInput = ({
             name="product_id" // You can set a name for the hidden input
             value={selectedProductId}
         />
-        <input
-            className="custom-input"
-            placeholder="Producto"
-            value={value}
-            onChange={onInputChange}
-            onKeyDown={handleKeyDown}
-            ref={inputRef}
-            autoComplete="off"
-        />
-        <div className="suggestions-container" ref={suggestionsContainerRef}>
-            {            
-            suggestionsList && suggestionsList.length > 0 ? (
-              
-                suggestionsList.map((suggestion, index) => (
+        
+        <div className="placeholder-group">
+          <input className="placeholder-control" value={value} onChange={onInputChange} onKeyDown={handleKeyDown} required/>
+          <label className="floating-label category">Producto</label>
+          <div className="suggestions-container" ref={suggestionsContainerRef}>
+              {            
+              suggestionsList && suggestionsList.length > 0 ? (
+                
+                  suggestionsList.map((suggestion, index) => (
 
-                <div
-                    key={index}
-                    className={highlightedIndex === index ? "suggestion highlighted" : "suggestion"}
-                    onClick={() => onSuggestionSelected(suggestion, productIds[index])}
-                    onKeyDown={(event) => handleSuggestionKeyDown(event, index)}
-                    tabIndex="0" // Make the suggestion focusable
-                >
-                    {suggestion}
-                </div>
-                ))
-            ) : null}
+                  <div
+                      key={index}
+                      className={highlightedIndex === index ? "suggestion highlighted" : "suggestion"}
+                      onClick={() => onSuggestionSelected(suggestion, productIds[index])}
+                      onKeyDown={(event) => handleSuggestionKeyDown(event, index)}
+                      tabIndex="0" // Make the suggestion focusable
+                  >
+                      {suggestion}
+                  </div>
+                  ))
+              ) : null}
+          </div>  
         </div>
     </div>
   );

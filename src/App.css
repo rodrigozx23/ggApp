@@ -316,7 +316,7 @@ body{
 }
 
 .textLeft{
-  padding-right: 85px;
+  text-align: left;
 }
 
 /* styles.css */
@@ -337,6 +337,7 @@ body{
   border: 1px solid #ccc;
   max-height: 150px;
   overflow-y: auto;
+  z-index: 9999;
 }
 
 .suggestion {
@@ -416,6 +417,7 @@ body{
 .placeholder-group {
   position: relative;
   margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .floating-label {
@@ -435,7 +437,8 @@ body{
 
 .placeholder-control:not(:empty) ~ .floating-label,
 .placeholder-control:focus ~ .floating-label,
-.placeholder-control:not(:focus):valid ~ .floating-label {
+.placeholder-control:not(:focus):valid ~ .floating-label,
+.placeholder-control:read-only ~ .floating-label  {
   top: -10px; /* Adjust position */
   padding-top: 5px;
   font-size: 10px; /* Adjust font size */

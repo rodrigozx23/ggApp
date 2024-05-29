@@ -63,20 +63,19 @@ const CategoryAutoCompleteInput = ({
         <div className="placeholder-group">
           <input type="text" required id="category" className="placeholder-control category" onChange={onInputChange} value={value}></input>
           <label className="floating-label category">Categoria</label>
-        </div>
-
-        <div className="suggestions-container">
-            {suggestionsList && suggestionsList.length > 0 ? (
-                suggestionsList.map((suggestion, index) => (
-                <div
-                    key={index}
-                    className="suggestion"
-                    onClick={() => onSuggestionSelected(suggestion, categoryIds[index])}
-                >
-                    {suggestion}
-                </div>
-                ))
-            ) : null}
+          <div className="suggestions-container">
+              {suggestionsList && suggestionsList.length > 0 ? (
+                  suggestionsList.map((suggestion, index) => (
+                  <div
+                      key={index}
+                      className="suggestion"
+                      onClick={() => onSuggestionSelected(suggestion, categoryIds[index])}
+                  >
+                      {suggestion}
+                  </div>
+                  ))
+              ) : null}
+          </div>
         </div>
     </div>
   );
