@@ -33,9 +33,9 @@ function App() {
   const [showAlmacenOptions, setShowAlmacenOptions] = useState(false);
   const [showMenuOptions, setShowMenuOptions] = useState(false);
   const [showCategoriaDetails, setShowCategoriaDetails] = useState(false);
-  const [showModalCategoria, setShowModalCategoria] = useState(false);    
+  const [showModalCategoria, setShowModalCategoria] = useState(false);
 
-  const [showProductosDetails, setShowProductosDetails] = useState(false);  
+  const [showProductosDetails, setShowProductosDetails] = useState(false);
   const [showModalProductos, setShowModalProductos] = useState(false);
 
   const [showPedidosMenuDetails, setShowPedidosMenuDetails] = useState(false);
@@ -48,16 +48,16 @@ function App() {
   const [showReportePedidoDetalle, setShowReportePedidoDetalle] = useState(false);
 
   const [categoryData, setCategoryData] = useState([]);
-  const [productData, setProductData] = useState([]);  
-  const [pedidoData, setPedidoData] = useState([]);  
-  const [detallePedidoData, setDetallePedidoData] = useState([]); 
+  const [productData, setProductData] = useState([]);
+  const [pedidoData, setPedidoData] = useState([]);
+  const [detallePedidoData, setDetallePedidoData] = useState([]);
 
-  const [categoriaDetails, setCategoriaDetails] = useState([]);  
+  const [categoriaDetails, setCategoriaDetails] = useState([]);
   const [productosDetails, setProductosDetails] = useState([]);
   const [pedidosDetails, setPedidosDetails] = useState([]);
 
   const [memoDetails, setMemoDetails] = useState([]);
-  const [editRow, setEditRow] = useState(null);  
+  const [editRow, setEditRow] = useState(null);
 
   const [descripcionInput, setDescripcionInput] = useState('');
   const [quantityInput, setQuantityInput] = useState('');
@@ -67,17 +67,19 @@ function App() {
   const [clienteInput, setClienteInput] = useState('');
   const [totalInput, setTotalInput] = useState('');
   const [idPedido, setIdPedido] = useState('');
-  const [updatedDescription, setUpdatedDescription] = useState('');	
+  const [updatedDescription, setUpdatedDescription] = useState('');
   const [updatedData, setUpdatedData] = useState({});
   const [pedidos, setPedidos] = useState(true);
 
   const [showTogleMenu, setShowTogleMenu] = useState(false);
   const [showCrear, setShowCrear] = useState(false);
-	const [showActualizar, setShowActualizar] = useState(false);
+  const [showActualizar, setShowActualizar] = useState(false);
 
   const [activeIndex, setActiveIndex] = useState(null);
 
   const [isInPedidos, setisInPedidos] = useState(false);
+
+  const [filteredProductData, setFilteredProductData] = useState([]);
 
   const handleActiveIndex = (index) => {
     setActiveIndex(index);
@@ -207,7 +209,7 @@ function App() {
     setShowModalPedidoDetalle(false);
     setShowPedidosDetails(false);
     setShowCategoriaDetails(false);
-    setShowProductosDetails(false);    
+    setShowProductosDetails(false);
     setShowPedidosMenuDetails(false);
     setIdPedido(iorder);
     setMesaInput(imesa);
@@ -219,7 +221,7 @@ function App() {
     setShowReportePedidoDetalle(false);
   }
 
-  const openPedidoDetails =() => {
+  const openPedidoDetails = () => {
     setShowTogleMenu(true);
     setShowCrearPedidoDetails(false);
     setShowUpdPedidoDetails(false);
@@ -250,7 +252,7 @@ function App() {
 
       const newQuantity = parseInt(newItem.Quantity, 10);
       const newUnitPrice = parseFloat(newItem.UnitPrice);
-  
+
       if (existingItemIndex !== -1) {
         // If the description already exists, update the quantity and total
         updatedDetallePedidoData[existingItemIndex].Quantity += newQuantity;
@@ -260,14 +262,14 @@ function App() {
         // If the description doesn't exist, add it to the data with the total
         newItem.Quantity = newQuantity;
         newItem.Total = newQuantity * newUnitPrice;
-        updatedDetallePedidoData.push(newItem);   
+        updatedDetallePedidoData.push(newItem);
       }
     });
     updatedDetallePedidoData.forEach((item) => {
       const quantity = parseInt(item.Quantity, 10);
       const unitPrice = parseFloat(item.UnitPrice);
       const total = quantity * unitPrice;
-    
+
       item.Total = total; // Update the 'Total' property for each item
       totalOfTotals += total; // Add the total of the current item to the total of totals
     });
@@ -281,7 +283,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogin = async () => {
-    const response = await checkLogin({ 
+    const response = await checkLogin({
       username: username,
       password: password
     });
@@ -315,238 +317,241 @@ function App() {
 
   return (
     <div>
-    {!isLoggedIn ? (
-      <div className='container'>
-       <div className="container-title">
-        <img className='logo' src={require("./images/gg-logo.png")} />
-        <div className="text-and-form">
-          <h1 className='title'>Administrativo</h1>
-        </div>
-      </div>
-      <div className='center-container' onKeyDown={handleKeyDown} >
-        <div className="login-form">
-          
-        <div className="placeholder-group">
-          <input type="text" id="username" className="placeholder-control" required value={username} onChange={(e) => setUsername(e.target.value)}></input>
-          <label htmlFor="username" className="floating-label">Username</label>
-        </div>
-        <div className="placeholder-group">
-          <input type="password" id="password" className="placeholder-control" required value={password} onChange={(e) => setPassword(e.target.value)}></input>
-          <label htmlFor="password" className="floating-label">Password</label>
-        </div>
-            <button className='responsive-button' tabIndex={0} onClick={handleLogin}>Iniciar sesión</button>
-        </div>
-      </div>
-      </div>
-    ) : (
-      <div className="containerGlob"> {/* Add Bootstrap container */}
-        <header className="App-header">
-      
-        <MenuBar
-          showAlmacenOptions = { showAlmacenOptions }
-          setShowAlmacenOptions = { setShowAlmacenOptions }
-          showMenuOptions = { showMenuOptions }
-          setShowMenuOptions = {setShowMenuOptions}
-          openCategoriaDetails = { openCategoriaDetails }
-          openProductosDetails = { openProductosDetails }
-          openPedidosDetails = { openPedidosDetails }
-          openCrearPedidoDetails = { openCrearPedidoDetails }
-          openPedidosMenuDetails = { openPedidosMenuDetails }
-          user = {username}
-          handleLogout = {handleLogout}
-          handleActiveIndex = {handleActiveIndex}
-          activeIndex = {activeIndex}
-          openReportePedidos = { openReportePedidos }
-        />        
-        </header>
-        <body>
-
-          <TableDataProvider value={detallePedidoData}> 
-            {showCrear && (
-              <ModalPedido // Create a separate Modal for Pedidos
-                editRow={editRow}
-                setEditRow = {setEditRow}
-                mesaInput = {mesaInput}
-                setMesaInput = {setMesaInput}		
-                totalInput = {totalInput}
-                setTotalInput = {setTotalInput}
-                setPedidoData={setPedidoData}
-                modalType="pedidos"
-                openPedidoDetails = {openPedidoDetails}
-                closeCrearPedido = {closeCrearPedido}
-                detallePedidoData={detallePedidoData}
-                setDetallePedidoData = { setDetallePedidoData }
-                handleActiveIndex = {handleActiveIndex}
-              />
-            )}         
-          </TableDataProvider>      
-                                   
-          <TableDataProvider value={detallePedidoData}>
-            {showActualizar && (
-              <ModalPedidoUpd // Create a separate Modal for Pedidos
-                editRow={editRow}
-                setEditRow = {setEditRow}
-                mesaInput = {mesaInput}
-                setMesaInput = {setMesaInput}		
-                totalInput = {totalInput}
-                setTotalInput = {setTotalInput}			
-                clienteInput = {clienteInput}
-                setClienteInput = {setClienteInput}	
-                idPedido = {idPedido}
-                setIdPedido = {setIdPedido}
-                setPedidoData={setPedidoData}
-                modalType="pedidosUpd"
-                openPedidoDetails = {openPedidoDetails}           
-                detallePedidoData={detallePedidoData}
-                setDetallePedidoData = { setDetallePedidoData }
-              />
-            )}       
-          </TableDataProvider>
-
-          <div className="row mt-3 content">
-            {showTogleMenu}
-
-            {showPedidosDetails && 
-              (
-              <BodyPedidos 
-                //editRow={editRow}
-                updatedData={updatedData} // Pass updated data state
-                setUpdatedData={setUpdatedData} // Set updated data state	            
-                setEditRow = {setEditRow}
-                openCrearPedidoDetails = {openCrearPedidoDetails}
-                openUpdPedidoDetails = {openUpdPedidoDetails}
-                openReportePedidos = {openReportePedidos}
-                pedidoData={ pedidoData }
-                setPedidoData={setPedidoData}
-              />
-            )}
-
-            <div>
-            {showReportePedido && (
-              <BodyReportesPedidos         
-                openReportePedidos = { openReportePedidos }
-                openUpdPedidoDetails = { openUpdPedidoDetails }
-                pedidos = { pedidos }
-                setPedidos = { setPedidos }
-                openReportePedidosDetalle = { openReportePedidosDetalle }
-              />
-            )}
+      {!isLoggedIn ? (
+        <div className='container'>
+          <div className="container-title">
+            <img className='logo' src={require("./images/gg-logo.png")} />
+            <div className="text-and-form">
+              <h1 className='title'>Administrativo</h1>
             </div>
-            <div>
-            {showReportePedidoDetalle && (
-              <BodyReportesPedidosDetalle
-                openPedidosDetails = { openPedidosDetails }             
-                openReportePedidos = { openReportePedidos }
-                pedidos = { pedidos }
-                setPedidos = { setPedidos }
-                openReportePedidosDetalle = { openReportePedidosDetalle }
-              />
-            )}
+          </div>
+          <div className='center-container' onKeyDown={handleKeyDown} >
+            <div className="login-form">
+
+              <div className="placeholder-group">
+                <input type="text" id="username" className="placeholder-control" required value={username} onChange={(e) => setUsername(e.target.value)}></input>
+                <label htmlFor="username" className="floating-label">Username</label>
+              </div>
+              <div className="placeholder-group">
+                <input type="password" id="password" className="placeholder-control" required value={password} onChange={(e) => setPassword(e.target.value)}></input>
+                <label htmlFor="password" className="floating-label">Password</label>
+              </div>
+              <button className='responsive-button' tabIndex={0} onClick={handleLogin}>Iniciar sesión</button>
             </div>
+          </div>
+        </div>
+      ) : (
+        <div className="containerGlob"> {/* Add Bootstrap container */}
+          <header className="App-header">
 
-
-            {showPedidosMenuDetails && (
-              <BodyCrearPedidoMenu
-                mesaInput = {mesaInput}
-                setMesaInput = {setMesaInput}		
-                totalInput = {totalInput}
-                setTotalInput = {setTotalInput}
-              />
-            )}
-            
-        <TableDataProvider value={detallePedidoData}>
-          <div>
-          {showUpdPedidoDetails && (
-            <BodyUpdPedido // Create a separate Modal for Pedidos
-              editRow={editRow}
-              setEditRow = {setEditRow}
-              mesaInput = {mesaInput}
-              setMesaInput = {setMesaInput}		
-              totalInput = {totalInput}
-              setTotalInput = {setTotalInput}			
-              clienteInput = {clienteInput}
-              setClienteInput = {setClienteInput}	
-              idPedido = {idPedido}
-              setIdPedido = {setIdPedido}	
-              setPedidoData={setPedidoData}
-              modalType="pedidosUpd"
-              openPedidoDetails = {openPedidoDetails}                 
-              detallePedidoData={detallePedidoData}
-              setDetallePedidoData = { setDetallePedidoData }
+            <MenuBar
+              showAlmacenOptions={showAlmacenOptions}
+              setShowAlmacenOptions={setShowAlmacenOptions}
+              showMenuOptions={showMenuOptions}
+              setShowMenuOptions={setShowMenuOptions}
+              openCategoriaDetails={openCategoriaDetails}
+              openProductosDetails={openProductosDetails}
+              openPedidosDetails={openPedidosDetails}
+              openCrearPedidoDetails={openCrearPedidoDetails}
+              openPedidosMenuDetails={openPedidosMenuDetails}
+              user={username}
+              handleLogout={handleLogout}
+              handleActiveIndex={handleActiveIndex}
+              activeIndex={activeIndex}
+              openReportePedidos={openReportePedidos}
             />
-          )}
-          {showModalPedidoDetalle &&(
-            <ModalPedidoDetalle
-              setShowModalPedidoDetalle = {setShowModalPedidoDetalle}
-              setDetallePedidoData={saveDetallePedidoData} 
-            /> 
-          )}          
-          </div>
-        </TableDataProvider>
+          </header>
+          <body>
 
-        <TableDataProvider>
-          <div>
-            {showCategoriaDetails && (
-              <BodyMantenimientoCategory
-              editRow={editRow}
-              updatedDescription={updatedDescription}
-              setUpdatedDescription={setUpdatedDescription}
-              setEditRow = {setEditRow}
-              openModal = {openModal}
-              modalType="categoria"
-              categoryData={categoryData}
-              setCategoryData={setCategoryData}
-              />
-            )}
-          
-            {showModalCategoria && (
-              <ModalCategoria
-              descripcionInput = {descripcionInput}
-              setDescripcionInput = {setDescripcionInput}			
-              setShowModalCategoria = {setShowModalCategoria}
-              setCategoryData={setCategoryData}
-              />
-            )}
-          </div>
-        </TableDataProvider>
-        
-        <TableDataProvider>
-          <div>
-            {showProductosDetails && (
-              <BodyMantenimientoProducto
-                editRow={editRow}
-                updatedData={updatedData}
-                setUpdatedData={setUpdatedData}
-                setEditRow = {setEditRow}
-                openModal = {openModal}
-                modalType="productos"
-                productData={productData}
-                setProductData={setProductData}
-              />
-            )}
-                    
-            {showModalProductos && (
-              <ModalProducto
-                descripcionInput={descripcionInput}
-                setDescripcionInput={setDescripcionInput}
-                quantityInput={quantityInput}
-                setQuantityInput={setQuantityInput}
-                unitPriceInput={unitPriceInput}
-                setUnitPriceInput={setUnitPriceInput}
-                categoryInput={categoryInput}
-                setCategoryInput={setCategoryInput}
-                setShowModalProductos={setShowModalProductos}
-                setProductData={setProductData}
-              />
-            )}
-          </div>
-        </TableDataProvider>
+            <TableDataProvider value={detallePedidoData}>
+              {showCrear && (
+                <ModalPedido // Create a separate Modal for Pedidos
+                  editRow={editRow}
+                  setEditRow={setEditRow}
+                  mesaInput={mesaInput}
+                  setMesaInput={setMesaInput}
+                  totalInput={totalInput}
+                  setTotalInput={setTotalInput}
+                  setPedidoData={setPedidoData}
+                  modalType="pedidos"
+                  openPedidoDetails={openPedidoDetails}
+                  closeCrearPedido={closeCrearPedido}
+                  detallePedidoData={detallePedidoData}
+                  setDetallePedidoData={setDetallePedidoData}
+                  handleActiveIndex={handleActiveIndex}
+                />
+              )}
+            </TableDataProvider>
 
+            <TableDataProvider value={detallePedidoData}>
+              {showActualizar && (
+                <ModalPedidoUpd // Create a separate Modal for Pedidos
+                  editRow={editRow}
+                  setEditRow={setEditRow}
+                  mesaInput={mesaInput}
+                  setMesaInput={setMesaInput}
+                  totalInput={totalInput}
+                  setTotalInput={setTotalInput}
+                  clienteInput={clienteInput}
+                  setClienteInput={setClienteInput}
+                  idPedido={idPedido}
+                  setIdPedido={setIdPedido}
+                  setPedidoData={setPedidoData}
+                  modalType="pedidosUpd"
+                  openPedidoDetails={openPedidoDetails}
+                  detallePedidoData={detallePedidoData}
+                  setDetallePedidoData={setDetallePedidoData}
+                />
+              )}
+            </TableDataProvider>
+
+            <div className="row mt-3 content">
+              {showTogleMenu}
+
+              {showPedidosDetails &&
+                (
+                  <BodyPedidos
+                    //editRow={editRow}
+                    updatedData={updatedData} // Pass updated data state
+                    setUpdatedData={setUpdatedData} // Set updated data state	            
+                    setEditRow={setEditRow}
+                    openCrearPedidoDetails={openCrearPedidoDetails}
+                    openUpdPedidoDetails={openUpdPedidoDetails}
+                    openReportePedidos={openReportePedidos}
+                    pedidoData={pedidoData}
+                    setPedidoData={setPedidoData}
+                  />
+                )}
+
+              <div>
+                {showReportePedido && (
+                  <BodyReportesPedidos
+                    openReportePedidos={openReportePedidos}
+                    openUpdPedidoDetails={openUpdPedidoDetails}
+                    pedidos={pedidos}
+                    setPedidos={setPedidos}
+                    openReportePedidosDetalle={openReportePedidosDetalle}
+                  />
+                )}
+              </div>
+              <div>
+                {showReportePedidoDetalle && (
+                  <BodyReportesPedidosDetalle
+                    openPedidosDetails={openPedidosDetails}
+                    openReportePedidos={openReportePedidos}
+                    pedidos={pedidos}
+                    setPedidos={setPedidos}
+                    openReportePedidosDetalle={openReportePedidosDetalle}
+                  />
+                )}
+              </div>
+
+
+              {showPedidosMenuDetails && (
+                <BodyCrearPedidoMenu
+                  mesaInput={mesaInput}
+                  setMesaInput={setMesaInput}
+                  totalInput={totalInput}
+                  setTotalInput={setTotalInput}
+                />
+              )}
+
+              <TableDataProvider value={detallePedidoData}>
+                <div>
+                  {showUpdPedidoDetails && (
+                    <BodyUpdPedido // Create a separate Modal for Pedidos
+                      editRow={editRow}
+                      setEditRow={setEditRow}
+                      mesaInput={mesaInput}
+                      setMesaInput={setMesaInput}
+                      totalInput={totalInput}
+                      setTotalInput={setTotalInput}
+                      clienteInput={clienteInput}
+                      setClienteInput={setClienteInput}
+                      idPedido={idPedido}
+                      setIdPedido={setIdPedido}
+                      setPedidoData={setPedidoData}
+                      modalType="pedidosUpd"
+                      openPedidoDetails={openPedidoDetails}
+                      detallePedidoData={detallePedidoData}
+                      setDetallePedidoData={setDetallePedidoData}
+                    />
+                  )}
+                  {showModalPedidoDetalle && (
+                    <ModalPedidoDetalle
+                      setShowModalPedidoDetalle={setShowModalPedidoDetalle}
+                      setDetallePedidoData={saveDetallePedidoData}
+                    />
+                  )}
+                </div>
+              </TableDataProvider>
+
+              <TableDataProvider>
+                <div>
+                  {showCategoriaDetails && (
+                    <BodyMantenimientoCategory
+                      editRow={editRow}
+                      updatedDescription={updatedDescription}
+                      setUpdatedDescription={setUpdatedDescription}
+                      setEditRow={setEditRow}
+                      openModal={openModal}
+                      modalType="categoria"
+                      categoryData={categoryData}
+                      setCategoryData={setCategoryData}
+                    />
+                  )}
+
+                  {showModalCategoria && (
+                    <ModalCategoria
+                      descripcionInput={descripcionInput}
+                      setDescripcionInput={setDescripcionInput}
+                      setShowModalCategoria={setShowModalCategoria}
+                      setCategoryData={setCategoryData}
+                    />
+                  )}
+                </div>
+              </TableDataProvider>
+
+              <TableDataProvider>
+                <div>
+                  {showProductosDetails && (
+                    <BodyMantenimientoProducto
+                      editRow={editRow}
+                      updatedData={updatedData}
+                      setUpdatedData={setUpdatedData}
+                      setEditRow={setEditRow}
+                      openModal={openModal}
+                      modalType="productos"
+                      productData={productData}
+                      setProductData={setProductData}
+                      filteredProductData={filteredProductData}
+                      setFilteredProductData={setFilteredProductData}
+                    />
+                  )}
+
+                  {showModalProductos && (
+                    <ModalProducto
+                      descripcionInput={descripcionInput}
+                      setDescripcionInput={setDescripcionInput}
+                      quantityInput={quantityInput}
+                      setQuantityInput={setQuantityInput}
+                      unitPriceInput={unitPriceInput}
+                      setUnitPriceInput={setUnitPriceInput}
+                      categoryInput={categoryInput}
+                      setCategoryInput={setCategoryInput}
+                      setShowModalProductos={setShowModalProductos}
+                      setProductData={setProductData}
+                      setFilteredProductData={setFilteredProductData}
+                    />
+                  )}
+                </div>
+              </TableDataProvider>
+
+            </div>
+          </body>
         </div>
-        </body>        
-      </div>
-    )}
-  </div>
+      )}
+    </div>
   );
 }
 
