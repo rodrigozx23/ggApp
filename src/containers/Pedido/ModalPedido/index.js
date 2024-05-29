@@ -85,15 +85,8 @@ function ModalPedido({
       }
   };
 
-  const handleServiceTypeChange = (e) => {
-    const newServiceType = e.target.value;
-    if(newServiceType == 'Salon'){
-      setServiceType(newServiceType);
-      setClienteInput('');
-    }else{
-      setServiceType(newServiceType);
-      setClienteInput(newServiceType);
-    }
+  const handleServiceTypeChange = () => {
+    setServiceType(prevType => prevType === 'Salon' ? 'Menu' : 'Salon');
   };
 
   const populateProducts = async () => {
@@ -271,48 +264,21 @@ function ModalPedido({
                                     <div className="col-md-2"> 
                                         <p>Tipo de Servicio</p>
                                     </div>
-                                    <div className="col-md-10"> 
+                                    <div className="col-md-10">
                                       <div className="form-check form-check-inline">
-                                          <input
-                                              className="form-check-input"
-                                              type="radio"
-                                              name="serviceType"
-                                              id="menuOption"
-                                              value="Menu"
-                                              checked={serviceType === 'Menu'}
-                                              onChange={handleServiceTypeChange}
-                                          />
-                                          <label className="form-check-label" htmlFor="menuOption">
-                                              Menu
-                                          </label>
-                                      </div>
-                                      <div className="form-check form-check-inline">
-                                          <input
-                                              className="form-check-input"
-                                              type="radio"
-                                              name="serviceType"
-                                              id="deliveryOption"
-                                              value="Delivery"
-                                              checked={serviceType === 'Delivery'}
-                                              onChange={handleServiceTypeChange}
-                                          />
-                                          <label className="form-check-label" htmlFor="deliveryOption">
-                                              Delivery
-                                          </label>
-                                      </div>
-                                      <div className="form-check form-check-inline">
-                                          <input
-                                              className="form-check-input"
-                                              type="radio"
-                                              name="serviceType"
-                                              id="salonOption"
-                                              value="Salon"
-                                              checked={serviceType === 'Salon'}
-                                              onChange={handleServiceTypeChange}
-                                          />
-                                          <label className="form-check-label" htmlFor="salonOption">
-                                              Salon
-                                          </label>
+                                        <input
+                                          className="form-check-input"
+                                          type="checkbox"
+                                          id="menuOption"
+                                          checked={serviceType === 'Menu'}
+                                          onChange={(e)=> {
+                                            handleServiceTypeChange();
+                                            setClienteInput(e.target.checked ? 'Menú' : '');
+                                          }}
+                                        />
+                                        <label className="form-check-label" htmlFor="menuOption">
+                                          Menu
+                                        </label>
                                       </div>
                                     </div>
                                 </div>
