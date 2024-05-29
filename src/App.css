@@ -482,3 +482,8 @@ body{
   float: left;
   margin: 8px;
 }
+
+.icMenu{
+  height: 52px;
+  width: 52px;
+}
