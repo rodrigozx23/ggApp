@@ -273,7 +273,7 @@ function ModalPedido({
                                           checked={serviceType === 'Menu'}
                                           onChange={(e)=> {
                                             handleServiceTypeChange();
-                                            setClienteInput(e.target.checked ? 'Menu' : '');
+                                            setClienteInput(e.target.checked ? 'Menú' : '');
                                           }}
                                         />
                                         <label className="form-check-label" htmlFor="menuOption">
