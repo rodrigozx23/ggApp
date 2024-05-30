@@ -142,7 +142,7 @@ function ModalProducto({
                 </div>
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                       <CategoryAutoCompleteInput
                         categoryDescriptions={categoryDescriptions}
                         categoryIds={categoryIds}
