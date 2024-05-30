@@ -66,7 +66,7 @@ function BodyPedidos({
          Mesa: {mesa}</p>
          <br />
          <span className='right up'>{ hora }</span>
-         <p className='ordersButBotton'><span className='left'><b>Salon/Delivery</b></span></p>
+         <p className='ordersButBotton'><span className='left'><b></b></span></p>
       </button>
     );
   };
