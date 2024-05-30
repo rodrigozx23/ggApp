@@ -145,16 +145,11 @@ function BodyMantenimientoProducto({
 			<br />
 			<br />
 			<br />
-			<div className="col-md-10">
+			<div className="row col-md-12">
 				<h1><b>Productos</b></h1>
 			</div>
-			<div className="col-md-2">
-				<button className="btn btn-primary mt-3" onClick={() => openModal(modalType)}>
-					Add Producto
-				</button>
-			</div>
-			<div className="row mb-3">
-				<div className="col-md-3">
+			<div className="row centerC">
+				<div className="col-md-2">
 					<div className="input-group">
 						<CategoryAutoCompleteInput
 							categoryDescriptions={categoryDescriptions}
@@ -168,13 +163,19 @@ function BodyMantenimientoProducto({
 						/>
 					</div>
 				</div>
+				<div className="col-md-2">
+					<button className="btn-gg btn-modal" onClick={() => openModal(modalType)}>
+						<img className='' src={require("../../images/ic-add-white.png")} /> Crear Producto
+					</button>
+				</div>
 			</div>
-			<div className="col-md-12 mt-3">
+			<br />
+			<div className="row ol-md-12 mt-3">
 				{loading ? (
 					<p>Loading...</p>
 				) : productData.length > 0 ? (
 					<div className="table-responsive">
-						<table className="table table-striped table-bordered">
+						<table className="table table-striped table-bordered tableReporte">
 							<thead>
 								<tr>
 									<th>Descripcion</th>
@@ -273,37 +274,37 @@ function BodyMantenimientoProducto({
 											<td>
 												{editRow === rowIndex ? (
 													<button
-														className="btn btn-success"
+														className="btn-table"
 														onClick={() => handleSave(rowIndex, row.id)}
 													>
-														Save
+														<img className='' src={require("../../images/ic-save.png")} />
 													</button>
 												) : (
 													<button
-														className="btn btn-primary"
+														className="btn-table"
 														onClick={() => {
 															// Enter edit mode and set the initial values
 															setEditRow(rowIndex);
 															setUpdatedData({ ...productData[rowIndex] });
 														}}
 													>
-														Edit
+														<img className='' src={require("../../images/ic-edit.png")} />
 													</button>
 												)}
 												&nbsp;
 												<button
-													className="btn btn-warning"
+													className="btn-table"
 													onClick={() => handleDelete(rowIndex, row.id)}
 												>
-													Delete
+													<img className='' src={require("../../images/ic-delete.png")} />
 												</button>
 												&nbsp;
 												{editRow === rowIndex ? (
 													<button
-														className="btn btn-danger"
+														className="btn-table"
 														onClick={() => setEditRow(false)}
 													>
-														Cancel
+														<img className='' src={require("../../images/ic-cancel-gg.png")} />
 													</button>
 												) : (
 													<span></span>

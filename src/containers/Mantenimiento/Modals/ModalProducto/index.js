@@ -94,11 +94,11 @@ function ModalProducto({
 
   return (
     <div className="modal">
-      <div className="modal-content">
+      <div className="modal-content modProd">
         <div className="modal-header">
           <div className="row">
             <div className="col-md-12">
-              <h2>Crear Producto</h2>
+              <h4><b>Crear Producto</b></h4>
             </div>
           </div>
         </div>
@@ -107,85 +107,64 @@ function ModalProducto({
             <div className="row mt-3">
               <div className="form-group">
                 <div className="row">
-                  <div className="col-md-2">
-                    <p>Ingresa producto:</p>
-                  </div>
-                  <div className="col-md-10">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Descripcion"
-                      value={descripcionInput}
-                      onChange={(e) => setDescripcionInput(e.target.value)}
-                    />
+                  <div className="col-md-12">
+                    <div className="placeholder-group">
+                      <input type="text" id="descripcion" className="placeholder-control form-control" required value={descripcionInput} onChange={(e) => setDescripcionInput(e.target.value)}></input>
+                      <label htmlFor="descripcion" className="floating-label">Descripcion</label>
+                    </div>
                   </div>
                 </div>
                 <div className="row mt-3">
-                  <div className="col-md-2">
-                    <p>Ingresa cantidad:</p>
-                  </div>
-                  <div className="col-md-10">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Quantity"
-                      value={quantityInput}
-                      onChange={(e) => {
+                  <div className="col-md-12">
+                    <div className="placeholder-group">
+                      <input type="text" id="cantidad" className="placeholder-control form-control" required value={quantityInput} onChange={(e) => {
                         const inputValue = e.target.value;
                         if (/^\d*\.?\d*$/.test(inputValue)) {
                           setQuantityInput(inputValue)
                         }
-                      }}
-                    />
+                      }}></input>
+                      <label htmlFor="cantidad" className="floating-label">Cantidad</label>
+                    </div>
                   </div>
                 </div>
                 <div className="row mt-3">
-                  <div className="col-md-2">
-                    <p>Ingresa precio unitario:</p>
-                  </div>
-                  <div className="col-md-10">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="UnitPrice"
-                      value={unitPriceInput}
-                      onChange={(e) => {
+                  <div className="col-md-12">
+                    <div className="placeholder-group">
+                      <input type="text" id="precunit" className="placeholder-control form-control" required value={unitPriceInput} onChange={(e) => {
                         const inputValue = e.target.value;
                         if (/^\d*\.?\d*$/.test(inputValue)) {
                           setUnitPriceInput(inputValue)
                         }
-
-                      }}
-                    />
+                      }}></input>
+                      <label htmlFor="precunit" className="floating-label">Precio unitario</label>
+                    </div>
                   </div>
                 </div>
-                <div className="row mt-3">
-                  <div className="col-md-2">
-                    <p>Ingresa categoria:</p>
-                  </div>
-                  <div className="col-md-10">
-                    <CategoryAutoCompleteInput
-                      categoryDescriptions={categoryDescriptions}
-                      categoryIds={categoryIds}
-                      selectedCategoryDescription={categoryInput}
-                      onCategorySelect={handleCategorySelect}
-                    />
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-6">
+                      <CategoryAutoCompleteInput
+                        categoryDescriptions={categoryDescriptions}
+                        categoryIds={categoryIds}
+                        selectedCategoryDescription={categoryInput}
+                        onCategorySelect={handleCategorySelect}
+                      />
+                    </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
         </div>
         <div className="modal-footer">
           <button
-            className="btn btn-success mt-3" // Add margin top class               
+            className="btn-table" // Add margin top class               
             onClick={() => handleInsert(descripcionInput, quantityInput, unitPriceInput, categoryId)}
           >
-            Save
+            <img className='' src={require("../../../../images/ic-save.png")} />
           </button>
           <button
-            className="btn btn-danger mt-3" // Add margin top class
+            className="btn-table" // Add margin top class
             onClick={() => {
               setDescripcionInput('');
               setQuantityInput('');
@@ -196,7 +175,7 @@ function ModalProducto({
             }
             }
           >
-            Close
+            <img className='' src={require("../../../../images/ic-cancel-gg.png")} />
           </button>
         </div>
       </div>

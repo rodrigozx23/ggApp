@@ -33,10 +33,6 @@ body {
   padding-top: 20px;
 }
 
-.content input {
-  width: 150px;
-}
-
 .menu-bar {
   width: 100%;
   height: 100%;
@@ -221,6 +217,16 @@ body {
   position: relative;
 }
 
+.modProd {
+  width: 20% !important;
+  height: 55% !important; 
+}
+
+.modCat {
+  width: 20% !important;
+  height: 35% !important; 
+}
+
 .save-button {
   background-color: #0074d9;
   color: white;
@@ -286,7 +292,7 @@ body {
   padding: 6px;
 }
 
-.btn-update {
+.btn-gg {
   height: 40px;
   width: 180px;
   background-color: #157F88;
@@ -294,6 +300,14 @@ body {
   border-radius: 8px;
   font-weight: bold;
   color: #fff;
+}
+
+.centerC{
+  align-items: center;
+}
+
+.centerC button{
+  margin-top: 24px;
 }
 
 .btn-table {
@@ -326,7 +340,7 @@ body {
 
 .input-container input {
   width: 100%;
-  padding: 8px;
+  padding: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -457,10 +471,6 @@ body {
   opacity: 1;
 }
 
-.placeholder-control.category {
-  padding: 8px 8px 8px 8px;
-}
-
 .ordersButton {
   background-color: #fff;
   margin: 10px;
@@ -502,4 +512,18 @@ body {
 
 .floatLeft {
   float: left;
+}
+
+.tableReporte{
+  width: auto;
+  text-align: center;
+}
+
+.tableReporte td{
+  width: 240px;
+  align-content: center;
+}
+
+.inputGG{
+  width: 160px !important;
 }

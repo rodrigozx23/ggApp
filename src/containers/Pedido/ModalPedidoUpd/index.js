@@ -278,7 +278,7 @@ function ModalPedidoUpd({
                 </div>
                 <div className="col-md-10">
                   <div className="placeholder-group">
-                    <input type="text" id="mesa" className="placeholder-control form-control" required value={mesaInput} onChange={(e) => setMesaInput(e.target.value)}></input>
+                    <input type="text" id="mesa" className="placeholder-control form-control" required value={mesaInput} onChange={(e) => setMesaInput(e.target.value)} readOnly></input>
                     <label htmlFor="mesa" className="floating-label">Mesa</label>
                   </div>
                 </div>
@@ -418,7 +418,7 @@ function ModalPedidoUpd({
             <div className="row mt-3">
               <div className="col-md-12">
                 <button
-                  className="btn-update btn-modal" // Add margin top class
+                  className="btn-gg btn-modal" // Add margin top class
                   onClick={() => handleUpdate(mesaInput, clienteInput, totalInput, detallePedidoData)}
                   disabled={buttonDisabled}>
                   <img className='' src={require("../../../images/ic-refresh.png")} /> Actualizar Pedido

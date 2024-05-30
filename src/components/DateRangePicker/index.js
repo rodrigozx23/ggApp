@@ -14,7 +14,7 @@ const DateRangePicker = ({ handleSearchDate }) => {
   };
 
   return (
-    <div className="input-group">
+    <div className="input-group inputGG">
       <DatePicker
         selected={startDate}
         onChange={handleDateChange}
@@ -23,7 +23,7 @@ const DateRangePicker = ({ handleSearchDate }) => {
         selectsRange
         dateFormat="dd/MM/yyyy"
         className="form-control"
-        placeholderText="Select Date Range"
+        placeholderText="Elegir fecha"
       />
     </div>
   );

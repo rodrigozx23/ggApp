@@ -23,7 +23,7 @@ function ModalPedido({
 }) {
   const [clienteInput, setClienteInput] = useState([]);
   const [descripcionInput, setDescripcionInput] = useState('');
-  const [cantidadInput, setCantidadInput] = useState(0);
+  const [cantidadInput, setCantidadInput] = useState('');
   const [precioUnitarioInput, setPrecioUnitarioInput] = useState(0);
   const [precioTotalInput, setPrecioTotalInput] = useState(0);
   const [idProductoInput, setIdProducto] = useState(0);
@@ -254,29 +254,19 @@ function ModalPedido({
                 <div className="col-md-2">
                 </div>
                 <div className="col-md-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Mesa"
-                    value={mesaInput}
-                    onChange={(e) => {
-                      const inputValue = e.target.value;
-                      // Check if the input is a valid decimal number
-                      if (/^[1-9]\d*$/.test(inputValue) || inputValue === '') {
-                        setMesaInput(inputValue);
-                      }
-                    }} />
+                  <div className="placeholder-group">
+                    <input type="text" id="mesa" className="placeholder-control form-control" required value={mesaInput} onChange={(e) => setMesaInput(e.target.value)}></input>
+                    <label htmlFor="mesa" className="floating-label">Mesa</label>
+                  </div>
                 </div>
                 <br />
                 <div className="col-md-2">
                 </div>
                 <div className="col-md-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Cliente"
-                    value={clienteInput}
-                    onChange={(e) => setClienteInput(e.target.value)} />
+                  <div className="placeholder-group">
+                    <input type="text" id="cliente" className="placeholder-control form-control" required value={clienteInput} onChange={(e) => setClienteInput(e.target.value)}></input>
+                    <label htmlFor="cliente" className="floating-label">Cliente</label>
+                  </div>
                 </div>
               </div>
               <div className="col-md-1">
@@ -333,20 +323,24 @@ function ModalPedido({
                   </div>
                   <div className="col-md-6">
                     <div className="col-md-10">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Cantidad"
-                        value={cantidadInput}
-                        onChange={(e) => {
-                          const newQuantity = e.target.value;
-                          if (/^[1-9]\d*$/.test(newQuantity) || newQuantity === '') {
-                            setCantidadInput(newQuantity);
-                            // Calculate total price
-                            const totalPrice = parseFloat(newQuantity) * parseFloat(precioUnitarioInput);
-                            setPrecioTotalInput(totalPrice.toFixed(2)); // Ensure total price is formatted to two decimal place
-                          }
-                        }} />
+                      <div className="placeholder-group">
+                        <input
+                          type="text"
+                          className="placeholder-control form-control"
+                          value={cantidadInput}
+                          required
+                          onChange={(e) => {
+                            const newQuantity = e.target.value;
+                            if (/^[1-9]\d*$/.test(newQuantity) || newQuantity === '') {
+                              setCantidadInput(newQuantity);
+                              // Calculate total price
+                              const totalPrice = parseFloat(newQuantity) * parseFloat(precioUnitarioInput);
+                              setPrecioTotalInput(totalPrice.toFixed(2)); // Ensure total price is formatted to two decimal place
+                            }
+                          }} />
+                        <label htmlFor="cantidad" className="floating-label">Cantidad</label>
+
+                      </div>
                     </div>
                   </div>
                   <div className="col-md-1">
@@ -389,7 +383,7 @@ function ModalPedido({
             <div className="row mt-3">
               <div className="col-md-12">
                 <button
-                  className="btn-update btn-modal" // Add margin top class
+                  className="btn-gg btn-modal" // Add margin top class
                   onClick={() => handleInsert(clienteInput, mesaInput, totalInput, detallePedidoData)}>
                   Crear Pedido
                 </button>
