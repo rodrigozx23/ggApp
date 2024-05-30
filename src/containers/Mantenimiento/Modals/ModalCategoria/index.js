@@ -62,19 +62,19 @@ function ModalCategoria({
 				</div>
 				<div className="modal-footer">
 					<button
-						className="btn-table" // Add margin top class
+						className="btn-mant" // Add margin top class
 						onClick={() => handleInsert(descripcionInput)}
 					>
-						<img className='' src={require("../../../../images/ic-save.png")} />
+						<img className='' src={require("../../../../images/ic-save-big.png")} />
 					</button>
 					<button
-						className="btn-table" // Add margin top class
+						className="btn-mant" // Add margin top class
 						onClick={() => {
 							setDescripcionInput('');
 							setShowModalCategoria(false)
 						}}
 					>
-						<img className='' src={require("../../../../images/ic-cancel-gg.png")} />
+						<img className='' src={require("../../../../images/ic-cancel-big.png")} />
 					</button>
 				</div>
 			</div>

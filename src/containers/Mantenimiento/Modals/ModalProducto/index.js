@@ -158,13 +158,13 @@ function ModalProducto({
         </div>
         <div className="modal-footer">
           <button
-            className="btn-table" // Add margin top class               
+            className="btn-mant" // Add margin top class               
             onClick={() => handleInsert(descripcionInput, quantityInput, unitPriceInput, categoryId)}
           >
-            <img className='' src={require("../../../../images/ic-save.png")} />
+            <img className='' src={require("../../../../images/ic-save-big.png")} />
           </button>
           <button
-            className="btn-table" // Add margin top class
+            className="btn-mant" // Add margin top class
             onClick={() => {
               setDescripcionInput('');
               setQuantityInput('');
@@ -175,7 +175,7 @@ function ModalProducto({
             }
             }
           >
-            <img className='' src={require("../../../../images/ic-cancel-gg.png")} />
+            <img className='' src={require("../../../../images/ic-cancel-big.png")} />
           </button>
         </div>
       </div>

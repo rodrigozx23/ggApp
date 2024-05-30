@@ -209,7 +209,7 @@ body {
 .modal-content {
   background-color: #ffffff;
   padding: 16px;
-  width: 50%;
+  width: 60%;
   height: 80%;
   overflow-y: auto;
   border-radius: 8px;
@@ -219,7 +219,7 @@ body {
 
 .modProd {
   width: 20% !important;
-  height: 55% !important; 
+  height: 60% !important; 
 }
 
 .modCat {
@@ -316,6 +316,21 @@ body {
   height: 30px;
   width: 35px;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+  margin: 8px;
+}
+
+.btn-mant {
+  background-color: #fff;
+  border: none;
+  height: 50px;
+  width: 55px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+  margin: 8px;
+}
+
+.btn-mant img{
+  height: 26px;
+  width: 28px;
 }
 
 .icModal {
