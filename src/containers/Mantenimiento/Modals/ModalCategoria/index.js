@@ -6,86 +6,80 @@ function ModalCategoria({
 	setDescripcionInput,
 	setShowModalCategoria,
 	setCategoryData
-}){
-	const handleInsert = async ( descripcionInput) => {
+}) {
+	const handleInsert = async (descripcionInput) => {
 		try {
-		  // Call the insertCategory function to send the POST request
-		  const response = await insertCategory({ updatedDescription: descripcionInput });
+			// Call the insertCategory function to send the POST request
+			const response = await insertCategory({ updatedDescription: descripcionInput });
 
-		  // Check if the response is successful and handle it as needed
-		  if (response) {
-			// Optionally, you can add code to update your UI or take other actions upon success
-			const transformedObject = {
-				id: response.id,
-				description: response.descripcion,
-			};	
+			// Check if the response is successful and handle it as needed
+			if (response) {
+				// Optionally, you can add code to update your UI or take other actions upon success
+				const transformedObject = {
+					id: response.id,
+					description: response.descripcion,
+				};
 
-			setCategoryData((prevData) => [...prevData, transformedObject]); 
-			// Clear the input and close the modal
-			setDescripcionInput('');
-			setShowModalCategoria(false);
-		  } else {
-			// Handle the case when the request was not successful (e.g., display an error message)
-			console.error('Category not saved: An error occurred');
-		  }
+				setCategoryData((prevData) => [...prevData, transformedObject]);
+				// Clear the input and close the modal
+				setDescripcionInput('');
+				setShowModalCategoria(false);
+			} else {
+				// Handle the case when the request was not successful (e.g., display an error message)
+				console.error('Category not saved: An error occurred');
+			}
 		} catch (error) {
-		  // Handle network errors
-		  console.error('Network error:', error);
+			// Handle network errors
+			console.error('Network error:', error);
 		}
-    };
-	
-	return(
+	};
+
+	return (
 		<div className="modal">
-            <div className="modal-content">
-				<div class="modal-header">
+			<div className="modal-content modCat">
+				<div className="modal-header">
 					<div className="row">
-						<div className="col-md-12"> 
-							<h2>Crear Categoria</h2>
-						</div>          
+						<div className="col-md-12">
+							<h4><b>Crear Categoria</b></h4>
+						</div>
 					</div>
 				</div>
-				<div class="modal-body">
+				<div className="modal-body">
 					<div className="container">
-						<div className="row mt-3"> 
+						<div className="row mt-3">
 							<div className="form-group">
 								<div className="row">
-									<div className="col-md-2"> 
-										<p>Ingresa categoria:</p>
-									</div>
 									<div className="col-md-10">
-										<input
-											type="text"
-											className="form-control"
-											placeholder="Descripcion"
-											value={descripcionInput}
-											onChange={(e) => setDescripcionInput(e.target.value)}
-										/>
+										<div className="placeholder-group">
+											<input type="text" id="descripcion" className="placeholder-control form-control" required value={descripcionInput} onChange={(e) => setDescripcionInput(e.target.value)}></input>
+											<label htmlFor="descripcion" className="floating-label">Descripcion</label>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>					
+					</div>
 				</div>
-				<div class="modal-footer">
+				<div className="modal-footer">
 					<button
-						className="btn btn-success mt-3" // Add margin top class
+						className="btn-mant" // Add margin top class
 						onClick={() => handleInsert(descripcionInput)}
 					>
-						Save
+						<img className='' src={require("../../../../images/ic-save-big.png")} />
 					</button>
 					<button
-						className="btn btn-danger mt-3" // Add margin top class
+						className="btn-mant" // Add margin top class
 						onClick={() => {
 							setDescripcionInput('');
 							setShowModalCategoria(false)
 						}}
 					>
-						Close
+						<img className='' src={require("../../../../images/ic-cancel-big.png")} />
 					</button>
 				</div>
-            </div>
-        </div>
-	)	
+			</div>
+		</div>
+	)
 }
 
 

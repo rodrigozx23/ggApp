@@ -50,7 +50,7 @@ const handleInsert = async (mesaInput, clienteInput, totalInput, model) => {
 
 
   return(
-	  <div className="container">
+	  <div className="content">
         <div className="col-md-10">
           <h2>Crear Pedido</h2>
         </div>
@@ -72,8 +72,7 @@ const handleInsert = async (mesaInput, clienteInput, totalInput, model) => {
                   if (/^[1-9]\d*$/.test(inputValue) || inputValue === '') {
                     setMesaInput(inputValue);
                   }
-                }}
-                />   
+                }}/>   
               </div>
             </div>
             <div className="row">
@@ -86,8 +85,7 @@ const handleInsert = async (mesaInput, clienteInput, totalInput, model) => {
                 className="form-control"
                 placeholder="Cliente"
                 value={clienteInput}
-                onChange={(e) => setClienteInput(e.target.value)}
-              />     
+                onChange={(e) => setClienteInput(e.target.value)}/>     
               </div>
             </div>           
           </div>
@@ -99,8 +97,7 @@ const handleInsert = async (mesaInput, clienteInput, totalInput, model) => {
             <div className="col-md-2">
               <button
               className="btn btn-success mt-3" // Add margin top class
-              onClick={() => openModal(modalType)}
-              >
+              onClick={() => openModal(modalType)}>
               Agregar Detalle
               </button>
             </div>
@@ -117,17 +114,14 @@ const handleInsert = async (mesaInput, clienteInput, totalInput, model) => {
                 type="text"
                 className="form-control"
                 placeholder="Total"
-                value={totalInput ? totalInput.toFixed(2) : totalInput}
-                readOnly
-            />
+                value={totalInput ? totalInput.toFixed(2) : totalInput}/>
           </div>
           <div className="row mt-3">
             <div className="col-md-10"></div>
             <div className="col-md-1">
               <button
                 className="btn btn-primary mt-3" // Add margin top class
-                onClick={() => handleInsert(mesaInput, clienteInput, totalInput, detallePedidoData)}
-              >
+                onClick={() => handleInsert(mesaInput, clienteInput, totalInput, detallePedidoData)}>
                 Save
               </button>
             </div>
@@ -136,8 +130,7 @@ const handleInsert = async (mesaInput, clienteInput, totalInput, model) => {
                 className="btn btn-danger mt-3" // Add margin top class
                 onClick={() => {
                   openPedidoDetails()
-                }}
-              >
+                }}>
                 Return
               </button>
             </div>

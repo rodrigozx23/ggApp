@@ -29,7 +29,6 @@ const uniqueProducts = Object.keys(descriptionToTotalMap);
         <table className="table table-striped table-bordered">
         <thead>
             <tr>
-            <th>ID</th>
             <th>Descripción Producto</th>
             <th>Cantidad</th>
             <th>Precio Unitario</th>
@@ -40,7 +39,6 @@ const uniqueProducts = Object.keys(descriptionToTotalMap);
         <tbody>
             {uniqueProducts.map((Description, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td>
                   <td>{Description}</td>
                   <td>{descriptionToTotalMap[Description].Quantity}</td>
                   <td>{descriptionToTotalMap[Description].UnitPrice.toFixed(2)}</td>

@@ -1,31 +1,140 @@
 /* App.css */
 .App {
   text-align: center;
+  display: flex;
+}
+
+body {
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  height: 100%;
+  width: 99%;
+}
+
+.containerGlob {
+  display: flex;
+  width: 100%;
+  padding-left: 20px;
+  padding-top: 5px;
+}
+
+.App-header {
+  position: absolute;
+  width: 15%;
+  height: 100%;
+  /*For selected use BGC 005C64*/
+  background-color: #136971;
+}
+
+.content {
+  margin-left: 20%;
+  padding-right: 20px;
+  padding-top: 20px;
 }
 
 .menu-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #333;
-  padding: 10px;
+  width: 100%;
+  height: 100%;
   list-style: none;
-  position: relative; /* Ensure stacking context */
-  z-index: 1000; /* Adjust the z-index value as needed */
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .menu-item {
-  margin-right: 20px;
+  height: 100px;
+  align-content: center;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .menu-button {
   background-color: transparent;
-  color: white;
   border: none;
-  padding: 10px;
+  padding: 15px;
   text-decoration: none;
   font-size: 16px;
   cursor: pointer;
+  color: #fff;
+  font-size: xx-large;
+}
+
+.menu-button img {
+  margin-bottom: 16px;
+  margin-right: 8px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.btn-pedidos {
+  width: 110%;
+  height: 100%;
+  margin-left: -5%;
+  margin-top: 20px;
+  background-color: #21B3BF;
+  font-size: xx-large;
+  font-weight: bold;
+  border: none;
+  border-radius: 16px;
+}
+
+.btn-pedrep {
+  border-width: 0.5px;
+  width: 308px;
+  height: 80px;
+  transform: translateX(120%);
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.btn-ped {
+  border-radius: 8px 0px 0px 8px;
+  border-color: #1A929C;
+  background-color: #1A929C;
+  color: #fff;
+}
+
+.btn-rep {
+  border-radius: 0px 8px 8px 0px;
+  border-color: #1A929C;
+  background-color: #fff;
+  color: #1A929C;
+}
+
+.btn-rrep {
+  border-radius: 0px 8px 8px 0px;
+  border-color: #1A929C;
+  background-color: #1A929C;
+  color: #fff;
+}
+
+.btn-rped {
+  border-radius: 8px 0px 0px 8px;
+  border-color: #1A929C;
+  background-color: #fff;
+  color: #1A929C;
+}
+
+.menu-button.active {
+  font-size: 0;
+  background-color: #0E5258 !important;
+  border-radius: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.menu-button.active img {
+  margin-bottom: 0px !important;
+  margin-right: 0px !important;
+}
+
+.down {
+  margin-top: auto;
+  background-color: #198B95;
+  align-content: center;
 }
 
 .submenu {
@@ -84,12 +193,13 @@
 }
 
 .modal {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,10 +207,24 @@
 }
 
 .modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 16px;
+  width: 60%;
+  height: 80%;
+  overflow-y: auto;
+  border-radius: 8px;
   text-align: center;
+  position: relative;
+}
+
+.modProd {
+  width: 20% !important;
+  height: 60% !important; 
+}
+
+.modCat {
+  width: 20% !important;
+  height: 35% !important; 
 }
 
 .save-button {
@@ -121,6 +245,109 @@
   cursor: pointer;
 }
 
+.btn-volver {
+  background-color: #fff;
+  border: none;
+  font-weight: bold;
+  font-size: larger;
+  color: #157F88;
+  text-decoration: underline;
+}
+
+.btn-pagar {
+  height: 40px;
+  width: 180px;
+  color: #fff;
+  background-color: #0F0CA3;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  padding: 8px;
+}
+
+.btn-modal img {
+  margin-bottom: 3px;
+}
+
+.btn-cancelar {
+  height: 40px;
+  width: 180px;
+  color: #fff;
+  background-color: #B40000;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  padding: 8px;
+}
+
+.btn-agregar {
+  height: 40px;
+  width: 180px;
+  background-color: #fff;
+  border-color: #157F88;
+  border-radius: 8px;
+  border-width: 1px;
+  font-weight: bold;
+  color: #157F88;
+  padding: 6px;
+}
+
+.btn-gg {
+  height: 40px;
+  width: 180px;
+  background-color: #157F88;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.centerC{
+  align-items: center;
+}
+
+.centerC button{
+  margin-top: 24px;
+}
+
+.btn-table {
+  background-color: #fff;
+  border: none;
+  height: 30px;
+  width: 35px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+  margin: 8px;
+}
+
+.btn-mant {
+  background-color: #fff;
+  border: none;
+  height: 50px;
+  width: 55px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+  margin: 8px;
+}
+
+.btn-mant img{
+  height: 26px;
+  width: 28px;
+}
+
+.icModal {
+  padding-right: 8px;
+}
+
+.txtTotal {
+  text-align: center;
+  font-weight: bold;
+  margin: 8px;
+  width: 140px;
+}
+
+.textLeft {
+  text-align: left;
+}
+
 /* styles.css */
 .input-container {
   position: relative;
@@ -128,7 +355,7 @@
 
 .input-container input {
   width: 100%;
-  padding: 8px;
+  padding: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -139,6 +366,7 @@
   border: 1px solid #ccc;
   max-height: 150px;
   overflow-y: auto;
+  z-index: 9999;
 }
 
 .suggestion {
@@ -147,31 +375,59 @@
 }
 
 .highlighted {
-  background-color: lightblue; /* Adjust as needed */
+  background-color: lightblue;
+  /* Adjust as needed */
   /* Additional styling for highlighted suggestion */
 }
 
 .suggestion:hover {
   background-color: #f5f5f5;
 }
+
+.logo {
+  width: 95px;
+  height: 95px;
+}
+
+.container-title {
+  height: 50vh;
+  display: flex;
+  /* Enable flexbox */
+  align-items: center;
+  /* Align elements vertically to the center */
+  justify-content: center;
+  /* Center content horizontally */
+}
+
+.text-and-form {
+  margin-left: 40px;
+  display: flex;
+  /* Enable flexbox for the text and form container */
+  align-items: center;
+  /* Align text and form vertically within their container */
+}
+
 .center-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Ajusta la altura según tus necesidades */
+  height: 0.1vh;
 }
 
 .login-form {
+  width: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  justify-content: center;
+  padding: 45px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
 }
 
 .login-form input {
+  width: 100%;
   margin-bottom: 10px;
   padding: 8px;
   border: 1px solid #ccc;
@@ -179,14 +435,110 @@
 }
 
 .login-form button {
-  padding: 8px 20px;
-  background-color: #007bff;
+  width: 30%;
+  height: 40px;
+  background-color: #157F88;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .login-form button:hover {
-  background-color: #0056b3;
+  background-color: #005C64;
+}
+
+.placeholder-group {
+  position: relative;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.floating-label {
+  position: absolute;
+  pointer-events: none;
+  left: 10px;
+  /* Adjust horizontal position */
+  top: 40%;
+  transform: translateY(-50%);
+  /* Center vertically */
+  transition: 0.2s ease all;
+  color: gray;
+  /* Style the placeholder text */
+  opacity: 0.5;
+  /* Set initial opacity for a subtle placeholder effect */
+}
+
+.floating-label.category {
+  margin-top: 2px;
+}
+
+.placeholder-control:not(:empty)~.floating-label,
+.placeholder-control:focus~.floating-label,
+.placeholder-control:not(:focus):valid~.floating-label,
+.placeholder-control:read-only~.floating-label {
+  top: -10px;
+  /* Adjust position */
+  padding-top: 5px;
+  font-size: 10px;
+  /* Adjust font size */
+  opacity: 1;
+}
+
+.ordersButton {
+  background-color: #fff;
+  margin: 10px;
+  padding: 0px;
+  width: 280px;
+  border-width: 0.5px;
+  border-color: rgba(14, 125, 112, 0.6);
+}
+
+.ordersButBotton {
+  background-color: rgba(14, 125, 112, 0.6);
+  color: #0A3539;
+  margin: 0px !important;
+  padding: 0px 0px 40px 0px;
+  font-weight: bold;
+}
+
+.right {
+  float: right;
+  margin: 8px;
+}
+
+.right.up {
+  transform: translateY(-150%);
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.left {
+  float: left;
+  margin: 8px;
+}
+
+.icMenu {
+  height: 52px;
+  width: 52px;
+}
+
+.floatLeft {
+  float: left;
+}
+
+.tableReporte{
+  width: auto;
+  text-align: center;
+}
+
+.tableReporte td{
+  width: 240px;
+  align-content: center;
+}
+
+.inputGG{
+  width: 160px !important;
 }
