@@ -29,9 +29,12 @@ const ProductAutoCompleteInput = ({
     const inputValue = event.target.value;
     setValue(inputValue);
 
-    // Update the suggestions list
-    const newSuggestions = getSuggestions(inputValue);
-    setSuggestionsList(newSuggestions);
+    if (inputValue.length < 3) {
+      setSuggestionsList([]);
+    } else {
+      const newSuggestions = getSuggestions(inputValue);
+      setSuggestionsList(newSuggestions);
+    }
     setHighlightedIndex(-1);
   };
 
@@ -105,7 +108,7 @@ const ProductAutoCompleteInput = ({
         />
         
         <div className="placeholder-group">
-          <input className="placeholder-control" value={value} onChange={onInputChange} onKeyDown={handleKeyDown} required/>
+          <input className="placeholder-control" value={value} onChange={onInputChange} onKeyDown={handleKeyDown} autoComplete="off" required/>
           <label className="floating-label category">Producto</label>
           <div className="suggestions-container" ref={suggestionsContainerRef}>
               {            
