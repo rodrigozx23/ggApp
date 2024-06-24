@@ -138,10 +138,11 @@ function ModalPedido({
   };
 
   const handleInsert = async (clienteInput, mesaInput, totalInput, model) => {
+
+    if (buttonDisabled) return;
+    setButtonDisabled(true);
+
     try {
-      //const confirmMessage = "Are you sure you want to save this pedido?";
-      // Call the insertCategory function to send the POST request
-      //if (window.confirm(confirmMessage)) {
       const response = await insertPedido({
         pedido_id: "0",
         updatedMesa: mesaInput,
@@ -149,26 +150,21 @@ function ModalPedido({
         updatedTotal: totalInput,
         updatedEstadoPedido: "1"
       });
-
-      // Check if the response is successful and handle it as needed
       if (response) {
-        // Optionally, you can add code to update your UI or take other actions upon success
         const responsePD = await insertPedidoDetalle({ pedido_id: response.id, model: model })
       } else {
-        // Handle the case when the request was not successful (e.g., display an error message)
         console.error('Pedido not saved: An error occurred');
       }
-      //}
       openPedidoDetails();
       handleActiveIndex(0);
     } catch (error) {
-      // Handle network errors
       console.error('Network error:', error);
+    } finally {
+      setButtonDisabled(false);
     }
   };
 
   const handlePagarPedido = async (mesaInput, clienteInput, totalInput, model) => {
-    console.log(model);
     try {
       setButtonDisabled(true);
       // Call the insertCategory function to send the POST request
@@ -384,7 +380,8 @@ function ModalPedido({
               <div className="col-md-12">
                 <button
                   className="btn-gg btn-modal" // Add margin top class
-                  onClick={() => handleInsert(clienteInput, mesaInput, totalInput, detallePedidoData)}>
+                  onClick={() => handleInsert(clienteInput, mesaInput, totalInput, detallePedidoData)}
+                  disabled={buttonDisabled} >
                   Crear Pedido
                 </button>
               </div>
