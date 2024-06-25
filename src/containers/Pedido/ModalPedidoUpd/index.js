@@ -35,6 +35,7 @@ function ModalPedidoUpd({
   const [productData, setProductData] = useState(null);
   const [productDescriptions, setProductDescriptions] = useState([]);
   const [productIds, setProductIds] = useState([]);
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
 
   const handleAddToTable = () => {
     // Prepare the data and pass it to the parent component
@@ -82,6 +83,7 @@ function ModalPedidoUpd({
       }
       setCantidadInput("");
       setDescripcionInput("");
+      setUnsavedChanges(true);
     }
   };
 
@@ -153,9 +155,6 @@ function ModalPedidoUpd({
   const handleUpdate = async (mesaInput, clienteInput, totalInput, model) => {
     try {
       setButtonDisabled(true);
-      //const confirmMessage = "Are you sure you want to update this pedido?";
-      // Call the insertCategory function to send the POST request
-      //if (window.confirm(confirmMessage)) {
       const response = await updatePedido({
         pedido_id: idPedido,
         updatedCliente: clienteInput,
@@ -167,12 +166,12 @@ function ModalPedidoUpd({
       // Check if the response is successful and handle it as needed
       if (response) {
         // Optionally, you can add code to update your UI or take other actions upon success
-        const responsePD = await updatePedidoDetalle({ pedido_id: idPedido, model: model })
+        const responsePD = await updatePedidoDetalle({ pedido_id: idPedido, model: model });
+        setUnsavedChanges(false);
       } else {
         // Handle the case when the request was not successful (e.g., display an error message)
         console.error('Pedido not saved: An error occurred');
       }
-      //}
       openPedidoDetails();
     } catch (error) {
       console.error('Network error:', error);
@@ -241,6 +240,19 @@ function ModalPedidoUpd({
     }
   };
 
+  const handleVolverClick = () => {
+    if (unsavedChanges) {
+      if (window.confirm("You have unsaved changes. Do you want to save them before leaving?")) {
+        handleUpdate(mesaInput, clienteInput, totalInput, detallePedidoData);
+      } else {
+        return;
+      }
+    } else {
+      openPedidoDetails();
+      setEditRow(false);
+    }
+  };
+  
   return (
     <div className='modal'>
       <div className="modal-content">
@@ -257,10 +269,7 @@ function ModalPedidoUpd({
               <img className='' src={require("../../../images/ic-leftarrow.png")} />
               <button
                 className="btn-volver" // Add margin top class
-                onClick={() => {
-                  openPedidoDetails();
-                  setEditRow(false);
-                }}>Volver
+                onClick={handleVolverClick}>Volver
               </button>
             </div>
             <div className="col-md-1">
