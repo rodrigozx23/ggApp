@@ -137,6 +137,11 @@ function ModalPedido({
     }
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleInsert(clienteInput, mesaInput, totalInput, detallePedidoData);
+  };
+
   const handleInsert = async (clienteInput, mesaInput, totalInput, model) => {
 
     if (buttonDisabled) return;
@@ -378,12 +383,14 @@ function ModalPedido({
             </div>
             <div className="row mt-3">
               <div className="col-md-12">
-                <button
-                  className="btn-gg btn-modal" // Add margin top class
-                  onClick={() => handleInsert(clienteInput, mesaInput, totalInput, detallePedidoData)}
-                  disabled={buttonDisabled} >
-                  Crear Pedido
-                </button>
+                <form onSubmit={handleSubmit}>
+                  <button
+                    className="btn-gg btn-modal" // Add margin top class
+                    //seronClick={() => handleInsert(clienteInput, mesaInput, totalInput, detallePedidoData)}
+                    disabled={buttonDisabled} >
+                    Crear Pedido
+                  </button>
+                </form>                
               </div>
             </div>
           </div>

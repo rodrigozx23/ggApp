@@ -12,9 +12,9 @@ function BodyReportesPedidos({
   const [pedidoReporteData, setPedidoReporteData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
-  //const [selectedDate, setSelectedDate] = useState(null);
-  //const [startDate, setStartDate] = useState(null);
-  //const [endDate, setEndDate] = useState(null); 
+  const [searchValue, setSearchValue] = useState('');
+  const [searchKey, setSearchKey] = useState('');
+  const [dateRange, setDateRange] = useState({ start: null, end: null });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,7 +67,7 @@ function BodyReportesPedidos({
     fetchData();
   }, []);
 
-  const handleSearch = (event, key) => {
+  /*const handleSearch = (event, key) => {
     const searchValue = event.target.value.toLowerCase();
     const filtered = pedidoReporteData.filter(item => {
       if (key === 'total') {
@@ -91,7 +91,49 @@ function BodyReportesPedidos({
       );
     });
     setFilteredData(filtered);
+  };*/
+
+  useEffect(() => {
+    filterData();
+  }, [searchValue, searchKey, dateRange, pedidoReporteData]);
+
+  const handleSearch = (event, key) => {
+    setSearchValue(event.target.value.toLowerCase());
+    setSearchKey(key);
   };
+
+  const handleSearchDate = (start, end) => {
+    setDateRange({ start, end });
+  };
+
+  const filterData = () => {
+    let filtered = pedidoReporteData;
+
+    if (searchValue) {
+      filtered = filtered.filter(item => {
+        if (searchKey === 'total') {
+          return parseFloat(item[searchKey]).toString().toLowerCase().includes(searchValue);
+        } else {
+          return item[searchKey].toString().toLowerCase().includes(searchValue);
+        }
+      });
+    }
+
+    if (dateRange.start || dateRange.end) {
+      filtered = filtered.filter(item => {
+        const itemDate = new Date(item.fecha_creacion);
+        return (
+          (!dateRange.start || itemDate >= dateRange.start) &&
+          (!dateRange.end || itemDate <= dateRange.end)
+        );
+      });
+    }
+
+    setFilteredData(filtered);
+  };
+
+  const totalSum = filteredData.reduce((sum, order) => sum + parseFloat(order.total), 0);
+  const orderCount = filteredData.length;
 
   return (
     <div>
@@ -120,6 +162,10 @@ function BodyReportesPedidos({
         <br />
         <h1><b>Reporte Pedidos</b></h1>
         <br />
+      </div>
+      <div className="col-md-12 mt-3">
+          <p><b>Total Pedidos:</b> {orderCount}</p>
+          <p><b>Suma Total:</b> {totalSum.toFixed(2)} soles</p> {/* Format the totalSum to 2 decimal places */}
       </div>
       <div className="col-md-12 mt-3">
         {loading ? (
