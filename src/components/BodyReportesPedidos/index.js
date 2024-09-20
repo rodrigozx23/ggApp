@@ -95,6 +95,21 @@ function BodyReportesPedidos({
 
   useEffect(() => {
     filterData();
+    
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+  
+    // Limpiar el evento al desmontar el componente
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [searchValue, searchKey, dateRange, pedidoReporteData]);
 
   const handleSearch = (event, key) => {
@@ -134,6 +149,15 @@ function BodyReportesPedidos({
 
   const totalSum = filteredData.reduce((sum, order) => sum + parseFloat(order.total), 0);
   const orderCount = filteredData.length;
+  const [showButton, setShowButton] = useState(false);
+
+  // Función para desplazarse hacia la parte superior
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', // Desplazamiento suave
+    });
+  };
 
   return (
     <div>
@@ -245,6 +269,27 @@ function BodyReportesPedidos({
           <p>No Reporte data available.</p>
         )}
       </div>
+      <div style={{ height: '100px' }}></div>    
+      {showButton && (
+            <button
+              onClick={scrollToTop}
+              style={{
+                position: 'fixed',
+                bottom: '50px',
+                right: '50px',
+                padding: '10px 20px',
+                fontSize: '16px',
+                cursor: 'pointer',
+                backgroundColor: '#007bff',
+                color: 'white',
+                border: 'none',
+                borderRadius: '5px',
+                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              Go to the Top
+            </button>
+      )}
     </div>
   );
 }

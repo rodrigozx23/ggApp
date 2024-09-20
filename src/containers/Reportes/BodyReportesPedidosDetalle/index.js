@@ -12,6 +12,9 @@ function BodyReportesPedidosDetalle({
   const [pedidoDetalleReporteData, setPedidoDetalleReporteData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchValue, setSearchValue] = useState('');
+  const [searchKey, setSearchKey] = useState('');
+  const [dateRange, setDateRange] = useState({ start: null, end: null });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,7 +69,7 @@ function BodyReportesPedidosDetalle({
     fetchData();
   }, []);
 
-  const handleSearch = (event, key) => {
+  /*const handleSearch = (event, key) => {
     const searchValue = event.target.value.toLowerCase();
     const filtered = pedidoDetalleReporteData.filter(item => {
       if (key === 'total') {
@@ -91,6 +94,70 @@ function BodyReportesPedidosDetalle({
     });
     setFilteredData(filtered);
   };
+*/
+useEffect(() => {
+  filterData();
+  
+  const handleScroll = () => {
+    if (window.scrollY > 300) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll);
+
+  // Limpiar el evento al desmontar el componente
+  return () => {
+    window.removeEventListener('scroll', handleScroll);
+  };
+}, [searchValue, searchKey, dateRange, pedidoDetalleReporteData]);
+
+const handleSearch = (event, key) => {
+  setSearchValue(event.target.value.toLowerCase());
+  setSearchKey(key);
+};
+
+const handleSearchDate = (start, end) => {
+  setDateRange({ start, end });
+};
+
+const filterData = () => {
+  let filtered = pedidoDetalleReporteData;
+
+  if (searchValue) {
+    filtered = filtered.filter(item => {
+      if (searchKey === 'total') {
+        return parseFloat(item[searchKey]).toString().toLowerCase().includes(searchValue);
+      } else {
+        return item[searchKey].toString().toLowerCase().includes(searchValue);
+      }
+    });
+  }
+
+  if (dateRange.start || dateRange.end) {
+    filtered = filtered.filter(item => {
+      const itemDate = new Date(item.fecha_creacion);
+      return (
+        (!dateRange.start || itemDate >= dateRange.start) &&
+        (!dateRange.end || itemDate <= dateRange.end)
+      );
+    });
+  }
+
+  setFilteredData(filtered);
+};
+
+const [showButton, setShowButton] = useState(false);
+
+// Función para desplazarse hacia la parte superior
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth', // Desplazamiento suave
+  });
+};
 
   return (
     <div>
@@ -209,7 +276,28 @@ function BodyReportesPedidosDetalle({
         ) : (
           <p>No Reporte data available.</p>
         )}
-      </div>
+      </div> 
+      <div style={{ height: '100px' }}></div>    
+      {showButton && (
+            <button
+              onClick={scrollToTop}
+              style={{
+                position: 'fixed',
+                bottom: '50px',
+                right: '50px',
+                padding: '10px 20px',
+                fontSize: '16px',
+                cursor: 'pointer',
+                backgroundColor: '#007bff',
+                color: 'white',
+                border: 'none',
+                borderRadius: '5px',
+                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              Go to the Top
+            </button>
+      )}
     </div>
   );
 }
